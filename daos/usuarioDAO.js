@@ -24,8 +24,7 @@ class UsuarioDAO {
     return true;
   }
 
-  // INICIAR SESIÓN: sin imports externos, con consulta directa (parámetros)
-  // Nota: usamos una query parametrizada para evitar inyección. No hay hashing.
+
   static async iniciarSesion(nombreUsuario, contrasena) {
     const sql = `
       SELECT * FROM usuarios
