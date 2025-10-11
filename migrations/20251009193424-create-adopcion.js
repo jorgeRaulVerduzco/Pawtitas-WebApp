@@ -1,65 +1,82 @@
-'use strict';
+"use strict";
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Adopciones', {
+    await queryInterface.createTable("adopciones", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       idUsuario: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Usuarios', 
-          key: 'id'
+          model: "usuarios",
+          key: "id",
         },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+        onUpdate: "CASCADE",
+        onDelete: "RESTRICT",
       },
-      fechaSolicitud: {
-        type: Sequelize.DATE,
-        allowNull: false
-      },
-      fechaResolucion: {
-        type: Sequelize.DATE
-      },
-      razonAdopcion: {
-        type: Sequelize.TEXT
-      },
-      documentosSolicitud: {
-        type: Sequelize.STRING
-      },
-      tieneExperiencia: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false
-      },
-      estadoSolicitud: {
-        type: Sequelize.STRING,
-        defaultValue: 'pendiente'
+      idMascota: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "mascotas",
+          key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "RESTRICT",
       },
       tipoVivienda: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       tienePatio: {
         type: Sequelize.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
+        allowNull: false,
+      },
+      fechaSolicitud: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+      },
+      fechaResolucion: {
+        type: Sequelize.DATE,
+        allowNull: true,
+      },
+      razonAdopcion: {
+        type: Sequelize.TEXT,
+        allowNull: false,
+      },
+      tieneExperiencia: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+        allowNull: false,
+      },
+      estadoSolicitud: {
+        type: Sequelize.ENUM("pendiente", "aprobada", "rechazada"),
+        defaultValue: "pendiente",
+        allowNull: false,
+      },
+      documentosSolicitud: {
+        type: Sequelize.STRING,
+        allowNull: true,
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
-      }
+      },
     });
   },
+
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Adopciones');
-  }
+    await queryInterface.dropTable("adopciones");
+  },
 };

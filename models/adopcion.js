@@ -1,53 +1,85 @@
-'use strict';
-const { Model } = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
   class Adopcion extends Model {
     static associate(models) {
-      // 🔹 1:N con usuario
+      // N:1 con Usuario
       Adopcion.belongsTo(models.Usuario, {
-        foreignKey: 'idUsuario',
-        as: 'usuario'
+        foreignKey: "idUsuario",
+        as: "usuario",
       });
 
-      // 1:N con mascota
-      Adopcion.hasMany(models.Mascota, {
-        foreignKey: 'idAdopcion',
-        as: 'mascotas'
+      // N:1 con Mascota (una adopción es para UNA mascota)
+      Adopcion.belongsTo(models.Mascota, {
+        foreignKey: "idMascota",
+        as: "mascota",
       });
     }
   }
 
-  Adopcion.init({
-    idUsuario: {
-      type: DataTypes.INTEGER,
-      allowNull: false
+  Adopcion.init(
+    {
+      idUsuario: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: "usuarios",
+          key: "id",
+        },
+      },
+      idMascota: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: "mascotas",
+          key: "id",
+        },
+      },
+      tipoVivienda: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      tienePatio: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+        allowNull: false,
+      },
+      fechaSolicitud: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
+      },
+      fechaResolucion: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
+      razonAdopcion: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      tieneExperiencia: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+        allowNull: false,
+      },
+      estadoSolicitud: {
+        type: DataTypes.ENUM("pendiente", "aprobada", "rechazada"),
+        defaultValue: "pendiente",
+        allowNull: false,
+      },
+      documentosSolicitud: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
     },
-    fechaSolicitud: {
-      type: DataTypes.DATE,
-      allowNull: false
-    },
-    fechaResolucion: DataTypes.DATE,
-    razonAdopcion: DataTypes.TEXT,
-    documentosSolicitud: DataTypes.STRING,
-    tieneExperiencia: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false
-    },
-    estadoSolicitud: {
-      type: DataTypes.STRING,
-      defaultValue: 'pendiente'
-    },
-    tipoVivienda: DataTypes.STRING,
-    tienePatio: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false
+    {
+      sequelize,
+      modelName: "Adopcion",
+      tableName: "adopciones",
+      timestamps: true,
     }
-  }, {
-    sequelize,
-    modelName: 'Adopcion',
-    tableName: 'Adopciones', 
-  });
+  );
 
   return Adopcion;
 };
