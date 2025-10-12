@@ -1,10 +1,12 @@
 const db = require("../models");
-const { Op, fn, col, where } = require("sequelize"); // 👈 agregamos fn, col, where
+const { Op, fn, col, where } = require("sequelize");
 const { Producto, Categoria } = db;
 
 class ProductoDAO {
+  constructor() {}
+
   // Crear producto con categorias
-  static async crearProducto(data) {
+  async crearProducto(data) {
     try {
       const categorias = data.categorias;
       delete data.categorias;
@@ -31,8 +33,8 @@ class ProductoDAO {
     }
   }
 
-  // 🔹 Obtener producto por id (con o sin categorias)
-  static async obtenerProductoPorId(id, { includeCategorias = false } = {}) {
+  // Obtener producto por id (con o sin categorias)
+  async obtenerProductoPorId(id, { includeCategorias = false } = {}) {
     try {
       const include = includeCategorias
         ? [{ model: Categoria, as: "categorias" }]
@@ -43,8 +45,8 @@ class ProductoDAO {
     }
   }
 
-  // Listar productos 
-  static async obtenerProductos({ limit, offset } = {}) {
+  // Listar productos con paginación opcional
+  async obtenerProductos({ limit, offset } = {}) {
     try {
       return await Producto.findAll({
         limit,
@@ -55,7 +57,8 @@ class ProductoDAO {
       throw err;
     }
   }
-  static async actualizarProducto(id, data) {
+
+  async actualizarProducto(id, data) {
     try {
       const categorias = Array.isArray(data.categorias) ? data.categorias : [];
       delete data.categorias;
@@ -70,11 +73,9 @@ class ProductoDAO {
 
         for (const c of categorias) {
           if (typeof c === "number") {
-            // Buscar la categoria existente por id
             const cat = await Categoria.findByPk(c);
             if (cat) catInstances.push(cat);
           } else if (typeof c === "string") {
-            // Buscar o crear por nombre
             const [cat] = await Categoria.findOrCreate({
               where: { nombre: c },
             });
@@ -82,7 +83,6 @@ class ProductoDAO {
           }
         }
 
-        // Solo si hay categorias validas, hacemos setCategorias
         if (catInstances.length) {
           await producto.setCategorias(catInstances);
         }
@@ -94,8 +94,7 @@ class ProductoDAO {
     }
   }
 
-  // Eliminar producto
-  static async eliminarProducto(id) {
+  async eliminarProducto(id) {
     try {
       const deleted = await Producto.destroy({ where: { id } });
       return !!deleted;
@@ -104,8 +103,7 @@ class ProductoDAO {
     }
   }
 
-  // Buscar por nombre (corrigiendo el error de sequelize undefined)
-  static async buscarPorNombre(nombre) {
+  async buscarPorNombre(nombre) {
     try {
       return await Producto.findAll({
         where: where(fn("LOWER", col("nombre")), {
@@ -117,8 +115,7 @@ class ProductoDAO {
     }
   }
 
-  // Filtrar productos por categoría
-  static async filtrarPorCategoria(idCategoria) {
+  async filtrarPorCategoria(idCategoria) {
     try {
       const cat = await Categoria.findByPk(idCategoria);
       if (!cat) return [];
@@ -128,8 +125,7 @@ class ProductoDAO {
     }
   }
 
-  // Calificar producto
-  static async calificar(idProducto, nuevaCalificacion) {
+  async calificar(idProducto, nuevaCalificacion) {
     await Producto.update(
       { calificacion: nuevaCalificacion },
       { where: { id: idProducto } }
@@ -137,11 +133,11 @@ class ProductoDAO {
     return await Producto.findByPk(idProducto);
   }
 
-  // Obtener las categorías de un producto
-  static async obtenerCategoriasProducto(productoId) {
+  async obtenerCategoriasProducto(productoId) {
     const producto = await Producto.findByPk(productoId);
     if (!producto) throw new Error("Producto no encontrado");
     return await producto.getCategorias();
   }
 }
-module.exports = ProductoDAO;
+
+module.exports = new ProductoDAO();
