@@ -43,10 +43,6 @@ module.exports = {
         type: Sequelize.ENUM('macho', 'hembra'),
         allowNull: false
       },
-      genero: {
-        type: Sequelize.STRING,
-        allowNull: true
-      },
       descripcion: {
         type: Sequelize.TEXT,
         allowNull: true

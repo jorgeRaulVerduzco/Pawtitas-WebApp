@@ -52,10 +52,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.ENUM("macho", "hembra"),
         allowNull: false,
       },
-      genero: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
       descripcion: {
         type: DataTypes.TEXT,
         allowNull: true,
