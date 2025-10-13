@@ -3,6 +3,8 @@ const productoDAO = require("./daos/productoDAO.js");
 const ventaDAO = require("./daos/ventaDAO.js");
 const pagoDAO = require("./daos/pagoDAO.js");
 const centroAdopcionDAO = require("./daos/centroAdopcionDAO.js");
+const adopcionDAO = require("./daos/adopcionDAO.js");
+const mascotaDAO = require("./daos/mascotaDAO.js");
 
 (async function main() {
   try {
@@ -161,7 +163,7 @@ const centroAdopcionDAO = require("./daos/centroAdopcionDAO.js");
       telefono: "55-5123-4567",
     });
 
-        // 9) Pruebas Centro adobcion
+    // 10) Pruebas Centro adopcion
 
     console.log("Centro creado (raw):", centro); // instancia de Sequelize
     console.log("Centro creado (JSON):", centro.toJSON()); // objeto plano con los campos
@@ -173,6 +175,75 @@ const centroAdopcionDAO = require("./daos/centroAdopcionDAO.js");
       " creado:",
       centro.createdAt
     );
+
+    /// AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+    // 11) Pruebas de Mascota
+    console.log("\n11) Pruebas CRUD Mascota:");
+    console.log("11.1) Creando mascota asociada al centro...");
+    const mascota = await mascotaDAO.crearMascota({
+      idCentroAdopcion: centro.id,
+      especie: "Perro",
+      nombre: "Firulais",
+      edad: "3 años",
+      tamano: "Mediano",
+      sexo: "macho",
+      descripcion: "Un perro muy amigable y juguetón",
+      estado: "disponible",
+    });
+    console.log("Mascota creada:", mascota.toJSON());
+
+    console.log("11.2) Obteniendo mascota por ID...");
+    const mascotaFetched = await mascotaDAO.obtenerMascotaPorId(mascota.id);
+    console.log("Mascota obtenida:", mascotaFetched.toJSON());
+
+    console.log("11.3) Actualizando mascota (cambiar estado a 'adoptado')...");
+    const mascotaUpd = await mascotaDAO.actualizarMascota(mascota.id, {
+      estado: "adoptado",
+    });
+    console.log("Mascota actualizada:", mascotaUpd.toJSON());
+
+    // 12) Pruebas de Adopcion
+    // Crear otra mascota disponible para adopción
+    const mascota2 = await mascotaDAO.crearMascota({
+      idCentroAdopcion: centro.id,
+      especie: "Perro",
+      nombre: "Firulais",
+      edad: "3 años",
+      tamano: "Mediano",
+      sexo: "macho",
+      descripcion: "Un perro muy amigable y juguetón",
+      estado: "disponible",
+    });
+    // Crear otro usuario ACTIVO para la adopción
+    const usuario2 = await usuarioDAO.crear({
+      nombres: "bel",
+      apellidoPaterno: "c",
+      apellidoMaterno: "perez",
+      nombreUsuario: "bell",
+      correo: "bell@example.com",
+      contrasena: "55555",
+      rol: "cliente",
+      activo: true,
+    });
+    console.log("\n12) Pruebas CRUD Adopcion:");
+    console.log("12.1) Creando solicitud de adopción...");
+    const adopcion = await adopcionDAO.crearAdopcion({
+      idUsuario: usuario2.id,
+      idMascota: mascota2.id,
+      tipoVivienda: "departamento",
+      razonAdopcion: "Quiero compañía",
+      tieneExperiencia: true,
+    });
+    console.log("Solicitud de adopción creada:", adopcion.toJSON());
+
+    console.log("12.2) Obteniendo solicitud por ID...");
+    const adopcionFetched = await adopcionDAO.obtenerAdopcionPorId(adopcion.id);
+    console.log("Solicitud obtenida:", adopcionFetched.toJSON());
+
+    console.log("12.3) Rechazar la solicitud...");
+  const adopcionRechazada = await adopcionDAO.rechazarSolicitud(adopcion.id);
+    console.log("Solicitud rechazada:", adopcionRechazada.toJSON());
+
     console.log("\n=== FIN DE PRUEBAS ===");
     process.exit(0);
   } catch (err) {

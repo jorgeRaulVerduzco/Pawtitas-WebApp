@@ -13,6 +13,14 @@ class AdopcionDAO {
         throw err;
       }
 
+      if (!usuario.activo) {
+        const err = new Error(
+          "Usuario inactivo, no puede crear solicitudes de adopción"
+        );
+        err.name = "ConflictError";
+        throw err;
+      }
+
       const mascota = await Mascota.findByPk(datosAdopcion.idMascota);
       if (!mascota) {
         const err = new Error("Mascota no encontrada");
@@ -191,7 +199,7 @@ class AdopcionDAO {
     }
   }
 
-  async rechazarSolicitud(idAdopcion, razon) {
+  async rechazarSolicitud(idAdopcion) {
     try {
       const adopcion = await Adopcion.findByPk(idAdopcion);
       if (!adopcion) {
@@ -208,7 +216,6 @@ class AdopcionDAO {
 
       adopcion.estadoSolicitud = "rechazada";
       adopcion.fechaResolucion = new Date();
-      if (razon) adopcion.razonRechazo = razon;
       await adopcion.save();
       return adopcion;
     } catch (error) {
