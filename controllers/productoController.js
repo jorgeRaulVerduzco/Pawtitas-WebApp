@@ -1,14 +1,20 @@
-import productoDAO from "../daos/productoDAO.js";
-import { AppError } from "../utils/appError.js";
+const productoDAO = require("../daos/productoDAO.js");
+const { AppError } = require("../utils/appError.js");
 
 class ProductoController {
   // Crear producto con categorías opcionales
   static async crearProducto(req, res, next) {
     try {
-      const { nombre, descripcion, precio, cantidadStock, activo, categorias } = req.body;
+      const { nombre, descripcion, precio, cantidadStock, activo, categorias } =
+        req.body;
 
       if (!nombre || !precio || cantidadStock === undefined) {
-        return next(new AppError("Los campos nombre, precio y cantidadStock son requeridos.", 400));
+        return next(
+          new AppError(
+            "Los campos nombre, precio y cantidadStock son requeridos.",
+            400
+          )
+        );
       }
 
       const nuevoProducto = await productoDAO.crearProducto({
@@ -36,7 +42,9 @@ class ProductoController {
       const { id } = req.params;
       const includeCategorias = req.query.includeCategorias === "true";
 
-      const producto = await productoDAO.obtenerProductoPorId(id, { includeCategorias });
+      const producto = await productoDAO.obtenerProductoPorId(id, {
+        includeCategorias,
+      });
       if (!producto) {
         return next(new AppError("Producto no encontrado.", 404));
       }
@@ -50,7 +58,7 @@ class ProductoController {
     }
   }
 
-  // Listar productos 
+  // Listar productos
   static async obtenerProductos(req, res, next) {
     try {
       const limit = parseInt(req.query.limit) || 10;
@@ -81,7 +89,10 @@ class ProductoController {
         return next(new AppError("Producto no encontrado.", 404));
       }
 
-      const productoActualizado = await productoDAO.actualizarProducto(id, req.body);
+      const productoActualizado = await productoDAO.actualizarProducto(
+        id,
+        req.body
+      );
 
       res.status(200).json({
         status: "success",
@@ -118,7 +129,9 @@ class ProductoController {
     try {
       const { nombre } = req.query;
       if (!nombre) {
-        return next(new AppError("Debe especificar un nombre para buscar.", 400));
+        return next(
+          new AppError("Debe especificar un nombre para buscar.", 400)
+        );
       }
 
       const productos = await productoDAO.buscarPorNombre(nombre);
@@ -148,7 +161,12 @@ class ProductoController {
         data: productos,
       });
     } catch (error) {
-      next(new AppError(`Error al filtrar productos por categoria: ${error.message}`, 500));
+      next(
+        new AppError(
+          `Error al filtrar productos por categoria: ${error.message}`,
+          500
+        )
+      );
     }
   }
 
@@ -158,8 +176,14 @@ class ProductoController {
       const { id } = req.params;
       const { calificacion } = req.body;
 
-      if (typeof calificacion !== "number" || calificacion < 0 || calificacion > 5) {
-        return next(new AppError("La calificacion debe ser un numero entre 0 y 5.", 400));
+      if (
+        typeof calificacion !== "number" ||
+        calificacion < 0 ||
+        calificacion > 5
+      ) {
+        return next(
+          new AppError("La calificacion debe ser un numero entre 0 y 5.", 400)
+        );
       }
 
       const producto = await productoDAO.calificar(id, calificacion);
@@ -188,9 +212,13 @@ class ProductoController {
         data: categorias,
       });
     } catch (error) {
-      next(new AppError(`Error al obtener categorias del producto: ${error.message}`, 500));
+      next(
+        new AppError(
+          `Error al obtener categorias del producto: ${error.message}`,
+          500
+        )
+      );
     }
   }
 }
-
-export default ProductoController;
+module.exports = ProductoController;

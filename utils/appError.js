@@ -1,4 +1,4 @@
-import winston from "winston";
+const winston = require("winston");
 
 // Configurar winston para registrar errores en un archivo
 const logger = winston.createLogger({
@@ -32,4 +32,4 @@ const globalErrorHandler = (err, req, res, next) => {
   });
 };
 
-export { AppError, globalErrorHandler };
+module.exports = { AppError, globalErrorHandler };

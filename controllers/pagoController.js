@@ -1,7 +1,7 @@
 // controllers/pagoController.js
-import pagoDAO from "../daos/pagoDAO.js";
-import ventaDAO from "../daos/ventaDAO.js"; // para actualizar venta si el pago se aprueba
-import { AppError } from "../utils/appError.js";
+const pagoDAO = require("../daos/pagoDAO.js");
+const ventaDAO = require("../daos/ventaDAO.js"); // para actualizar venta si el pago se aprueba
+const { AppError } = require("../utils/appError.js");
 
 class PagoController {
   static async crearPago(req, res, next) {
@@ -140,4 +140,4 @@ class PagoController {
   }
 }
 
-export default PagoController;
+module.exports = PagoController;

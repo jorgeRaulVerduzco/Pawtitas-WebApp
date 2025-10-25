@@ -1,28 +1,20 @@
-// controllers/ventaController.js
-import ventaDAO from "../daos/ventaDAO.js";
-import { AppError } from "../utils/appError.js";
+const ventaDAO = require("../daos/ventaDAO.js");
+const { AppError } = require("../utils/appError.js");
 
 class VentaController {
   // crear venta completa
   static async crearVentaCompleta(req, res, next) {
     try {
-      // co
       const clienteId = req.body.clienteId ?? req.user?.id;
-      const items = req.body.items ?? []; // [{productoId, cantidad}, ...]
-      const pagoData = req.body.pago ?? null; // {metodoPago, referencia, monto, estado}
+      const items = req.body.items ?? [];
+      const pagoData = req.body.pago ?? null;
 
       if (!clienteId) return next(new AppError("clienteId es requerido", 400));
       if (!Array.isArray(items) || items.length === 0)
-        return next(
-          new AppError("items es un arreglo no vacío requerido", 400)
-        );
+        return next(new AppError("items es un arreglo no vacío requerido", 400));
 
-      const result = await ventaDAO.crearVentaCompleta(
-        clienteId,
-        items,
-        pagoData
-      );
-      // result = { venta, pago }
+      const result = await ventaDAO.crearVentaCompleta(clienteId, items, pagoData);
+      
       res.status(201).json({
         status: "success",
         message: "Venta creada correctamente",
@@ -39,9 +31,7 @@ class VentaController {
       if (!ventas || ventas.length === 0) {
         return res.status(200).json({ status: "success", count: 0, data: [] });
       }
-      res
-        .status(200)
-        .json({ status: "success", count: ventas.length, data: ventas });
+      res.status(200).json({ status: "success", count: ventas.length, data: ventas });
     } catch (error) {
       next(new AppError("Error al obtener ventas", 500));
     }
@@ -63,9 +53,7 @@ class VentaController {
       const idCliente = req.params.idCliente ?? req.user?.id;
       if (!idCliente) return next(new AppError("idCliente requerido", 400));
       const ventas = await ventaDAO.obtenerPorCliente(idCliente);
-      res
-        .status(200)
-        .json({ status: "success", count: ventas.length, data: ventas });
+      res.status(200).json({ status: "success", count: ventas.length, data: ventas });
     } catch (error) {
       next(new AppError("Error al obtener ventas por cliente", 500));
     }
@@ -78,22 +66,15 @@ class VentaController {
       if (!productoId || !cantidad)
         return next(new AppError("productoId y cantidad son requeridos", 400));
 
-      const result = await ventaDAO.agregarItemAVenta(ventaId, {
-        productoId,
-        cantidad,
+      const result = await ventaDAO.agregarItemAVenta(ventaId, { productoId, cantidad });
+      
+      res.status(201).json({
+        status: "success",
+        message: "Item agregado a la venta",
+        data: result,
       });
-      // result = { item, venta }
-      res
-        .status(201)
-        .json({
-          status: "success",
-          message: "Item agregado a la venta",
-          data: result,
-        });
     } catch (error) {
-      next(
-        new AppError(error.message || "Error al agregar item a la venta", 500)
-      );
+      next(new AppError(error.message || "Error al agregar item a la venta", 500));
     }
   }
 
@@ -102,9 +83,7 @@ class VentaController {
       const { ventaId } = req.params;
       const { monto, metodoPago, referencia, estado } = req.body;
       if (!ventaId || !monto || !metodoPago)
-        return next(
-          new AppError("ventaId, monto y metodoPago son requeridos", 400)
-        );
+        return next(new AppError("ventaId, monto y metodoPago son requeridos", 400));
 
       const pago = await ventaDAO.crearPagoSeparado({
         ventaId,
@@ -113,9 +92,7 @@ class VentaController {
         referencia,
         estado,
       });
-      res
-        .status(201)
-        .json({ status: "success", message: "Pago creado", data: pago });
+      res.status(201).json({ status: "success", message: "Pago creado", data: pago });
     } catch (error) {
       next(new AppError("Error al crear pago", 500));
     }
@@ -124,16 +101,13 @@ class VentaController {
   static async pagarVenta(req, res, next) {
     try {
       const { ventaId } = req.params;
-      const pagoData = req.body; // {metodoPago, referencia, monto, estado}
+      const pagoData = req.body;
       if (!ventaId) return next(new AppError("ventaId requerido", 400));
       if (!pagoData || !pagoData.metodoPago)
         return next(new AppError("pago.metodoPago es requerido", 400));
 
       const result = await ventaDAO.pagarVenta(ventaId, pagoData);
-      // result = { pago, venta }
-      res
-        .status(200)
-        .json({ status: "success", message: "Pago procesado", data: result });
+      res.status(200).json({ status: "success", message: "Pago procesado", data: result });
     } catch (error) {
       next(new AppError(error.message || "Error al procesar pago", 500));
     }
@@ -147,18 +121,13 @@ class VentaController {
         return next(new AppError("idPago y nuevoEstado son requeridos", 400));
 
       const result = await ventaDAO.actualizarEstadoPago(idPago, nuevoEstado);
-      // result = { pago } o { pago, venta } si se aprobó
-      res
-        .status(200)
-        .json({
-          status: "success",
-          message: "Estado de pago actualizado",
-          data: result,
-        });
+      res.status(200).json({
+        status: "success",
+        message: "Estado de pago actualizado",
+        data: result,
+      });
     } catch (error) {
-      next(
-        new AppError(error.message || "Error al actualizar estado de pago", 500)
-      );
+      next(new AppError(error.message || "Error al actualizar estado de pago", 500));
     }
   }
 
@@ -168,13 +137,11 @@ class VentaController {
       if (!idUsuario) return next(new AppError("idUsuario requerido", 400));
 
       const historial = await ventaDAO.obtenerHistorialPorUsuario(idUsuario);
-      res
-        .status(200)
-        .json({ status: "success", count: historial.length, data: historial });
+      res.status(200).json({ status: "success", count: historial.length, data: historial });
     } catch (error) {
       next(new AppError("Error al obtener historial de usuario", 500));
     }
   }
 }
 
-export default VentaController;
+module.exports = VentaController;
