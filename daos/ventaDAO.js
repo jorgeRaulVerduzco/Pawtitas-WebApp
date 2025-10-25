@@ -3,7 +3,6 @@ const { Venta, VentaItem, Producto, Pago, sequelize } = require("../models");
 class VentaDAO {
   constructor() {}
 
-  // CRUD básicos
   async crear(datos) {
     return await Venta.create(datos);
   }
