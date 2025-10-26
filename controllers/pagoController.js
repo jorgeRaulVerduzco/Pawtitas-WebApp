@@ -1,4 +1,3 @@
-// controllers/pagoController.js
 const pagoDAO = require("../daos/pagoDAO.js");
 const ventaDAO = require("../daos/ventaDAO.js"); // para actualizar venta si el pago se aprueba
 const { AppError } = require("../utils/appError.js");

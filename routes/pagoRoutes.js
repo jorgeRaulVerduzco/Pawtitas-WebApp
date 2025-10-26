@@ -1,13 +1,14 @@
-import express from 'express';
-import * as pagoController from '../controllers/pagoController.js';
+const express = require('express');
+const pagoController = require('../controllers/pagoController.js');
+const validateJWT = require('../utils/validateJWT.js');
 
 const router = express.Router();
 
-router.post('/', pagoController.crearPago);
-router.get('/all', pagoController.obtenerPagos);
-router.get('/:id', pagoController.obtenerPagoPorId);
-router.get('/venta/:ventaId', pagoController.obtenerPagosPorVenta);
-router.put('/:id', pagoController.actualizarEstado);
-router.delete('/:id', pagoController.eliminarPago);
+router.post('/', validateJWT, pagoController.crearPago);
+router.get('/all', validateJWT, pagoController.obtenerPagos);
+router.get('/:id', validateJWT, pagoController.obtenerPagoPorId);
+router.get('/venta/:ventaId', validateJWT, pagoController.obtenerPagosPorVenta);
+router.put('/:id', validateJWT, pagoController.actualizarEstado);
+router.delete('/:id', validateJWT, pagoController.eliminarPago);
 
-export { router };
+module.exports = router;

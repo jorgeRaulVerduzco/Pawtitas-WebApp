@@ -1,19 +1,19 @@
-import express from 'express';
-import * as ventaController from '../controllers/ventaController.js';
+const express = require('express');
+const ventaController = require('../controllers/ventaController.js');
+const validateJWT = require('../utils/validateJWT.js');
 
 const router = express.Router();
 
-router.post('/createSell', ventaController.crearVentaCompleta);
+router.post('/createSell', validateJWT, ventaController.crearVentaCompleta);
 router.get('/:id', ventaController.obtenerVentaPorId);
 router.get('/all', ventaController.obtenerVentas);
-router.get('/client/:idUser', ventaController.obtenerVentasPorCliente);
-router.post('/addSellItem', ventaController.agregarItemAVenta);
+router.get('/client/:idUser', validateJWT, ventaController.obtenerVentasPorCliente);
+router.post('/addSellItem', validateJWT, ventaController.agregarItemAVenta);
 router.get('/partPayment/:idSell', ventaController.crearPagoSeparado);
-router.put('/completeSell/:idSell', ventaController.pagarVenta);
-router.put('/:id', ventaController.actualizarEstadoPago);
-router.get('/HistoryUser/:idUser', ventaController.obtenerHistorialPorUsuario);
+router.put('/completeSell/:idSell', validateJWT, ventaController.pagarVenta);
+router.put('/:id', validateJWT, ventaController.actualizarEstadoPago);
+router.get('/HistoryUser/:idUser', validateJWT, ventaController.obtenerHistorialPorUsuario);
 
-
-export { router };
+module.exports = router;
 
 
