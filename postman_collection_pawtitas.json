@@ -28,7 +28,7 @@
             "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nombreUsuario\": \"Clint S\",\n  \"contrasena\": \"54321\"\n}"
+              "raw": "{\n  \"nombreUsuario\": \"jorgendo\",\n  \"contrasena\": \"123456\"\n}"
             },
             "url": { "raw": "{{baseUrl}}/api/usuarios/login" }
           }
@@ -82,7 +82,7 @@
               "mode": "raw",
               "raw": "{\n  \"clienteId\": 1,\n  \"items\": [{ \"productoId\": 1, \"cantidad\": 2 }],\n  \"pago\": { \"metodoPago\": \"tarjeta\", \"referencia\": \"TRANS-123\" }\n}"
             },
-            "url": { "raw": "{{baseUrl}}/api/ventas/createSell" }
+            "url": { "raw": "{{baseUrl}}/api/ventas/createSale" }
           }
         },
         {

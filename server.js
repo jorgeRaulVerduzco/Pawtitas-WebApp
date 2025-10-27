@@ -2,7 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 
-dotenv.config();
+// Cargar variables de entorno desde variables.env (archivo en el repo)
+dotenv.config({ path: './variables.env' });
 
 const usuarioRouter = require('./routes/usuarioRoutes.js');
 const productoRouter = require('./routes/productoRoutes.js');

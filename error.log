@@ -1,0 +1,19 @@
+{"level":"error","message":"Error al crear el usuario: Validation error"}
+{"level":"error","message":"Credenciales inválidas o usuario inactivo"}
+{"level":"error","message":"Error al iniciar sesión: secretOrPrivateKey must have a value"}
+{"level":"error","message":"Error al iniciar sesión: secretOrPrivateKey must have a value"}
+{"level":"error","message":"Error al iniciar sesión: secretOrPrivateKey must have a value"}
+{"level":"error","message":"Error al iniciar sesión: secretOrPrivateKey must have a value"}
+{"level":"error","message":"Error al iniciar sesión: secretOrPrivateKey must have a value"}
+{"level":"error","message":"Error al iniciar sesión: secretOrPrivateKey must have a value"}
+{"level":"error","message":"No hay token en la cabecera"}
+{"level":"error","message":"Venta no encontrada"}
+{"level":"error","message":"Venta no encontrada"}
+{"level":"error","message":"Venta no encontrada"}
+{"level":"error","message":"Venta no encontrada"}
+{"level":"error","message":"Venta no encontrada"}
+{"level":"error","message":"Venta no encontrada"}
+{"level":"error","message":"No hay token en la cabecera"}
+{"level":"error","message":"No hay token en la cabecera"}
+{"level":"error","message":"Error al crear solicitud de adopción: Error al crear adopción: Usuario inactivo, no puede crear solicitudes de adopción"}
+{"level":"error","message":"Error al crear solicitud de adopción: Error al crear adopción: Mascota no disponible para adopción"}
