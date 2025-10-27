@@ -1,16 +1,19 @@
-import express from 'express';
-import * as adopcionController from '../controllers/adopcionController.js';
+const express = require('express');
+const adopcionController = require('../controllers/adopcionController.js');
+const validateJWT = require('../utils/validateJWT.js');
 
 const router = express.Router();
 
-router.post('/', adopcionController.crear);
+router.post('/', validateJWT, adopcionController.crear);
 router.get('/all', adopcionController.obtenerTodas);
 router.get('/:id', adopcionController.obtenerPorId);
 router.get('/user/:userId', adopcionController.obtenerPorUsuario);
 router.get('/pet/:petId', adopcionController.obtenerPorMascota);
-router.get('/status/:status', adopcionController.aprobar);
-router.get('/status/:status', adopcionController.rechazar);
-router.put('/:id', adopcionController.actualizar);
-router.delete('/:id', adopcionController.eliminar);
 
-export { router };
+// Rutas para aprobar y rechazar adopciones
+router.put('/:id/approve', validateJWT, adopcionController.aprobar);
+router.put('/:id/reject', validateJWT, adopcionController.rechazar);
+router.put('/:id', validateJWT, adopcionController.actualizar);
+router.delete('/:id', validateJWT, adopcionController.eliminar);
+
+module.exports = router;

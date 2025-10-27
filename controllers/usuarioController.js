@@ -1,6 +1,7 @@
 const UsuarioDAO = require("../daos/usuarioDAO.js");
 const { AppError } = require("../utils/appError.js");
 const jwt = require("jsonwebtoken");
+const getJwtSecret = require('../utils/getJwtSecret.js');
 
 class UsuarioController {
   static async crearCuenta(req, res, next) {
@@ -35,9 +36,12 @@ class UsuarioController {
         return next(new AppError("Credenciales inválidas o usuario inactivo", 401));
       }
 
+      // Obtener el secreto de forma segura; lanzará AppError si no está configurado
+      const secret = getJwtSecret();
+
       const token = jwt.sign(
         { id: usuario.id, rol: usuario.rol, nombreUsuario: usuario.nombreUsuario },
-        process.env.JWT_SECRET,
+        secret,
         { expiresIn: "8h" }
       );
 

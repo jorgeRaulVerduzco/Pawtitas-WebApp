@@ -1,12 +1,12 @@
-import express from 'express';
-import * as centroAdopcionController from '../controllers/centroAdopcionController.js';
+const express = require('express');
+const centroAdopcionController = require('../controllers/centroAdopcionController.js');
+const validateJWT = require('../utils/validateJWT.js');
 
 const router = express.Router();
 
-router.post('/', centroAdopcionController.crearCentro);
+router.post('/', validateJWT, centroAdopcionController.crearCentro);
 router.get('/search', centroAdopcionController.buscarPorNombre);
 router.get('/all', centroAdopcionController.obtenerTodos);
 router.get('/:id', centroAdopcionController.obtenerPorId);
 
-
-export { router };
+module.exports = router;

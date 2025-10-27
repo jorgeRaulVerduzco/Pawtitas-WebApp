@@ -1,13 +1,14 @@
-import express from 'express';
-import * as mascotaController from '../controllers/mascotaController.js';
+const express = require('express');
+const mascotaController = require('../controllers/mascotaController.js');
+const validateJWT = require('../utils/validateJWT.js');
 
-const routes = express.Router();
+const router = express.Router();
 
-routes.post('/', mascotaController.crear);
-routes.get('/all', mascotaController.obtenerTodas);
-routes.get('/:id', mascotaController.obtenerPorId);
-routes.get('/centro/:centroId', mascotaController.obtenerPorCentro);
-routes.update('/estado/:id', mascotaController.actualizar);
-routes.delete('/:id', mascotaController.eliminar);
+router.post('/', validateJWT, mascotaController.crear);
+router.get('/all', validateJWT, mascotaController.obtenerTodas);
+router.get('/:id', validateJWT, mascotaController.obtenerPorId);
+router.get('/centro/:centroId', validateJWT, mascotaController.obtenerPorCentro);
+router.put('/estado/:id', validateJWT, mascotaController.actualizar);
+router.delete('/:id', validateJWT, mascotaController.eliminar);
 
-export { routes };
+module.exports = router;
