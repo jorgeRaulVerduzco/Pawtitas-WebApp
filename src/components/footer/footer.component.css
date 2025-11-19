@@ -1,0 +1,77 @@
+footer {
+  background-color: #983BED;
+  color: #ffffff;
+  padding: 1rem 1.25rem;
+  font-family: "Prompt", sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center; /* centra verticalmente brand y texto */
+  justify-content: flex-start; /* brand a la izquierda; center lo posicionamos absolute */
+  position: relative; /* necesario para posicionamiento absoluto del .center */
+}
+
+.left .brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.brand-logo { height: 56px; margin-right: 12px; }
+.brand-text { font-weight:700; font-size:1.25rem; font-family: 'Poppins', sans-serif; }
+
+.logo {
+  margin: 0;
+  font-family: 'Prompt';
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.logo img {
+  height: 48px;
+  vertical-align: middle;
+  margin-right: 12px;
+}
+
+/* asegúrate de que el párrafo no tenga margen y quede alineado */
+footer p{
+  margin: 0;
+  color: #ffffff;
+}
+
+/* Centrar el copyright horizontalmente en el footer (solo desktop) */
+.center{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+}
+
+.right{ /* espacio a la derecha si se necesita */
+  margin-left: auto;
+}
+
+/* Si el footer es muy estrecho (mobile), apilar los elementos */
+@media (max-width: 600px) {
+  footer{
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem;
+    padding: 0.8rem 0.8rem;
+  }
+  footer p{ padding-left: 0; }
+  .brand-text{ display:none; }
+}
+
+@media (max-width: 600px) {
+  footer {
+    font-size: 0.85rem;
+    padding: 0.8rem 0;
+  }
+}
