@@ -1,0 +1,134 @@
+/* General */
+body{
+    font-family: 'Poppins', 'Inter', 'Prompt';
+    margin: 0;
+    padding: 0;
+    min-height: 100dvh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    background-color: #F8E7F9;
+    color: #6B21A8;
+    
+}
+
+/* Sombras y Espaciados */
+body > header-info,
+body > footer-info,
+body > :content-component {
+    margin: 0;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 0;
+
+}
+
+
+.main-content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; 
+    padding: 10rem 5rem;
+    background-color: #f5e6fb;
+}
+
+
+.form-container {
+    background-color: #e0b0ff; 
+    border-radius: 20px;
+    padding: 30px 40px;
+    width: 100%;
+    max-width: 450px; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center; 
+}
+
+
+input[type="password"]{
+    margin-bottom: 2rem;
+}
+
+.titulo-form {
+    color:white; 
+    font-size: 1.8em;
+    margin-bottom: 5px;
+}
+
+
+.campos-requeridos {
+    color: white; 
+    font-size: 0.9em;
+    margin-bottom: 20px;
+}
+
+
+.general-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+    width: 100%;
+}
+
+
+
+.general-form label {
+    font-size: 1em;
+    color: white; 
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+
+.general-form .required::before {
+    content: '*';
+    color: #ff0000;
+    margin-right: 2px;
+}
+
+
+.general-form input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: #ffffff;
+    color: #333;
+    font-size: 1em;
+    box-sizing: border-box; 
+}
+
+
+.link {
+    font-size: 0.9em;
+    color: #4b0082;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    width: 100%;
+    text-align: center;
+}
+
+.link a {
+    color: #8a2be2; 
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.link a:hover {
+    text-decoration: underline;
+}
+
+
+.boton {
+    background-color: #8a2be2;
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    width: 60%; 
+    margin: 0 auto; 
+}
+
+.boton:hover {
+    background-color: #6a0dad; 
+}

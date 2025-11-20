@@ -45,7 +45,7 @@ export class ProductComponent extends HTMLElement {
 	#agregaEstilo(shadow) {
 		let link = document.createElement("link");
 		link.setAttribute("rel", "stylesheet");
-		link.setAttribute("href", "./src/components/product/product.component.css");
+		link.setAttribute("href", "/src/components/product/product.component.css");
 		shadow.appendChild(link);
 	}
 }

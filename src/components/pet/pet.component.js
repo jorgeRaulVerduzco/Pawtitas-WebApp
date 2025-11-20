@@ -32,7 +32,7 @@ export class PetComponent extends HTMLElement {
 	#agregaEstilo(shadow) {
 		let link = document.createElement("link");
 		link.setAttribute("rel", "stylesheet");
-		link.setAttribute("href", "./src/components/pet/pet.component.css");
+		link.setAttribute("href", "/src/components/pet/pet.component.css");
 		shadow.appendChild(link);
 	}
 }
