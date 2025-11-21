@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publicar Adopción</title>
+    <link rel="stylesheet" href="../Styles/publicar-adopcion-styles.css">
+    <script type="module" src="../../script.js"></script>
+</head>
+<body>
+    <header-info></header-info>
+
+    <div class="main-content">
+        <div class="form-container">
+            <h2 class="titulo-form">Publicar adopción</h2>
+            <p class="campos-requeridos">Campos con * son requeridos</p>
+
+            <form class="general-form">
+                <div class="form-row">
+                    <div class="form-column">
+                        <label for="nombre" class="required">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" required>
+                    </div>
+
+                    <div class="form-column">
+                        <label for="raza" class="required">Raza</label>
+                        <select id="raza" name="raza" required>
+                            <option value="">Seleccionar</option>
+                            <option value="labrador">Labrador</option>
+                            <option value="golden">Golden Retriever</option>
+                            <option value="chihuahua">Chihuahua</option>
+                            <option value="mestizo">Mestizo</option>
+                            <option value="otra">Otra</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column">
+                        <label for="edad" class="required">Edad</label>
+                        <input type="text" id="edad" name="edad" placeholder="Ej: 2 años" required>
+                    </div>
+
+                    <div class="form-column">
+                        <label for="peso" class="required">Peso</label>
+                        <input type="text" id="peso" name="peso" placeholder="Ej: 15 kg" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-column">
+                        <label for="sexo" class="required">Sexo</label>
+                        <select id="sexo" name="sexo" required>
+                            <option value="">Seleccionar</option>
+                            <option value="macho">Macho</option>
+                            <option value="hembra">Hembra</option>
+                        </select>
+                    </div>
+
+                    <div class="form-column">
+                        <label class="required">Especie</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="perro" name="especie" value="perro" checked>
+                                <label for="perro" class="checkbox-label">Perro</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="gato" name="especie" value="gato">
+                                <label for="gato" class="checkbox-label">Gato</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="conejo" name="especie" value="conejo">
+                                <label for="conejo" class="checkbox-label">Conejo</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <label for="descripcion" class="required">Descripción</label>
+                <textarea id="descripcion" name="descripcion" required></textarea>
+
+                <button type="submit" class="boton">Publicar</button>
+            </form>
+        </div>
+    </div>
+
+    <footer-info></footer-info>
+</body>
+</html>
