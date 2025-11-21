@@ -129,3 +129,53 @@ body > :content-component {
 .boton:hover {
     background-color: #6a0dad; 
 }
+
+.general-form textarea {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background-color: white;
+    box-sizing: border-box;
+    font-size: 1rem;
+    resize: vertical; 
+    min-height: 100px; 
+}
+
+.opciones {
+    display: flex;
+    gap: 30px; 
+    align-items: center;
+    margin-bottom: 20px; 
+}
+
+.opciones input[type="radio"] {
+    display: none;
+}
+
+.radio-option-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: #4b0082; 
+    font-size: 1em;
+    font-weight: 500;
+}
+
+
+.radio-option-label::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    border-radius: 50%; 
+    background-color: white;
+    margin-right: 8px; 
+    transition: all 0.2s ease;
+    
+}
+
+.opciones input[type="radio"]:checked + .radio-option-label::before {
+    background-color: #8a2be2;
+    box-shadow: inset 0 0 0 4px white; 
+}
+
