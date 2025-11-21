@@ -1,0 +1,123 @@
+/* General */
+body{
+    font-family: 'Poppins', 'Inter', 'Prompt';
+    margin: 0;
+    padding: 0;
+    min-height: 100dvh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    background-color: #F8E7F9;
+    color: #6B21A8;
+    
+}
+
+/* Sombras y Espaciados */
+body > header-info,
+body > footer-info,
+body > :content-component {
+    margin: 0;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 0;
+
+}
+
+
+.main-content {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 30px;
+    max-width: 1400px; 
+    width: 100%;
+    margin: 30px auto; 
+    padding: 0 20px; 
+    align-items: flex-start; 
+}
+
+
+.filter-content {
+    background-color: white; 
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    position: sticky; 
+    top: 30px; 
+    height: fit-content;
+}
+
+.titulo-filtro {
+    color: #4b0082; 
+    font-size: 1.7em;
+    font-weight: 700;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    text-align: center;
+    
+}
+
+
+
+.filtro-checkbox input[type="checkbox"] {
+    appearance: none; 
+    width: 18px;
+    height: 18px;
+    border: 2px solid #8a2be2; 
+    border-radius: 4px;
+    cursor: pointer;
+    place-content: center;
+}
+
+.filtro-checkbox input[type="checkbox"]:checked {
+    background-color: #8a2be2; 
+    border-color: #8a2be2;
+}
+
+.filtro-checkbox input[type="checkbox"]:checked::before {
+    content: '✓'; 
+    color: white;
+    font-size: 14px;
+    line-height: 0;
+}
+
+.filter-content label {
+    color: black; 
+    font-weight: 600;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    color: #000000;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+.filter-content select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #8a2be2;
+    border-radius: 8px;
+    background-color: white;
+    background-position: right 10px center;
+    cursor: pointer;
+}
+
+
+.resultados-adopcion {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+pet-info {
+    display: block; 
+}
+
+.pet-card {
+    background-color: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
