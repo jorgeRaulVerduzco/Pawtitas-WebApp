@@ -1,0 +1,123 @@
+/* General */
+body{
+    font-family: 'Poppins', 'Inter', 'Prompt';
+    margin: 0;
+    padding: 0;
+    min-height: 100dvh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    background-color: #F8E7F9;
+    color: #6B21A8;
+    
+}
+
+/* Sombras y Espaciados */
+body > header-info,
+body > footer-info,
+body > :content-component {
+    margin: 0;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 0;
+
+}
+
+.main-content {
+    display: flex;
+    justify-content: center; 
+    align-items: flex-start; 
+    padding: 40px 20px;
+}
+
+
+.mascota-container {
+    background-color: white; 
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 700px; 
+    width: 100%;
+    overflow: hidden; 
+    text-align: center;
+    padding-bottom: 30px; 
+}
+
+
+.mascota-img {
+    width: 100%;
+    height: 350px; 
+    overflow: hidden;
+    position: relative; 
+}
+
+.mascota-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    display: block;
+}
+
+
+.nombre-mascota {
+    font-size: 2.2em;
+    font-weight: 700;
+    color: #8a2be2; 
+    margin: 20px 0 10px 0; 
+}
+
+
+.info-mascota {
+    display: flex;
+    justify-content: center; 
+    gap: 20px; 
+    padding: 10px 30px;
+    border-bottom: 1px solid #f0f0f0; 
+    margin-bottom: 20px;
+}
+
+.info-mascota > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+}
+
+.info-label {
+    font-size: 0.9em;
+    font-weight: 600;
+    color: black; 
+    font-style: bold;
+    margin-bottom: 5px;
+}
+
+.info-value {
+    font-size: 1.1em;
+    color: black; 
+    font-weight: 400;
+}
+
+
+.Descripcion {
+    font-size: 1.5em;
+    color: black;
+    padding: 0 30px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+.Boton {
+    background-color: #8a2be2;
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    width: 60%; 
+    margin: 0 auto; 
+    margin-top: 2rem;
+}
+
+.Boton:hover {
+    background-color: #6a0dad; 
+}
+
+
