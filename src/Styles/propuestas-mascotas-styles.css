@@ -1,0 +1,105 @@
+/* General */
+body{
+    font-family: 'Poppins', 'Inter', 'Prompt';
+    margin: 0;
+    padding: 0;
+    min-height: 100dvh;
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    background-color: #F8E7F9;
+    color: #6B21A8;
+}
+
+/* Sombras y Espaciados */
+body > header-info,
+body > footer-info,
+body > :content-component {
+    margin: 0;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 0;
+}
+
+.titulo {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-left: 20rem; 
+    max-width: 900px; 
+    color: black;
+    text-align: left;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.nombre-destacado {
+    color: #8a2be2;
+}
+
+.main-content {
+    background-color: white;
+    display: flex; 
+    flex-direction: column; 
+    align-items: flex-start; 
+    border-radius: 25px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+    width: 90%;
+    margin: 1rem auto 4rem auto; 
+    padding: 40px 50px; 
+}
+
+.propuestas-container {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    width: 100%;
+}
+
+.propuesta-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.punto-morado {
+    color: #8a2be2;
+    font-size: 2.5rem;
+    line-height: 1;
+    margin-top: -8px;
+}
+
+.propuesta-content {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.solicitud-texto {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.solicitud-label {
+    color: #8a2be2;
+    font-weight: 600;
+}
+
+.nombre-solicitante {
+    color: #8a2be2;
+    font-weight: 700;
+}
+
+.link-gestionar {
+    color: black;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 1rem;
+    display: inline-block;
+    transition: color 0.2s ease;
+}
+
+.link-gestionar:hover {
+    color: #8a2be2;
+    text-decoration: underline;
+}
+
+
