@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
 /* General */
 body{
     font-family: 'Poppins', 'Inter', 'Prompt';
@@ -18,7 +20,6 @@ body > :content-component {
     margin: 0;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
     border-radius: 0;
-
 }
 
 
@@ -42,6 +43,16 @@ body > :content-component {
     position: sticky; 
     top: 30px; 
     height: fit-content;
+}
+
+.filter-form,
+.filter-content,
+.filtro-checkbox,
+.titulo-filtro,
+.filter-content label,
+.filter-content select,
+.filter-content a {
+    font-family: 'Poppins', sans-serif;
 }
 
 .titulo-filtro {
@@ -113,6 +124,10 @@ pet-info {
     display: block; 
 }
 
+product-info {
+    display: block; 
+}
+
 .pet-card {
     background-color: white;
     border-radius: 15px;
@@ -121,3 +136,36 @@ pet-info {
     transition: transform 0.2s;
 }
 
+.categoria-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.categoria-list li + li {
+  margin-top: 6px;
+}
+
+.categoria-list a.categoria-producto {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #000;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  padding: 6px 0;
+}
+
+.categoria-list a.categoria-producto:hover {
+  text-decoration: underline;
+}
+
+.categoria-list .categoria-nombre {
+  font-weight: 600;
+  color: #1a0a5b;
+}
+
+.categoria-list .numero-product {
+  color: #6b6b6b;
+  font-size: 0.95rem;
+}
