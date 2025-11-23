@@ -130,18 +130,14 @@ body > :content-component {
     mask-position: center;
 }
 
-/* Ocultamos la etiqueta <img> interna 
-   porque el icono ahora se dibuja con el background del <i> */
 .paw-icon img {
     display: none;
 }
 
-/* Estado Activo: Morado */
 .paw-icon.active {
     background-color: #A855F7; 
 }
 
-/* Estado Inactivo: Gris */
 .paw-icon.inactive {
     background-color: #9CA3AF; 
 }
@@ -165,3 +161,21 @@ body > :content-component {
         justify-content: space-between;
     }
 }
+
+.cantidad-vendidos {
+    text-align: center;
+    width: 6rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 15px;
+    border: 2px solid black;  
+    border-radius: 25px;
+}
+
+.promedio{
+    font-size: 0.9rem;
+    color: black;
+    font-weight: bold;
+}
+

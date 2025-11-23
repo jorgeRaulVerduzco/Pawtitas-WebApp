@@ -1,4 +1,5 @@
 import { HeaderComponent } from "./src/components/header/header.component.js"
+import { HeaderEmpresasComponent } from "./src/components/header-empresas/header-empresas.component.js"
 import { FooterComponent } from "./src/components/footer/footer.component.js"
 import { ProductComponent } from "./src/components/product/product.component.js"
 import { PetComponent } from "./src/components/pet/pet.component.js"
@@ -26,6 +27,7 @@ function showContent(contentId) {
 
 // Components
 window.customElements.define('header-info', HeaderComponent);
+window.customElements.define('header-empresas-info', HeaderEmpresasComponent);
 window.customElements.define('footer-info', FooterComponent);
 window.customElements.define('product-info', ProductComponent);
 window.customElements.define('pet-info', PetComponent);
