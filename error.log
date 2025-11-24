@@ -17,3 +17,17 @@
 {"level":"error","message":"No hay token en la cabecera"}
 {"level":"error","message":"Error al crear solicitud de adopción: Error al crear adopción: Usuario inactivo, no puede crear solicitudes de adopción"}
 {"level":"error","message":"Error al crear solicitud de adopción: Error al crear adopción: Mascota no disponible para adopción"}
+{"level":"error","message":"Error al obtener categorias del producto: Producto no encontrado"}
+{"level":"error","message":"Error al obtener categorias del producto: Producto no encontrado"}
+{"level":"error","message":"Error al obtener categorias del producto: Producto no encontrado"}
+{"level":"error","message":"Error al obtener categorias del producto: Producto no encontrado"}
+{"level":"error","message":"Error al obtener categorias del producto: Producto no encontrado"}
+{"level":"error","message":"Error al obtener categorias del producto: Producto no encontrado"}
+{"level":"error","message":"Error al obtener categorias del producto: Producto no encontrado"}
+{"level":"error","message":"Producto no encontrado."}
+{"level":"error","message":"Producto no encontrado."}
+{"level":"error","message":"Producto no encontrado."}
+{"level":"error","message":"Producto no encontrado."}
+{"level":"error","message":"Producto no encontrado."}
+{"level":"error","message":"Producto no encontrado."}
+{"level":"error","message":"Producto no encontrado."}

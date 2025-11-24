@@ -148,7 +148,7 @@ class ProductoController {
   // Filtrar productos por categoria
   static async filtrarPorCategoria(req, res, next) {
     try {
-      const { idCategoria } = req.params;
+      const { idCategoria } = req.query;
       const productos = await productoDAO.filtrarPorCategoria(idCategoria);
 
       if (!productos.length) {

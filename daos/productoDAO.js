@@ -133,11 +133,12 @@ class ProductoDAO {
     return await Producto.findByPk(idProducto);
   }
 
-  async obtenerCategoriasProducto(productoId) {
+async obtenerCategoriasProducto(productoId) {
     const producto = await Producto.findByPk(productoId);
-    if (!producto) throw new Error("Producto no encontrado");
+    // Cambia el throw por un return null
+    if (!producto) return null;
     return await producto.getCategorias();
-  }
+}
 }
 
 module.exports = new ProductoDAO();

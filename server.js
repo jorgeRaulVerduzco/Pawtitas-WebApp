@@ -32,7 +32,7 @@ app.use('/api/adopciones', adopcionRouter);
 // Manejador de errores global
 app.use(globalErrorHandler);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3002;
 app.listen(PORT, () => {
   console.log('Server listening on port', PORT);
 });
