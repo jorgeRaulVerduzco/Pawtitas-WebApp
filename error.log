@@ -31,3 +31,13 @@
 {"level":"error","message":"Producto no encontrado."}
 {"level":"error","message":"Producto no encontrado."}
 {"level":"error","message":"Producto no encontrado."}
+{"level":"error","message":"No hay token en la cabecera"}
+{"level":"error","message":"No hay token en la cabecera"}
+{"level":"error","message":"Los campos nombre, correo y teléfono son obligatorios."}
+{"level":"error","message":"Los campos nombre, correo y teléfono son obligatorios."}
+{"level":"error","message":"Los campos nombre, correo y teléfono son obligatorios."}
+{"level":"error","message":"Credenciales inválidas o usuario inactivo"}
+{"level":"error","message":"Error al obtener mascotas del centro: Error al obtener mascotas: WHERE parameter \"idCentroAdopcion\" has invalid \"undefined\" value"}
+{"level":"error","message":"Error al obtener mascotas del centro: Error al obtener mascotas: WHERE parameter \"idCentroAdopcion\" has invalid \"undefined\" value"}
+{"level":"error","message":"Error al obtener adopciones del usuario: Error al obtener adopciones: WHERE parameter \"idUsuario\" has invalid \"undefined\" value"}
+{"level":"error","message":"Error al crear solicitud de adopción: Error al crear adopción: Mascota no disponible para adopción"}

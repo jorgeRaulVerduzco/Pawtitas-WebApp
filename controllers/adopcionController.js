@@ -7,7 +7,7 @@ class AdopcionController {
     try {
       const datosAdopcion = req.body;
       const nuevaAdopcion = await adopcionDAO.crearAdopcion(datosAdopcion);
-      
+
       res.status(201).json({
         status: "success",
         message: "Solicitud de adopción creada exitosamente",
@@ -20,15 +20,21 @@ class AdopcionController {
       if (error.name === "ConflictError") {
         return next(new AppError(error.message, 409));
       }
-      next(new AppError(`Error al crear solicitud de adopción: ${error.message}`, 500));
+      next(
+        new AppError(
+          `Error al crear solicitud de adopción: ${error.message}`,
+          500
+        )
+      );
     }
   }
 
   // Obtener todas las adopciones
   static async obtenerTodas(req, res, next) {
     try {
-      const { includeUsuario, includeMascota, limit, offset, estadoSolicitud } = req.query;
-      
+      const { includeUsuario, includeMascota, limit, offset, estadoSolicitud } =
+        req.query;
+
       const options = {
         includeUsuario: includeUsuario === "true",
         includeMascota: includeMascota === "true",
@@ -39,7 +45,7 @@ class AdopcionController {
       if (estadoSolicitud) options.where = { estadoSolicitud };
 
       const adopciones = await adopcionDAO.obtenerAdopciones(options);
-      
+
       res.status(200).json({
         status: "success",
         count: adopciones.length,
@@ -103,7 +109,7 @@ class AdopcionController {
     try {
       const { id } = req.params;
       await adopcionDAO.eliminarAdopcion(id);
-      
+
       res.status(200).json({
         status: "success",
         message: "Adopción eliminada correctamente",
@@ -119,7 +125,7 @@ class AdopcionController {
   // Obtener adopciones por usuario
   static async obtenerPorUsuario(req, res, next) {
     try {
-      const { idUsuario } = req.params;
+      const { idUsuario } = req.params; // CAMBIO: de userId a idUsuario
       const { includeMascota } = req.query;
 
       const adopciones = await adopcionDAO.obtenerAdopcionesPorUsuario(
@@ -136,14 +142,19 @@ class AdopcionController {
         data: adopciones,
       });
     } catch (error) {
-      next(new AppError(`Error al obtener adopciones del usuario: ${error.message}`, 500));
+      next(
+        new AppError(
+          `Error al obtener adopciones del usuario: ${error.message}`,
+          500
+        )
+      );
     }
   }
 
   // Obtener adopciones por mascota
   static async obtenerPorMascota(req, res, next) {
     try {
-      const { idMascota } = req.params;
+      const { idMascota } = req.params; // CAMBIO: de petId a idMascota
       const { includeUsuario } = req.query;
 
       const adopciones = await adopcionDAO.obtenerAdopcionesPorMascota(
@@ -160,7 +171,12 @@ class AdopcionController {
         data: adopciones,
       });
     } catch (error) {
-      next(new AppError(`Error al obtener adopciones de la mascota: ${error.message}`, 500));
+      next(
+        new AppError(
+          `Error al obtener adopciones de la mascota: ${error.message}`,
+          500
+        )
+      );
     }
   }
 

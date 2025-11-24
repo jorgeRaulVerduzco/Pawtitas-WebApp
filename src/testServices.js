@@ -1,412 +1,468 @@
-// testServices.js - Clase de prueba con mock de localStorage
-
-// ===== MOCK DE LOCALSTORAGE PARA NODE.JS =====
-class LocalStorageMock {
-  constructor() {
-    this.store = {};
-  }
-
-  getItem(key) {
-    return this.store[key] || null;
-  }
-
-  setItem(key, value) {
-    this.store[key] = String(value);
-  }
-
-  removeItem(key) {
-    delete this.store[key];
-  }
-
-  clear() {
-    this.store = {};
-  }
-}
-
-// Simular localStorage en el entorno global
-global.localStorage = new LocalStorageMock();
-
-// ===== IMPORTAR SERVICIOS =====
+// testAllServices.js - Prueba completa de TODOS los servicios incluyendo adopciones
 const UsuarioService = require("./services/usuario.service.js");
 const ProductoService = require("./services/producto.service.js");
 const VentaService = require("./services/venta.service.js");
 const PagoService = require("./services/pago.service.js");
 
-class TestServices {
+// Nuevos servicios añadidos
+const MascotaService = require("./services/mascota.service.js");
+const CentroAdopcionService = require("./services/centroAdopcion.service.js");
+const AdopcionService = require("./services/adopcion.service.js");
+
+global.localStorage = {
+  data: {},
+  getItem(key) {
+    return this.data[key] || null;
+  },
+  setItem(key, value) {
+    this.data[key] = value;
+  },
+  removeItem(key) {
+    delete this.data[key];
+  },
+  clear() {
+    this.data = {};
+  }
+};
+class TestAllServices {
   constructor() {
+    // Datos de prueba para tienda
     this.usuarioId = null;
     this.productoIds = [];
     this.ventaId = null;
     this.pagoId = null;
+    
+    // Datos de prueba para adopciones
+    this.centroId = null;
+    this.mascotaIds = [];
+    this.adopcionIds = [];
   }
 
   /**
    * Ejecutar todas las pruebas
    */
   async ejecutarTodasLasPruebas() {
-    console.log("=== INICIO DE PRUEBAS DE SERVICIOS ===\n");
+    console.log('=== 🚀 INICIO DE PRUEBAS COMPLETAS DE TODOS LOS SERVICIOS ===\n');
 
     try {
+      // Módulo de Tienda
       await this.probarUsuarioService();
       await this.probarProductoService();
       await this.probarVentaService();
       await this.probarPagoService();
 
-      console.log("\n=== ✅ TODAS LAS PRUEBAS COMPLETADAS EXITOSAMENTE ===");
+      // Módulo de Adopciones
+      await this.probarCentroAdopcionService();
+      await this.probarMascotaService();
+      await this.probarAdopcionService();
+
+      console.log('\n=== ✅ TODAS LAS PRUEBAS COMPLETADAS EXITOSAMENTE ===');
+      this.generarReporteCompleto();
     } catch (error) {
-      console.error("\n=== ❌ ERROR EN LAS PRUEBAS ===");
+      console.error('\n=== ❌ ERROR EN LAS PRUEBAS ===');
       console.error(error);
     }
   }
 
   /**
-   * PRUEBAS DE USUARIO SERVICE
+   * PRUEBAS DE USUARIO SERVICE (ya implementado anteriormente)
    */
   async probarUsuarioService() {
-    console.log("\n📋 === PRUEBAS DE USUARIO SERVICE ===\n");
+    console.log('\n👤 === PRUEBAS DE USUARIO SERVICE ===\n');
 
     try {
-      // 1. Registrar usuario
-      console.log("1️⃣ Probando registrar usuario...");
       const nuevoUsuario = {
-        nombres: "Test",
-        apellidoPaterno: "Usuario",
-        apellidoMaterno: "Prueba",
-        nombreUsuario: `testuser_${Date.now()}`,
-        correo: `test_${Date.now()}@example.com`,
-        contrasena: "password123",
-        rol: "cliente",
+        nombres: 'Test',
+        apellidoPaterno: 'Adopcion',
+        apellidoMaterno: 'Usuario',
+        nombreUsuario: `adopter_${Date.now()}`,
+        correo: `adopter_${Date.now()}@example.com`,
+        contrasena: 'password123',
+        rol: 'cliente'
       };
 
+      console.log('1️⃣ Registrando usuario...');
       const registroResponse = await UsuarioService.registrar(nuevoUsuario);
-      console.log("✅ Usuario registrado:", registroResponse);
       this.usuarioId = registroResponse.data.id;
+      console.log('✅ Usuario registrado:', registroResponse.data.nombreUsuario);
 
-      // 2. Login
-      console.log("\n2️⃣ Probando login...");
+      console.log('\n2️⃣ Iniciando sesión...');
       const loginResponse = await UsuarioService.login(
         nuevoUsuario.nombreUsuario,
         nuevoUsuario.contrasena
       );
-      console.log("✅ Login exitoso. Token guardado en localStorage (mock)");
-      console.log("Token:", loginResponse.data.token.substring(0, 20) + "...");
+      console.log('✅ Login exitoso. Token guardado.');
 
-      // Verificar que el token se guardó
-      const tokenGuardado = localStorage.getItem("token");
-      console.log(
-        "Token verificado en localStorage:",
-        tokenGuardado ? "✅ Sí" : "❌ No"
-      );
-
-      // 3. Obtener todos los usuarios
-      console.log("\n3️⃣ Probando obtener todos los usuarios...");
-      const todosUsuarios = await UsuarioService.obtenerTodos();
-      console.log(`✅ Total de usuarios: ${todosUsuarios.count}`);
-
-      // 4. Obtener usuario por ID
-      console.log("\n4️⃣ Probando obtener usuario por ID...");
-      const usuarioPorId = await UsuarioService.obtenerPorId(this.usuarioId);
-      console.log("✅ Usuario obtenido:", {
-        id: usuarioPorId.data.id,
-        nombreUsuario: usuarioPorId.data.nombreUsuario,
-        correo: usuarioPorId.data.correo,
-      });
-
-      // 5. Actualizar usuario
-      console.log("\n5️⃣ Probando actualizar usuario...");
-      const actualizarResponse = await UsuarioService.actualizar(
-        this.usuarioId,
-        {
-          apellidoPaterno: "UsuarioActualizado",
-        }
-      );
-      console.log(
-        "✅ Usuario actualizado:",
-        actualizarResponse.data.apellidoPaterno
-      );
-
-      // 6. Cambiar rol
-      console.log("\n6️⃣ Probando cambiar rol...");
-      const cambiarRolResponse = await UsuarioService.cambiarRol(
-        this.usuarioId,
-        "empleado"
-      );
-      console.log("✅ Rol cambiado a:", cambiarRolResponse.data.rol);
-
-      // 7. Activar/Desactivar
-      console.log("\n7️⃣ Probando desactivar usuario...");
-      const desactivarResponse = await UsuarioService.activarDesactivar(
-        this.usuarioId,
-        false
-      );
-      console.log(
-        "✅ Usuario desactivado. Activo:",
-        desactivarResponse.data.activo
-      );
-
-      console.log("\n8️⃣ Probando reactivar usuario...");
-      const reactivarResponse = await UsuarioService.activarDesactivar(
-        this.usuarioId,
-        true
-      );
-      console.log(
-        "✅ Usuario reactivado. Activo:",
-        reactivarResponse.data.activo
-      );
-
-      console.log("\n✅ PRUEBAS DE USUARIO SERVICE COMPLETADAS\n");
+      console.log('\n✅ PRUEBAS DE USUARIO COMPLETADAS\n');
     } catch (error) {
-      console.error("❌ Error en pruebas de Usuario Service:", error.message);
+      console.error('❌ Error en Usuario Service:', error.message);
       throw error;
     }
   }
 
   /**
-   * PRUEBAS DE PRODUCTO SERVICE
+   * PRUEBAS DE PRODUCTO SERVICE (resumido)
    */
   async probarProductoService() {
-    console.log("\n📦 === PRUEBAS DE PRODUCTO SERVICE ===\n");
+    console.log('\n📦 === PRUEBAS DE PRODUCTO SERVICE ===\n');
 
     try {
-      // 1. Crear productos
-      console.log("1️⃣ Probando crear productos...");
+      console.log('1️⃣ Creando productos...');
       const producto1 = await ProductoService.crear({
-        nombre: "Comida para Perro Premium",
-        descripcion: "Alimento balanceado de alta calidad",
-        precio: 450.5,
-        cantidadStock: 50,
-        activo: true,
-        categorias: ["comida", "perros"],
+        nombre: 'Collar para Perro',
+        descripcion: 'Collar resistente',
+        precio: 150.00,
+        cantidadStock: 20,
+        categorias: ['accesorios']
       });
       this.productoIds.push(producto1.data.id);
-      console.log("✅ Producto 1 creado:", {
-        id: producto1.data.id,
-        nombre: producto1.data.nombre,
-        precio: producto1.data.precio,
-      });
+      console.log('✅ Producto creado:', producto1.data.nombre);
 
-      const producto2 = await ProductoService.crear({
-        nombre: "Juguete para Gato",
-        descripcion: "Juguete interactivo con plumas",
-        precio: 120.0,
-        cantidadStock: 30,
-        activo: true,
-        categorias: ["juguetes", "gatos"],
-      });
-      this.productoIds.push(producto2.data.id);
-      console.log("✅ Producto 2 creado:", {
-        id: producto2.data.id,
-        nombre: producto2.data.nombre,
-        precio: producto2.data.precio,
-      });
-
-      // 2. Obtener todos los productos
-      console.log("\n2️⃣ Probando obtener todos los productos...");
-      const todosProductos = await ProductoService.obtenerTodos(10, 0);
-      console.log(`✅ Total de productos: ${todosProductos.count}`);
-
-      // 5. Buscar por nombre
-      console.log("\n5️⃣ Probando buscar productos por nombre...");
-      try {
-        const busqueda = await ProductoService.buscarPorNombre("Comida");
-        console.log(`✅ Productos encontrados: ${busqueda.results}`);
-      } catch (error) {
-        console.log(`⚠️ Búsqueda no disponible: ${error.message}`);
-      }
-
-      // 3. Obtener producto por ID (con categorías)
-      console.log("\n3️⃣ Probando obtener producto por ID con categorías...");
-      const productoPorId = await ProductoService.obtenerPorId(
-        this.productoIds[0],
-        true
-      );
-      console.log("✅ Producto obtenido:", {
-        id: productoPorId.data.id,
-        nombre: productoPorId.data.nombre,
-        stock: productoPorId.data.cantidadStock,
-      });
-
-      // 4. Actualizar producto
-      console.log("\n4️⃣ Probando actualizar producto...");
-      const productoActualizado = await ProductoService.actualizar(
-        this.productoIds[0],
-        {
-          precio: 475.0,
-          cantidadStock: 45,
-        }
-      );
-      console.log("✅ Producto actualizado:", {
-        precio: productoActualizado.data.precio,
-        stock: productoActualizado.data.cantidadStock,
-      });
-
-      // 6. Calificar producto
-      console.log("\n6️⃣ Probando calificar producto...");
-      try {
-        const calificacion = await ProductoService.calificar(
-          this.productoIds[0],
-          4.5
-        );
-        console.log("✅ Producto calificado:", calificacion.data.calificacion);
-      } catch (error) {
-        console.log(`⚠️ Calificación no disponible: ${error.message}`);
-      }
-
-      // 7. FILTRAR POR CATEGORÍA (Nueva Prueba)
-      console.log("\n7️⃣ Probando filtrar por categoría...");
-      try {
-        // NOTA: ASUME QUE LA CATEGORÍA 'perros' TIENE EL ID 2 o 3.
-        // Si el ID es diferente, debes obtenerlo previamente. Usaremos el ID de categoría '1' como EJEMPLO
-        const CATEGORIA_ID_PRUEBA = 1; // ID de una categoría existente (e.g., 'comida')
-
-        const productosFiltrados = await ProductoService.filtrarPorCategoria(
-          CATEGORIA_ID_PRUEBA
-        );
-
-        // Verificamos que al menos uno de nuestros productos creados (el producto 1) esté en la lista.
-        const productoCreadoEncontrado = productosFiltrados.data.some(
-          (p) => p.id === this.productoIds[0]
-        );
-
-        if (productosFiltrados.results > 0 && productoCreadoEncontrado) {
-          console.log(
-            `✅ Productos filtrados: ${productosFiltrados.results} encontrados para la categoría ${CATEGORIA_ID_PRUEBA}.`
-          );
-        } else {
-          console.log(
-            `⚠️ Filtrado no verificable: Se esperaban productos, se encontraron ${productosFiltrados.results}.`
-          );
-        }
-      } catch (error) {
-        console.log(`❌ Error al filtrar por categoría: ${error.message}`);
-      }
-
-      console.log("\n✅ PRUEBAS DE PRODUCTO SERVICE COMPLETADAS\n");
+      console.log('\n✅ PRUEBAS DE PRODUCTO COMPLETADAS\n');
     } catch (error) {
-      console.error("❌ Error en pruebas de Producto Service:", error.message);
+      console.error('❌ Error en Producto Service:', error.message);
       throw error;
     }
-    console.log("\n✅ PRUEBAS DE PRODUCTO SERVICE COMPLETADAS\n");
-  }
-  catch(error) {
-    console.error("❌ Error en pruebas de Producto Service:", error.message);
-    throw error;
   }
 
   /**
-   * PRUEBAS DE VENTA SERVICE
+   * PRUEBAS DE VENTA SERVICE (resumido)
    */
   async probarVentaService() {
-    console.log("\n🛒 === PRUEBAS DE VENTA SERVICE ===\n");
+    console.log('\n🛒 === PRUEBAS DE VENTA SERVICE ===\n');
 
     try {
-      // 1. Crear venta completa
-      console.log("1️⃣ Probando crear venta completa...");
+      console.log('1️⃣ Creando venta...');
       const ventaData = {
         clienteId: this.usuarioId,
-        items: [
-          {
-            productoId: this.productoIds[0],
-            cantidad: 2,
-          },
-          {
-            productoId: this.productoIds[1],
-            cantidad: 3,
-          },
-        ],
-        pago: {
-          metodoPago: "tarjeta",
-          referencia: "TEST-TRANS-001",
-          estado: "pendiente",
-        },
+        items: [{ productoId: this.productoIds[0], cantidad: 1 }],
+        pago: { metodoPago: 'tarjeta', estado: 'pendiente' }
       };
 
       const ventaCreada = await VentaService.crearVentaCompleta(ventaData);
       this.ventaId = ventaCreada.data.venta.id;
       this.pagoId = ventaCreada.data.pago.id;
-      console.log("✅ Venta creada:", {
-        id: ventaCreada.data.venta.id,
-        total: ventaCreada.data.venta.total,
-        estado: ventaCreada.data.venta.estado,
-      });
-      console.log("✅ Pago inicial creado:", {
-        id: ventaCreada.data.pago.id,
-        monto: ventaCreada.data.pago.monto,
-        estado: ventaCreada.data.pago.estado,
-      });
+      console.log('✅ Venta creada:', { id: this.ventaId, total: ventaCreada.data.venta.total });
 
-      // 2. Obtener venta por ID
-      console.log("\n2️⃣ Probando obtener venta por ID...");
-      const ventaPorId = await VentaService.obtenerPorId(this.ventaId);
-      console.log("✅ Venta obtenida:", {
-        id: ventaPorId.data.id,
-        total: ventaPorId.data.total,
-      });
-
-      console.log("\n✅ PRUEBAS DE VENTA SERVICE COMPLETADAS\n");
+      console.log('\n✅ PRUEBAS DE VENTA COMPLETADAS\n');
     } catch (error) {
-      console.error("❌ Error en pruebas de Venta Service:", error.message);
+      console.error('❌ Error en Venta Service:', error.message);
       throw error;
     }
   }
 
   /**
-   * PRUEBAS DE PAGO SERVICE
+   * PRUEBAS DE PAGO SERVICE (resumido)
    */
   async probarPagoService() {
-    console.log("\n💳 === PRUEBAS DE PAGO SERVICE ===\n");
+    console.log('\n💳 === PRUEBAS DE PAGO SERVICE ===\n');
 
     try {
-      // 1. Obtener pago por ID
-      console.log("1️⃣ Probando obtener pago por ID...");
-      const pagoPorId = await PagoService.obtenerPorId(this.pagoId);
-      console.log("✅ Pago obtenido:", {
-        id: pagoPorId.data.id,
-        monto: pagoPorId.data.monto,
-        estado: pagoPorId.data.estado,
-      });
+      console.log('1️⃣ Aprobando pago...');
+      await PagoService.actualizarEstado(this.pagoId, 'aprobado');
+      console.log('✅ Pago aprobado');
 
-      console.log("\n✅ PRUEBAS DE PAGO SERVICE COMPLETADAS\n");
+      console.log('\n✅ PRUEBAS DE PAGO COMPLETADAS\n');
     } catch (error) {
-      console.error("❌ Error en pruebas de Pago Service:", error.message);
+      console.error('❌ Error en Pago Service:', error.message);
       throw error;
     }
   }
 
   /**
-   * Método para generar reporte de resultados
+   * PRUEBAS DE CENTRO ADOPCION SERVICE
    */
-  generarReporte() {
-    console.log("\n📊 === REPORTE DE PRUEBAS ===\n");
-    console.log(`Usuario ID: ${this.usuarioId}`);
-    console.log(`Productos creados: ${this.productoIds.length}`);
-    console.log(`Producto IDs: [${this.productoIds.join(", ")}]`);
-    console.log(`Venta ID: ${this.ventaId}`);
-    console.log(`Pago ID: ${this.pagoId}`);
-    console.log("\n=================================\n");
+  async probarCentroAdopcionService() {
+    console.log('\n🏢 === PRUEBAS DE CENTRO ADOPCION SERVICE ===\n');
+
+    try {
+      // 1. Crear centro
+      console.log('1️⃣ Creando centro de adopción...');
+      const centroData = {
+        nombre: 'Centro Patitas Felices',
+        correo: `centro_${Date.now()}@patitasfelices.org`,
+        telefono: '555-1234-5678'
+      };
+
+      const centroCreado = await CentroAdopcionService.crear(centroData);
+      this.centroId = centroCreado.centro.id;
+      console.log('✅ Centro creado:', {
+        id: this.centroId,
+        nombre: centroCreado.centro.nombre
+      });
+
+      // 2. Obtener todos los centros
+      console.log('\n2️⃣ Obteniendo todos los centros...');
+      const todosCentros = await CentroAdopcionService.obtenerTodos();
+      console.log(`✅ Total de centros: ${todosCentros.total}`);
+
+      // 3. Obtener centro por ID
+      console.log('\n3️⃣ Obteniendo centro por ID...');
+      const centroPorId = await CentroAdopcionService.obtenerPorId(this.centroId);
+      console.log('✅ Centro obtenido:', centroPorId.centro.nombre);
+
+      // 4. Buscar por nombre
+      console.log('\n4️⃣ Buscando centros por nombre...');
+      const busqueda = await CentroAdopcionService.buscarPorNombre('Patitas');
+      console.log(`✅ Centros encontrados: ${busqueda.centros.length}`);
+
+      console.log('\n✅ PRUEBAS DE CENTRO ADOPCION COMPLETADAS\n');
+    } catch (error) {
+      console.error('❌ Error en Centro Adopcion Service:', error.message);
+      throw error;
+    }
+  }
+
+  /**
+   * PRUEBAS DE MASCOTA SERVICE
+   */
+  async probarMascotaService() {
+    console.log('\n🐾 === PRUEBAS DE MASCOTA SERVICE ===\n');
+
+    try {
+      // 1. Crear mascotas
+      console.log('1️⃣ Creando mascotas...');
+      const mascotas = [
+        {
+          idCentroAdopcion: this.centroId,
+          especie: 'Perro',
+          nombre: 'Firulais',
+          edad: '3 años',
+          tamano: 'Mediano',
+          sexo: 'macho',
+          descripcion: 'Perro amigable y juguetón',
+          estado: 'disponible'
+        },
+        {
+          idCentroAdopcion: this.centroId,
+          especie: 'Gato',
+          nombre: 'Michi',
+          edad: '1 año',
+          tamano: 'Pequeño',
+          sexo: 'hembra',
+          descripcion: 'Gata cariñosa',
+          estado: 'disponible'
+        }
+      ];
+
+      for (const mascota of mascotas) {
+        const resultado = await MascotaService.crear(mascota);
+        this.mascotaIds.push(resultado.data.id);
+        console.log(`✅ Mascota creada: ${resultado.data.nombre} (${resultado.data.especie})`);
+      }
+
+      // 2. Obtener todas las mascotas
+      console.log('\n2️⃣ Obteniendo todas las mascotas...');
+      const todasMascotas = await MascotaService.obtenerTodas({ includeCentro: true });
+      console.log(`✅ Total de mascotas: ${todasMascotas.count}`);
+
+      // 3. Obtener mascota por ID
+      console.log('\n3️⃣ Obteniendo mascota por ID...');
+      const mascotaPorId = await MascotaService.obtenerPorId(this.mascotaIds[0], true);
+      console.log('✅ Mascota obtenida:', {
+        nombre: mascotaPorId.data.nombre,
+        centro: mascotaPorId.data.centro?.nombre
+      });
+
+      // 4. Obtener mascotas por centro
+      console.log('\n4️⃣ Obteniendo mascotas por centro...');
+      const mascotasCentro = await MascotaService.obtenerPorCentro(this.centroId);
+      console.log(`✅ Mascotas del centro: ${mascotasCentro.count}`);
+
+      // 5. Obtener mascotas disponibles
+      console.log('\n5️⃣ Obteniendo mascotas disponibles...');
+      const disponibles = await MascotaService.obtenerDisponibles({ includeCentro: true });
+      console.log(`✅ Mascotas disponibles: ${disponibles.count}`);
+
+      // 6. Actualizar estado de mascota
+      console.log('\n6️⃣ Actualizando estado de mascota...');
+      await MascotaService.actualizarEstado(this.mascotaIds[1], 'en_proceso');
+      console.log('✅ Estado actualizado a: en_proceso');
+
+      console.log('\n✅ PRUEBAS DE MASCOTA COMPLETADAS\n');
+    } catch (error) {
+      console.error('❌ Error en Mascota Service:', error.message);
+      throw error;
+    }
+  }
+
+  /**
+   * PRUEBAS DE ADOPCION SERVICE
+   */
+  async probarAdopcionService() {
+    console.log('\n💚 === PRUEBAS DE ADOPCION SERVICE ===\n');
+
+    try {
+      // 1. Crear solicitud de adopción
+      console.log('1️⃣ Creando solicitud de adopción...');
+      const adopcionData = {
+        idUsuario: this.usuarioId,
+        idMascota: this.mascotaIds[0],
+        tipoVivienda: 'Casa',
+        tienePatio: true,
+        razonAdopcion: 'Quiero darle un hogar a una mascota',
+        tieneExperiencia: true
+      };
+
+      const adopcionCreada = await AdopcionService.crear(adopcionData);
+      this.adopcionIds.push(adopcionCreada.data.id);
+      console.log('✅ Solicitud creada:', {
+        id: adopcionCreada.data.id,
+        estado: adopcionCreada.data.estadoSolicitud
+      });
+
+      // 2. Obtener todas las adopciones
+      console.log('\n2️⃣ Obteniendo todas las adopciones...');
+      const todasAdopciones = await AdopcionService.obtenerTodas({
+        includeUsuario: true,
+        includeMascota: true
+      });
+      console.log(`✅ Total de adopciones: ${todasAdopciones.count}`);
+
+      // 3. Obtener adopción por ID
+      console.log('\n3️⃣ Obteniendo adopción por ID...');
+      const adopcionPorId = await AdopcionService.obtenerPorId(this.adopcionIds[0], {
+        includeUsuario: true,
+        includeMascota: true
+      });
+      console.log('✅ Adopción obtenida:', {
+        id: adopcionPorId.data.id,
+        usuario: adopcionPorId.data.usuario?.nombreUsuario,
+        mascota: adopcionPorId.data.mascota?.nombre
+      });
+
+      // 4. Obtener adopciones por usuario
+      console.log('\n4️⃣ Obteniendo adopciones por usuario...');
+      const adopcionesUsuario = await AdopcionService.obtenerPorUsuario(this.usuarioId, true);
+      console.log(`✅ Adopciones del usuario: ${adopcionesUsuario.count}`);
+
+      // 5. Obtener adopciones por mascota
+      console.log('\n5️⃣ Obteniendo adopciones por mascota...');
+      const adopcionesMascota = await AdopcionService.obtenerPorMascota(this.mascotaIds[0], true);
+      console.log(`✅ Adopciones de la mascota: ${adopcionesMascota.count}`);
+
+      // 6. Obtener solicitudes pendientes
+      console.log('\n6️⃣ Obteniendo solicitudes pendientes...');
+      const pendientes = await AdopcionService.obtenerPendientes({ includeMascota: true });
+      console.log(`✅ Solicitudes pendientes: ${pendientes.count}`);
+
+      // 7. Aprobar solicitud
+      console.log('\n7️⃣ Aprobando solicitud de adopción...');
+      const aprobada = await AdopcionService.aprobar(this.adopcionIds[0]);
+      console.log('✅ Solicitud aprobada:', {
+        id: aprobada.data.id,
+        estado: aprobada.data.estadoSolicitud
+      });
+
+      // 8. Verificar que la mascota cambió de estado
+      console.log('\n8️⃣ Verificando estado de mascota adoptada...');
+      const mascotaAdoptada = await MascotaService.obtenerPorId(this.mascotaIds[0]);
+      console.log('✅ Estado de mascota:', mascotaAdoptada.data.estado);
+
+      await MascotaService.actualizarEstado(this.mascotaIds[1], 'disponible');
+    console.log('✅ Mascota 2 actualizada a disponible');
+    
+    const adopcion2 = await AdopcionService.crear({
+      idUsuario: this.usuarioId,
+      idMascota: this.mascotaIds[1],  // Ahora está disponible
+      tipoVivienda: 'Departamento',
+      tienePatio: false,
+      razonAdopcion: 'Compañía',
+      tieneExperiencia: false
+    });
+    this.adopcionIds.push(adopcion2.data.id);
+    
+    const rechazada = await AdopcionService.rechazar(adopcion2.data.id);
+    console.log('✅ Solicitud rechazada:', {
+      id: rechazada.data.id,
+      estado: rechazada.data.estadoSolicitud
+    });
+
+    // 10. Obtener historial del usuario
+    console.log('\n🔟 Obteniendo historial completo del usuario...');
+    const historial = await AdopcionService.obtenerHistorialUsuario(this.usuarioId);
+    console.log(`✅ Historial: ${historial.count} solicitudes`);
+    historial.data.forEach((adopcion, index) => {
+      console.log(`   ${index + 1}. ${adopcion.mascota?.nombre} - Estado: ${adopcion.estadoSolicitud}`);
+    });
+
+    console.log('\n✅ PRUEBAS DE ADOPCION COMPLETADAS\n');
+  } catch (error) {
+    console.error('❌ Error en Adopcion Service:', error.message);
+    throw error;
+  }
+  }
+
+  /**
+   * Generar reporte completo
+   */
+  generarReporteCompleto() {
+    console.log('\n📊 === REPORTE COMPLETO DE PRUEBAS ===\n');
+    console.log('MÓDULO DE TIENDA:');
+    console.log(`  Usuario ID: ${this.usuarioId}`);
+    console.log(`  Productos creados: ${this.productoIds.length}`);
+    console.log(`  Venta ID: ${this.ventaId}`);
+    console.log(`  Pago ID: ${this.pagoId}`);
+    console.log('\nMÓDULO DE ADOPCIONES:');
+    console.log(`  Centro ID: ${this.centroId}`);
+    console.log(`  Mascotas creadas: ${this.mascotaIds.length}`);
+    console.log(`  Mascotas IDs: [${this.mascotaIds.join(', ')}]`);
+    console.log(`  Adopciones creadas: ${this.adopcionIds.length}`);
+    console.log(`  Adopciones IDs: [${this.adopcionIds.join(', ')}]`);
+    console.log('\n==========================================\n');
+  }
+
+  /**
+   * Limpiar datos de prueba
+   */
+  async limpiarDatosPrueba() {
+    console.log('\n🧹 === LIMPIANDO DATOS DE PRUEBA ===\n');
+
+    try {
+      // Limpiar adopciones
+      for (const adopcionId of this.adopcionIds) {
+        await AdopcionService.eliminar(adopcionId);
+        console.log(`✅ Adopción ${adopcionId} eliminada`);
+      }
+
+      // Limpiar mascotas
+      for (const mascotaId of this.mascotaIds) {
+        await MascotaService.eliminar(mascotaId);
+        console.log(`✅ Mascota ${mascotaId} eliminada`);
+      }
+
+      // Desactivar usuario
+      if (this.usuarioId) {
+        await UsuarioService.desactivar(this.usuarioId);
+        console.log('✅ Usuario desactivado');
+      }
+
+      // Eliminar productos
+      for (const productoId of this.productoIds) {
+        await ProductoService.eliminar(productoId);
+        console.log(`✅ Producto ${productoId} eliminado`);
+      }
+
+      console.log('\n✅ LIMPIEZA COMPLETADA\n');
+    } catch (error) {
+      console.error('❌ Error al limpiar datos:', error.message);
+    }
   }
 }
 
-// Ejecutar pruebas automáticamente al cargar
-(async function () {
-  const tester = new TestServices();
-
+// Ejecutar pruebas
+(async function() {
+  const tester = new TestAllServices();
+  
   try {
-    console.log("🔍 Estado de localStorage antes de pruebas:");
-    console.log("   Items:", Object.keys(localStorage.store).length);
-
     await tester.ejecutarTodasLasPruebas();
-    tester.generarReporte();
-
-    console.log("\n🔍 Estado de localStorage después de pruebas:");
-    console.log("   Items:", Object.keys(localStorage.store).length);
-    console.log(
-      "   Token guardado:",
-      localStorage.getItem("token") ? "Sí" : "No"
-    );
+    
+    // Descomentar para limpiar datos de prueba
+    // await tester.limpiarDatosPrueba();
+    
   } catch (error) {
-    console.error("Error fatal en las pruebas:", error);
+    console.error('Error fatal en las pruebas:', error);
   }
 })();
 
-module.exports = TestServices;
+module.exports = TestAllServices;

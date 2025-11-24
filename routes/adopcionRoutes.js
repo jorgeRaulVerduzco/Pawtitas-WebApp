@@ -7,8 +7,10 @@ const router = express.Router();
 router.post('/', validateJWT, adopcionController.crear);
 router.get('/all', adopcionController.obtenerTodas);
 router.get('/:id', adopcionController.obtenerPorId);
-router.get('/user/:userId', adopcionController.obtenerPorUsuario);
-router.get('/pet/:petId', adopcionController.obtenerPorMascota);
+
+// CAMBIOS AQUÍ: de userId a idUsuario y de petId a idMascota
+router.get('/user/:idUsuario', adopcionController.obtenerPorUsuario);
+router.get('/pet/:idMascota', adopcionController.obtenerPorMascota);
 
 // Rutas para aprobar y rechazar adopciones
 router.put('/:id/approve', validateJWT, adopcionController.aprobar);
