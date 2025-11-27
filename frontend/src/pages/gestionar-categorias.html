@@ -9,30 +9,39 @@
 </head>
 <body>
     <header-info></header-info>
+
     <main class="main-content">
         <h2 class="page-title">Gestionar Categorías</h2>
+
         <div class="content-card">
             <div class="list-section">
                 <ul class="category-list">
-                    <!-- Lista dinámica -->
-                </ul>
+                    </ul>
             </div>
+            
             <div class="image-section">
                 <img src="/frontend/src/assets/images/canela.png" alt="Canela" class="hero-image">
             </div>
         </div>
+
         <div class="form-card">
             <h3 class="form-title">Agregar una categoría</h3>
             <p class="form-subtitle">Campos con <span class="red-asterisk">*</span> son requeridos</p>
+            
             <form class="add-category-form">
-                <label for="cat-name" class="form-label"><span class="red-asterisk">*</span>Nombre de la Categoría</label>
-                <input type="text" id="cat-name" class="form-input" required>
+                <div class="input-group">
+                    <label for="cat-name" class="form-label"><span class="red-asterisk">*</span>Nombre de la Categoría</label>
+                    <input type="text" id="cat-name" class="form-input" required>
+                </div>
                 <button type="submit" class="submit-btn">Agregar categoría</button>
             </form>
+            
             <div id="mensajeCategorias" class="feedback-message" hidden role="status" aria-live="polite"></div>
         </div>
     </main>
+
     <footer-info></footer-info>
+    
     <script src="../services/categoria.service.js"></script>
     <script src="../js/gestionar-categorias.js"></script>
 </body>

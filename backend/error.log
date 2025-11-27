@@ -53,3 +53,11 @@
 {"level":"error","message":"No se puede eliminar el producto porque tiene ventas asociadas"}
 {"level":"error","message":"No se puede eliminar el producto porque tiene ventas asociadas"}
 {"level":"error","message":"No se puede eliminar el producto porque tiene ventas asociadas"}
+{"level":"error","message":"request entity too large"}
+{"level":"error","message":"request entity too large"}
+{"level":"error","message":"request entity too large"}
+{"level":"error","message":"request entity too large"}
+{"level":"error","message":"request entity too large"}
+{"level":"error","message":"request entity too large"}
+{"level":"error","message":"request entity too large"}
+{"level":"error","message":"Credenciales inválidas o usuario inactivo"}

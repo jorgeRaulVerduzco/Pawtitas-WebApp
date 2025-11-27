@@ -10,41 +10,45 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
+    display: flex;
+    flex-direction: column;
     background-color: #FBEAFF;
     color: #000;
 }
 
 .main-content {
+    flex: 1;
     width: 100%;
-    max-width: 900px;
+    max-width: 850px; /* Ancho contenido */
     margin: 0 auto;
-    padding: 2rem;
+    padding: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2rem;
+    gap: 1rem; /* Espacio reducido entre título, tarjeta blanca y formulario */
 }
 
 .page-title {
-    font-size: 2rem;
+    font-size: 1.4rem;
     font-weight: 800;
     color: #000;
     align-self: flex-start;
-    margin: 0 0 0.5rem 0;
+    margin: 0 0 0.2rem 0.5rem; /* Margen casi nulo */
 }
 
+/* --- Tarjeta Blanca (Lista + Imagen) --- */
 .content-card {
     background-color: #fff;
-    border-radius: 20px;
-    padding: 2rem;
+    border-radius: 15px; /* Bordes un poco menos redondeados */
+    padding: 1rem 1.5rem; /* Padding interno muy ajustado */
     width: 100%;
     display: flex;
+    flex-direction: row;
+    align-items: center; /* Alineación al centro */
     justify-content: space-between;
-    align-items: center;
-    gap: 2rem;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    gap: 1rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    height: auto; /* IMPORTANTE: Altura automática */
 }
 
 .list-section {
@@ -55,172 +59,188 @@ body {
     list-style: none;
     padding: 0;
     margin: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0; /* Asegura que no haya espacio entre items */
 }
 
-.category-item.empty-state {
-    justify-content: center;
-    color: #6b7280;
-    font-weight: 500;
-}
-
-.category-item.empty-state.error {
-    color: #b91c1c;
-}
-
+/* --- VERSIÓN ULTRA COMPACTA DE LA LISTA --- */
 .category-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.2rem 0.5rem;
-    border-bottom: 2px solid #F3E8FF;
+    padding: 0.4rem 0; /* Renglones muy delgados */
+    border-bottom: 1px solid #F3E8FF;
+    font-weight: 500;
+    font-size: 0.9rem; /* Texto ligeramente más pequeño */
+    color: #333;
+    line-height: 1.2; /* Evita que el texto estire la caja */
 }
 
 .category-item:last-child {
     border-bottom: none;
 }
 
-.category-name {
-    font-size: 1.1rem;
-    font-weight: 500;
-    color: #1f2937;
+/* Aseguramos que el texto dentro no tenga margen */
+.category-item span, 
+.category-item p {
+    margin: 0;
+    padding: 0;
 }
 
 .item-actions {
     display: flex;
-    gap: 10px;
     align-items: center;
+    gap: 5px;
 }
 
-.icon-btn {
+.item-actions button {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.2s;
-    color: #000;
+    font-size: 0.9rem;
+    padding: 0; /* Sin padding en los botones */
+    display: flex; /* Para centrar el icono */
+    margin: 0;
+    color: #555;
 }
 
-.icon-btn:hover {
-    transform: scale(1.1);
-}
-
-.icon-btn.delete:hover {
-    color: #d00;
-}
-
+/* --- Imagen de Canela Pequeña --- */
 .image-section {
-    flex: 1;
+    flex-shrink: 0;
     display: flex;
-    justify-content: center;
-    max-width: 400px;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 .hero-image {
-    width: 100%;
-    height: auto;
-    border-radius: 100px; 
+    width: auto;
+    height: 110px; /* Altura FIJA pequeña */
     object-fit: cover;
-    aspect-ratio: 16/9; 
+    border-radius: 55px; /* Píldora perfecta */
 }
 
+/* --- Tarjeta Morada Compacta --- */
 .form-card {
-    background-color: #D89EFF; 
+    background-color: #D89EFF;
     width: 100%;
-    max-width: 600px; 
+    max-width: 500px; /* Formulario angosto */
     border-radius: 20px;
-    padding: 2rem;
+    padding: 1.2rem; /* Poco padding interno */
     text-align: center;
     color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     box-shadow: 0 4px 15px rgba(168, 85, 247, 0.2);
 }
 
 .form-title {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 700;
     margin: 0;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    line-height: 1.2;
 }
 
 .form-subtitle {
-    font-size: 0.85rem;
-    margin-top: 0.2rem;
-    margin-bottom: 1.5rem;
+    font-size: 0.75rem;
+    margin: 0.2rem 0 0.8rem 0;
     opacity: 0.9;
 }
 
 .red-asterisk {
     color: #ff4444;
-    font-weight: bold;
-    margin-right: 4px;
 }
 
 .add-category-form {
-    width: 100%;
-    max-width: 400px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    width: 100%;
+}
+
+.input-group {
+    width: 100%;
+    max-width: 350px;
+    text-align: left;
+    margin-bottom: 0.8rem;
 }
 
 .form-label {
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-    align-self: flex-start;
+    display: block;
+    margin-bottom: 0.3rem;
+    font-weight: 600;
+    font-size: 0.85rem;
 }
 
 .form-input {
     width: 100%;
-    padding: 0.8rem;
+    padding: 0.6rem 0.8rem;
     border: none;
     border-radius: 8px;
-    margin-bottom: 1.5rem;
     font-family: 'Poppins', sans-serif;
-    font-size: 1rem;
+    font-size: 0.9rem;
     outline: none;
 }
 
 .submit-btn {
-    background-color: #9333EA;
+    background-color: #A855F7;
     color: white;
     font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
+    font-weight: 600;
+    font-size: 0.9rem;
     border: none;
-    padding: 0.8rem 2rem;
+    padding: 0.6rem 2rem;
     border-radius: 50px;
     cursor: pointer;
-    width: 100%;
-    transition: background-color 0.2s;
-    box-shadow: 0 4px 0 rgba(0,0,0,0.1);
+    transition: background 0.3s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .submit-btn:hover {
-    background-color: #7e22ce;
+    background-color: #9333EA;
 }
 
-.feedback-message {
-    margin-top: 1rem;
-    font-size: 0.95rem;
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
-    width: 100%;
-    text-align: center;
-    background-color: rgba(255,255,255,0.2);
+/* Responsive */
+@media (max-width: 700px) {
+    .content-card {
+        flex-direction: column-reverse;
+        padding: 1rem;
+        gap: 1rem;
+    }
+    .hero-image {
+        height: 90px; /* Aún más pequeña en celular */
+        border-radius: 45px;
+    }
 }
 
-.feedback-message[data-type="success"] {
-    color: #065f46;
-    background-color: #d1fae5;
+/* --- CORRECCIÓN PARA EL JAVASCRIPT --- */
+
+/* 1. Obligar a las imágenes dentro de los botones a ser diminutas */
+.icon-btn img {
+    width: 18px !important;  /* Tamaño fijo muy pequeño */
+    height: 18px !important;
+    display: block; /* Elimina espacios fantasma debajo de la imagen */
+    pointer-events: none; /* Evita problemas al hacer click */
 }
 
-.feedback-message[data-type="error"] {
-    color: #b91c1c;
-    background-color: #fee2e2;
+/* 2. Asegurar que el botón no tenga relleno extra */
+.icon-btn {
+    padding: 5px !important; /* Espacio mínimo alrededor del icono */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px; /* Ancho fijo del botón */
+    height: 32px; /* Alto fijo del botón */
+    border-radius: 50%; /* Opcional: hace el hover redondo */
+    transition: background 0.2s;
+}
+
+.icon-btn:hover {
+    background-color: #f3f4f6; /* Pequeño efecto gris al pasar el mouse */
+}
+
+/* 3. Asegurar que el renglón (generado por JS) sea compacto */
+.category-item {
+    min-height: 0 !important; /* Evita alturas mínimas raras */
+    height: auto !important;
+    padding: 0.5rem 0 !important; /* Relleno vertical controlado */
 }
