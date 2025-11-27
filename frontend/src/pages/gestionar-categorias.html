@@ -14,39 +14,7 @@
         <div class="content-card">
             <div class="list-section">
                 <ul class="category-list">
-                    <li class="category-item">
-                        <span class="category-name">Comida</span>
-                        <div class="item-actions">
-                            <button class="icon-btn edit" aria-label="Editar">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
-                            </button>
-                            <button class="icon-btn delete" aria-label="Eliminar">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                            </button>
-                        </div>
-                    </li>
-                    <li class="category-item">
-                        <span class="category-name">Peluches</span>
-                        <div class="item-actions">
-                            <button class="icon-btn edit" aria-label="Editar">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
-                            </button>
-                            <button class="icon-btn delete" aria-label="Eliminar">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                            </button>
-                        </div>
-                    </li>
-                    <li class="category-item">
-                        <span class="category-name">Collares</span>
-                        <div class="item-actions">
-                            <button class="icon-btn edit" aria-label="Editar">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
-                            </button>
-                            <button class="icon-btn delete" aria-label="Eliminar">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                            </button>
-                        </div>
-                    </li>
+                    <!-- Lista dinámica -->
                 </ul>
             </div>
             <div class="image-section">
@@ -61,8 +29,11 @@
                 <input type="text" id="cat-name" class="form-input" required>
                 <button type="submit" class="submit-btn">Agregar categoría</button>
             </form>
+            <div id="mensajeCategorias" class="feedback-message" hidden role="status" aria-live="polite"></div>
         </div>
     </main>
     <footer-info></footer-info>
+    <script src="../services/categoria.service.js"></script>
+    <script src="../js/gestionar-categorias.js"></script>
 </body>
 </html>

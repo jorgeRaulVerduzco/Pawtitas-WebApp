@@ -3,71 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="stylesheet" href="/frontend/src/styles/agregar-producto-styles.css">
+    <link rel="stylesheet" href="/frontend/src/styles/agregar-producto-styles.css">
     <script type="module" src="../../script.js"></script>
     <title>Agregar Producto</title>
-    <style>
-        .categorias-container {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            margin-top: 5px;
-        }
-        .checkbox-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .checkbox-item input[type="checkbox"] {
-            width: auto;
-        }
-    </style>
 </head>
 <body>
     <header-empresas-info></header-empresas-info>
-
-   <div class="main-content">
-    <div class="form-container">
-        <h2 class="titulo-form">Agregar un producto</h2>
-        <p class="campos-requeridos">Campos con * son requeridos</p>
-
-        <form class="general-form">
-            <label for="nombre" class="required">Nombre</label>
-            <textarea name="nombre" id="nombre" required></textarea>
-
-            <label for="descripcion" class="required">Descripción</label>
-            <textarea name="descripcion" id="descripcion" required></textarea>
+    <div class="main-content">
+        <div class="form-container">
+            <h2 class="titulo-form">Agregar un producto</h2>
+            <p class="campos-requeridos">Campos con * son requeridos</p>
             
-            <div class="form-grid-row">
-                <div class="form-field-group">
-                    <label for="precio" class="required">Precio</label>
-                    <input type="number" id="precio" name="precio" step="0.01" required>
+            <form class="general-form" id="agregarProductoForm">
+                <label for="nombre" class="required">Nombre</label>
+                <textarea name="nombre" id="nombre" required></textarea>
+                
+                <label for="descripcion" class="required">Descripción</label>
+                <textarea name="descripcion" id="descripcion" required></textarea>
+                
+                <div class="form-grid-row">
+                    <div class="form-field-group">
+                        <label for="precio" class="required">Precio</label>
+                        <input type="number" id="precio" name="precio" step="0.01" min="0" required>
+                    </div>
+                    
+                    <div class="form-field-group">
+                        <label for="cantidad" class="required">Cantidad existente</label>
+                        <input type="number" id="cantidad" name="cantidad" min="0" required>
+                    </div>
                 </div>
                 
-                <div class="form-field-group">
-                    <label for="cantidad" class="required">Cantidad existente</label>
-                    <input type="number" id="cantidad" name="cantidad" required>
+                <label for="categorias">Categorías (separadas por coma)</label>
+                <input type="text" id="categorias" name="categorias" placeholder="Ej: comida, juguetes, accesorios">
+                
+                <label for="imagenArchivo" class="required">Imagen del producto</label>
+                <div class="imagen-form">
+                    <input type="file" id="imagenArchivo" name="imagenArchivo" accept="image/*" required>
                 </div>
-            </div>
-            
-            <label for="imagen" class="required">Imagen</label>
-            <div class="imagen-form">
-                <input class="imgen" type="file" id="imagen" name="imagen" accept="image/*" required>
-            </div>
+                <div class="imagen-preview" id="previewContainer" hidden>
+                    <img id="previewImagen" alt="Vista previa del producto">
+                </div>
 
-            <!-- Las categorías se cargarán dinámicamente aquí -->
-
-            <button type="submit" class="boton">Agregar</button>
-        </form>
+                <div id="mensaje-error" style="color: red; margin: 10px 0; display: none;"></div>
+                <div id="mensaje-exito" style="color: green; margin: 10px 0; display: none;"></div>
+                
+                <button type="submit" class="boton">Agregar</button>
+            </form>
+        </div>
     </div>
-</div>
-    
     <footer-info></footer-info>
-    
-    <!-- Scripts -->
+
+    <!-- Cargar servicios y lógica -->
     <script src="../services/producto.service.js"></script>
     <script src="../js/agregar-producto.js"></script>
 </body>

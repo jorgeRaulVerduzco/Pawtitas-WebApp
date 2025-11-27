@@ -87,25 +87,19 @@ class ProductoService {
    * Crear nuevo producto (requiere autenticación)
    * POST /api/productos/
    */
-  static async crear(productoData) {
-    try {
-      const response = await fetch(`${API_URL}/`, {
-        method: "POST",
-        headers: this.getHeaders(true),
-        body: JSON.stringify(productoData),
-      });
+ static async crear(productoData) {
+    console.log("Enviando a API:", productoData); // LOG PARA VER SI LLEGA AQUI
+    const response = await fetch(`${API_URL}/`, {
+      method: "POST",
+      headers: this.getHeaders(true),
+      body: JSON.stringify(productoData),
+    });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "Error al crear producto");
-      }
-
-      return data;
-    } catch (error) {
-      console.error("Error en crear:", error);
-      throw error;
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || "Error al crear producto");
     }
+    return data;
   }
 
   /**
@@ -285,4 +279,4 @@ class ProductoService {
   }
 }
 
-// ✅ NO OLVIDES ESTO
+
