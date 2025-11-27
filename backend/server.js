@@ -14,6 +14,7 @@ const mascotaRouter = require('./routes/mascotaRoutes.js');
 const centroAdopcionRouter = require('./routes/centroAdopcionRoutes.js');
 const adopcionRouter = require('./routes/adopcionRoutes.js');
 const categoriaRouter = require('./routes/categoriaRoutes.js');
+const direccionRouter = require('./routes/direccionRoutes.js');
 
 const { globalErrorHandler } = require('./utils/appError.js');
 
@@ -42,6 +43,7 @@ app.use('/api/mascotas', mascotaRouter);
 app.use('/api/centros', centroAdopcionRouter);
 app.use('/api/adopciones', adopcionRouter);
 app.use('/api/categorias', categoriaRouter);
+app.use('/api/direcciones', direccionRouter);
 
 // ---------------------------------------------------------
 // 3. RUTA RAÍZ -> LOGIN

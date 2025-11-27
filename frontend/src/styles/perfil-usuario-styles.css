@@ -41,6 +41,13 @@ body > :content-component {
     margin-bottom: 2rem;
 }
 
+.correo {
+    color: #4b0082;
+    font-size: 1rem;
+    margin-top: -1rem;
+    margin-bottom: 2rem;
+}
+
 .main-content {
     display: grid;
     grid-template-columns: 480px 1fr; 
@@ -116,6 +123,15 @@ body > :content-component {
     background-color: #6a0dad;
 }
 
+.perfil-mensaje {
+    width: 100%;
+    text-align: left;
+    font-size: 0.9rem;
+    margin-top: 15px;
+    color: #fff;
+    min-height: 1.2rem;
+}
+
 
 .mini-containers {
     display: grid;  
@@ -155,4 +171,14 @@ body > :content-component {
 
 .mini-container a:hover {
     text-decoration: underline;
+}
+
+.login-prompt {
+    text-align: center;
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 520px;
+    margin: 0 auto;
 }

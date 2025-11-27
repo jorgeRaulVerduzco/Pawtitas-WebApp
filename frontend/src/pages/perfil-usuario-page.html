@@ -11,16 +11,16 @@
     <header-info></header-info>
     
     <div class="contenido">
-        <h1 class="nombre">Sesuko S Segalá</h1>
-        <p class="bienvenida">Bienvenido a tu cuenta, en esta sección podrás modificar tus datos.</p>
+        <h1 class="nombre" id="perfilNombre"></h1>
+        <p class="bienvenida" id="perfilBienvenida"></p>
+        <p class="correo" id="perfilCorreo"></p>
 
-        <div class="main-content">
-            
+        <div id="perfilContent" class="main-content">
             <div class="form-container">
                 <h2 class="titulo-form">Actualizar Contraseña</h2>
                 <p class="campos-requeridos">Campos con * son requeridos</p>
 
-                <form class="actualizar-contrasena-form">
+                <form class="actualizar-contrasena-form" id="formActualizarContrasena">
                     <label for="contrasena-actual" class="required">Contraseña actual</label>
                     <input type="password" id="contrasena-actual" name="contrasena-actual" required>
 
@@ -28,39 +28,45 @@
                     <input type="password" id="nueva-contrasena" name="nueva-contrasena" required>
 
                     <label for="confirmar-nueva-contrasena" class="required">Confirmar nueva contraseña</label>
-                    <input type="password" id="confirmar-nueva-contrasena" name="confirmar-nueva-contrasena" required>  
+                    <input type="password" id="confirmar-nueva-contrasena" name="confirmar-nueva-contrasena" required>
                     
-                    <button type="submit" class="boton-actualizar">Actualizar</button>
+                    <button type="submit" class="boton-actualizar">Guardar cambios</button>
+                    <p id="perfilMensaje" class="perfil-mensaje" role="status"></p>
                 </form>
             </div>
 
             <div class="mini-containers">
-                
                 <div class="mini-container">
                     <div class="fondo-img"> <img src="/frontend/src/assets/images/shopping-cart.svg" alt="carrito"></div>
-                    <a href="">Historial de Compras</a>
+                    <a id="linkHistorialCompras" href="/frontend/src/pages/historial-ventas.html">Historial de Compras</a>
                 </div>
                 
                 <div class="mini-container">
-                    <div class="fondo-img"> <img src="/frontend/src/assets/images/shopping-cart.svg" alt="carrito"></div>
-                    <a href="">Historial de Adopciones</a>
+                    <div class="fondo-img"> <img src="/frontend/src/assets/images/paw-purple.svg" alt="Huella"></div>
+                    <a id="linkHistorialAdopciones" href="/frontend/src/pages/historial-adopciones.html">Historial de Adopciones</a>
                 </div>
                 
                 <div class="mini-container">
-                    <div class="fondo-img"> <img src="/frontend/src/assets/images/shopping-cart.svg" alt="carrito"></div>
-                    <a href="">Estado de Solicitudes de Adopción</a>
+                    <div class="fondo-img"> <img src="/frontend/src/assets/images/circle-question-mark.svg" alt="Estado"></div>
+                    <a id="linkEstadoSolicitudes" href="/frontend/src/pages/estado-solicitud.html">Estado de Solicitudes</a>
                 </div>
 
-                <div class="mini-container">
-                    <div class="fondo-img"> <img src="/frontend/src/assets/images/shopping-cart.svg" alt="carrito"></div>
-                    <a href="">Direcciones</a>
-                </div>
-
+                    <div class="mini-container">
+                        <div class="fondo-img"> <img src="/frontend/src/assets/images/Edit-black.svg" alt="Direcciones"></div>
+                        <a id="linkDirecciones" href="/frontend/src/pages/direcciones-page.html">Direcciones</a>
+                    </div>
             </div>
-            
         </div>
+
+        <section id="perfilLoginPrompt" class="login-prompt" hidden>
+            <p>Debes iniciar sesión para ver tu perfil.</p>
+            <button id="irIniciarSesion" class="boton-actualizar">Iniciar sesión</button>
+        </section>
     </div>
 
     <footer-info></footer-info>
+
+    <script src="../services/usuario.service.js"></script>
+    <script src="../js/perfil-usuario.js"></script>
 </body>
 </html>

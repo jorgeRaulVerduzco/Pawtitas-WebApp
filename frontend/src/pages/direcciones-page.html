@@ -1,53 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seleccionar direccion</title>
+    <title>Seleccionar dirección</title>
     <link rel="stylesheet" href="/frontend/src/styles/direcciones-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <script type="module" src="../../script.js"></script>
 </head>
 <body>
 
     <header-info></header-info>
 
-    <div class="contenido">
-        <h1 class="purple-label">Sesuko S Segalá</h1>
-        <p class="libro-direcciones">Gestiona su libro de direcciones.</p>
-        <h1 class="purple-label">Libreta de direcciones</h1>
-
+    <div class="contenido-wrapper">
         <div class="main-content">
-            <div class="direcciones-section">
-                <div class="lista-direcciones"> 
-                    <div class="direcciones-container">
-                        <p class="direcciones">Calle numero 890 con esquina de la calle 99090</p>
-                        <div class="iconos">
-                            <img src="/frontend/src/assets/images/edit.svg" alt="Editar dirección" class="icon-edit">
-                            <img src="/frontend/src/assets/images/trash.svg" alt="Eliminar dirección" class="icon-trash">
-                        </div>
-                    </div>
+            
+            <section class="left-column">
+                <div class="headers-container">
+                    <h1 class="user-name" id="direccionesNombre">Cargando...</h1>
+                    <p class="subtitle">Gestione su libro de direcciones.</p>
+                    <h2 class="section-title">Libreta de direcciones</h2>
+                </div>
 
-                    <div class="direcciones-container">
-                        <p class="direcciones">#666 diablo esquina del doblado</p>
-                        <div class="iconos">
-                            <img src="/frontend/src/assets/images/edit.svg" alt="Editar dirección" class="icon-edit">
-                            <img src="/frontend/src/assets/images/trash.svg" alt="Eliminar dirección" class="icon-trash">
-                        </div>
+                <div class="direcciones-grid-container">
+                    <ul class="lista-direcciones" id="listaDirecciones">
+                        </ul>
+                    
+                    <p id="direccionesMensaje" class="feedback" role="status"></p>
+                    
+                    <div class="btn-container">
+                        <button class="boton" id="btnNuevaDireccion">Añadir nueva dirección</button>
                     </div>
                 </div>
-                
-                <button class="boton"> Añadir nueva dirección </button>
-
-            </div>
+            </section>
             
-            <div class="dog-image"> 
-                <img src="/frontend/src/assets/images/totakae.png" alt="dogo">
-            </div>
+            <section class="right-column"> 
+                <div class="dog-image-container">
+                    <img src="/frontend/src/assets/images/totakae.png" alt="Personaje">
+                </div>
+            </section>
 
         </div>
-        
     </div>
 
     <footer-info></footer-info>
+    
+    <script src="../services/direccion.service.js"></script>
+    <script src="../js/direcciones.js"></script>
 </body>
 </html>

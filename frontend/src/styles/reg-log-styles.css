@@ -130,6 +130,12 @@ body > :content-component {
     background-color: #6a0dad; 
 }
 
+.direccion-mensaje {
+    margin-top: 1rem;
+    color: #fff;
+    min-height: 1.2rem;
+}
+
 .general-form textarea {
     width: 100%;
     padding: 12px;

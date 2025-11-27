@@ -11,34 +11,36 @@
     <header-info></header-info>
     <div class="main-content">
         <div class="form-container">
-            <h2 class="titulo-form">Nueva Dirección</h2>
+            <h2 class="titulo-form" id="domicilioTitulo">Nueva Dirección</h2>
             <p class="campos-requeridos">Campos con * son requeridos</p>
 
-            <form class="general-form">
-                <label for="Ciudad" class="required">Ciudad</label>
-                <input type="text" id="Ciudad" name="Ciudad" required>
+            <form class="general-form" id="formDireccion">
+                <label for="ciudad" class="required">Ciudad</label>
+                <input type="text" id="ciudad" name="ciudad" required>
 
-                <label for="Calle" class="required">Calle</label>
-                <input type="text" id="Calle" name="Calle" required>
+                <label for="calle" class="required">Calle</label>
+                <input type="text" id="calle" name="calle" required>
 
-                <label for="Colonia" class="required">Colonia</label>
-                <input type="text" id="Colonia" name="Colonia" required>
+                <label for="colonia" class="required">Colonia</label>
+                <input type="text" id="colonia" name="colonia" required>
 
-                <label for="CP" class="required">Codigo Postal</label>
-                <input type="text" id="CP" name="CP" required>
+                <label for="codigoPostal" class="required">Código Postal</label>
+                <input type="text" id="codigoPostal" name="codigoPostal" required>
 
-                <label for="Num-exterior" class="required">Numero Exterior</label>
-                <input type="text" id="Num-exterior" name="Num-exterior" required>
+                <label for="numeroExterior" class="required">Número Exterior</label>
+                <input type="text" id="numeroExterior" name="numeroExterior" required>
 
-                <label for="Num-interior" class="required">Numero Interior</label>
-                <input type="text" id="Num-interior" name="Num-interior" required>
+                <label for="numeroInterior">Número Interior (opcional)</label>
+                <input type="text" id="numeroInterior" name="numeroInterior">
 
-                <button class="boton">Guardar</button>
+                <button class="boton" type="submit" id="btnGuardarDireccion">Guardar</button>
+                <p id="direccionMensaje" class="direccion-mensaje" role="status"></p>
             </form>
         </div>
     </div> 
 
     <footer-info></footer-info>
-    
+    <script src="../services/direccion.service.js"></script>
+    <script src="../js/agregar-domicilio.js"></script>
 </body>
 </html>

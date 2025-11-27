@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (rol === 'empleado') {
           window.location.href = '/frontend/src/pages/home-empresas.html';
         } else {
-          window.location.href = '/frontend/src/pages/home-cliente.html';
+          window.location.href = '/frontend/src/pages/index.html'; //nose si este correcto xd
         }
       } else {
         throw new Error('Respuesta del servidor incompleta');
