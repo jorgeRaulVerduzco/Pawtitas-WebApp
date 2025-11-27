@@ -6,6 +6,25 @@
    <link rel="stylesheet" href="/frontend/src/styles/agregar-producto-styles.css">
     <script type="module" src="../../script.js"></script>
     <title>Agregar Producto</title>
+    <style>
+        .categorias-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .checkbox-item input[type="checkbox"] {
+            width: auto;
+        }
+    </style>
 </head>
 <body>
     <header-empresas-info></header-empresas-info>
@@ -16,7 +35,6 @@
         <p class="campos-requeridos">Campos con * son requeridos</p>
 
         <form class="general-form">
-
             <label for="nombre" class="required">Nombre</label>
             <textarea name="nombre" id="nombre" required></textarea>
 
@@ -26,7 +44,7 @@
             <div class="form-grid-row">
                 <div class="form-field-group">
                     <label for="precio" class="required">Precio</label>
-                    <input type="number" id="precio" name="precio" required>
+                    <input type="number" id="precio" name="precio" step="0.01" required>
                 </div>
                 
                 <div class="form-field-group">
@@ -37,15 +55,20 @@
             
             <label for="imagen" class="required">Imagen</label>
             <div class="imagen-form">
-            <input class="imgen"  type="file" id="imagen" name="imagen" required>
+                <input class="imgen" type="file" id="imagen" name="imagen" accept="image/*" required>
             </div>
 
-            <button class="boton">Agregar</button>
+            <!-- Las categorías se cargarán dinámicamente aquí -->
+
+            <button type="submit" class="boton">Agregar</button>
         </form>
     </div>
 </div>
-    </div>
+    
     <footer-info></footer-info>
     
+    <!-- Scripts -->
+    <script src="../services/producto.service.js"></script>
+    <script src="../js/agregar-producto.js"></script>
 </body>
 </html>

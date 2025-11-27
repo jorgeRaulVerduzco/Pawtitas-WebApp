@@ -7,6 +7,8 @@ const router = express.Router();
 
 // --- RUTAS GET ESPECÍFICAS (Debe ir primero) ---
 router.get('/all', productoController.obtenerProductos);
+router.get('/mas-vendidos', productoController.obtenerMasVendidos);
+
 router.get('/search', productoController.obtenerCategoriasProducto);
 router.get('/filter', productoController.filtrarPorCategoria);
 router.get('/buscar', productoController.buscarPorNombre); // ✅ AHORA VA AQUÍ (antes de /:id)

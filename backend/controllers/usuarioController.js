@@ -1,22 +1,31 @@
 const UsuarioDAO = require("../daos/usuarioDAO.js");
 const { AppError } = require("../utils/appError.js");
 const jwt = require("jsonwebtoken");
-const getJwtSecret = require('../utils/getJwtSecret.js');
+const getJwtSecret = require("../utils/getJwtSecret.js");
 
 class UsuarioController {
   static async crearCuenta(req, res, next) {
     try {
-      const { nombres, apellidoPaterno, nombreUsuario, correo, contrasena } = req.body;
+      const { nombres, apellidoPaterno, nombreUsuario, correo, contrasena } =
+        req.body;
 
-      if (!nombres || !apellidoPaterno || !nombreUsuario || !correo || !contrasena) {
-        return next(new AppError("Todos los campos obligatorios deben completarse", 400));
+      if (
+        !nombres ||
+        !apellidoPaterno ||
+        !nombreUsuario ||
+        !correo ||
+        !contrasena
+      ) {
+        return next(
+          new AppError("Todos los campos obligatorios deben completarse", 400)
+        );
       }
 
       const usuario = await UsuarioDAO.crear(req.body);
-      res.status(201).json({ 
+      res.status(201).json({
         status: "success",
-        message: "Usuario creado exitosamente", 
-        data: usuario 
+        message: "Usuario creado exitosamente",
+        data: usuario,
       });
     } catch (error) {
       next(new AppError(`Error al crear el usuario: ${error.message}`, 500));
@@ -32,23 +41,44 @@ class UsuarioController {
       }
 
       const usuario = await UsuarioDAO.iniciarSesion(nombreUsuario, contrasena);
+
       if (!usuario) {
-        return next(new AppError("Credenciales inválidas o usuario inactivo", 401));
+        return next(
+          new AppError("Credenciales inválidas o usuario inactivo", 401)
+        );
       }
 
-      // Obtener el secreto de forma segura; lanzará AppError si no está configurado
+      // Obtener el secreto de forma segura
       const secret = getJwtSecret();
-
       const token = jwt.sign(
-        { id: usuario.id, rol: usuario.rol, nombreUsuario: usuario.nombreUsuario },
+        {
+          id: usuario.id,
+          rol: usuario.rol,
+          nombreUsuario: usuario.nombreUsuario,
+        },
         secret,
         { expiresIn: "8h" }
       );
 
-      res.status(200).json({ 
+      // IMPORTANTE: Devolver el usuario completo (sin la contraseña)
+      const usuarioSinContrasena = {
+        id: usuario.id,
+        nombres: usuario.nombres,
+        apellidoPaterno: usuario.apellidoPaterno,
+        apellidoMaterno: usuario.apellidoMaterno,
+        nombreUsuario: usuario.nombreUsuario,
+        correo: usuario.correo,
+        rol: usuario.rol,
+        activo: usuario.activo,
+      };
+
+      res.status(200).json({
         status: "success",
-        message: "Inicio de sesión exitoso", 
-        data: { token } 
+        message: "Inicio de sesión exitoso",
+        data: {
+          token,
+          usuario: usuarioSinContrasena, // ← AGREGAR ESTO
+        },
       });
     } catch (error) {
       next(new AppError(`Error al iniciar sesión: ${error.message}`, 500));
@@ -61,10 +91,10 @@ class UsuarioController {
       if (!usuarios.length) {
         return next(new AppError("No se encontraron usuarios", 404));
       }
-      res.status(200).json({ 
-        status: "success", 
-        count: usuarios.length, 
-        data: usuarios 
+      res.status(200).json({
+        status: "success",
+        count: usuarios.length,
+        data: usuarios,
       });
     } catch (error) {
       next(new AppError("Error al obtener los usuarios", 500));
@@ -96,10 +126,10 @@ class UsuarioController {
         return next(new AppError("Usuario no encontrado", 404));
       }
 
-      res.status(200).json({ 
+      res.status(200).json({
         status: "success",
-        message: "Usuario actualizado correctamente", 
-        data: usuario 
+        message: "Usuario actualizado correctamente",
+        data: usuario,
       });
     } catch (error) {
       next(new AppError("Error al actualizar el usuario", 500));
@@ -111,9 +141,9 @@ class UsuarioController {
       const { id } = req.params;
 
       await UsuarioDAO.eliminar(id);
-      res.status(200).json({ 
+      res.status(200).json({
         status: "success",
-        message: "Usuario desactivado correctamente" 
+        message: "Usuario desactivado correctamente",
       });
     } catch (error) {
       next(new AppError("Error al desactivar el usuario", 500));
@@ -130,10 +160,10 @@ class UsuarioController {
       }
 
       const usuario = await UsuarioDAO.cambiarRol(id, nuevoRol);
-      res.status(200).json({ 
+      res.status(200).json({
         status: "success",
-        message: "Rol actualizado correctamente", 
-        data: usuario 
+        message: "Rol actualizado correctamente",
+        data: usuario,
       });
     } catch (error) {
       next(new AppError("Error al cambiar el rol del usuario", 500));
@@ -161,4 +191,3 @@ class UsuarioController {
   }
 }
 module.exports = UsuarioController;
-

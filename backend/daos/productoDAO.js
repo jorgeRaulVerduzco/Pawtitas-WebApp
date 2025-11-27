@@ -95,10 +95,39 @@ class ProductoDAO {
   }
 
   async eliminarProducto(id) {
+    const transaction = await db.sequelize.transaction();
+
     try {
-      const deleted = await Producto.destroy({ where: { id } });
-      return !!deleted;
+      const producto = await Producto.findByPk(id, { transaction });
+
+      if (!producto) {
+        await transaction.rollback();
+        throw new Error("Producto no encontrado");
+      }
+
+      // Las relaciones con categorías se eliminarán automáticamente por CASCADE
+      // No necesitas hacer producto.setCategorias([])
+
+      const deleted = await Producto.destroy({
+        where: { id },
+        transaction,
+      });
+
+      await transaction.commit();
+
+      console.log("✅ Producto eliminado. Filas afectadas:", deleted);
+
+      return deleted > 0;
     } catch (err) {
+      await transaction.rollback();
+      console.error("❌ Error en eliminarProducto:", err);
+
+      if (err.name === "SequelizeForeignKeyConstraintError") {
+        throw new Error(
+          "No se puede eliminar el producto porque tiene ventas asociadas"
+        );
+      }
+
       throw err;
     }
   }
@@ -133,12 +162,45 @@ class ProductoDAO {
     return await Producto.findByPk(idProducto);
   }
 
-async obtenerCategoriasProducto(productoId) {
+  async obtenerCategoriasProducto(productoId) {
     const producto = await Producto.findByPk(productoId);
     // Cambia el throw por un return null
     if (!producto) return null;
     return await producto.getCategorias();
-}
+  }
+
+  async obtenerMasVendidos(limit = 10) {
+    try {
+      const { VentaItem } = db;
+
+      const resultado = await VentaItem.findAll({
+        attributes: [
+          "productoId",
+          [fn("SUM", col("cantidad")), "totalVendido"],
+        ],
+        include: [
+          {
+            model: Producto,
+            as: "producto",
+            attributes: ["id", "nombre", "imagen", "calificacion"],
+          },
+        ],
+        group: ["productoId", "producto.id"],
+        order: [[fn("SUM", col("cantidad")), "DESC"]],
+        limit,
+      });
+
+      return resultado.map((item) => ({
+        id: item.producto.id,
+        nombre: item.producto.nombre,
+        imagen: item.producto.imagen,
+        calificacion: item.producto.calificacion,
+        cantidadVendida: parseInt(item.dataValues.totalVendido),
+      }));
+    } catch (err) {
+      throw err;
+    }
+  }
 }
 
 module.exports = new ProductoDAO();

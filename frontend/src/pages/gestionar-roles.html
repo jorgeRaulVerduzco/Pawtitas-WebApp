@@ -13,54 +13,40 @@
         <div class="top-bar">
             <h2 class="section-title">Buscar Usuarios...</h2>
             <div class="search-wrapper">
-                <form class="search-form" action="/search" method="get">
+                <form class="search-form" id="searchForm">
                     <button type="submit" class="search-icon-btn" aria-label="Buscar">
                         <img src="/frontend/src/assets/images/search.svg" alt="Buscar" />
                     </button>
-                    <input type="search" name="q" class="search-input" placeholder="Buscar..." aria-label="Buscar">
+                    <input type="search" name="q" id="searchInput" class="search-input" placeholder="Buscar..." aria-label="Buscar">
                 </form>
             </div>
         </div>
         <div class="user-list-section">
             <h3 class="list-title">Lista de Usuarios</h3>
             <div class="user-card">
-                <ul class="user-list">
+                <ul class="user-list" id="userList">
                     <li class="user-item">
-                        <span class="username">Bell</span>
-                        <div class="user-details">
-                            <span class="user-role">Rol: Cliente</span>
-                            <input type="checkbox" class="role-checkbox" checked>
-                        </div>
-                    </li>
-                    <li class="user-item">
-                        <span class="username">Sesuko</span>
-                        <div class="user-details">
-                            <span class="user-role">Rol: Cliente</span>
-                            <input type="checkbox" class="role-checkbox" checked>
-                        </div>
-                    </li>
-                    <li class="user-item">
-                        <span class="username">Homero</span>
-                        <div class="user-details">
-                            <span class="user-role">Rol: Cliente</span>
-                            <input type="checkbox" class="role-checkbox" checked>
-                        </div>
+                        <span>Cargando usuarios...</span>
                     </li>
                 </ul>
             </div>
         </div>
         <div class="botones">
-            <button class="action-btn cambiar-cliente-btn">
+            <button class="action-btn cambiar-cliente-btn" id="btnCliente">
                 Cambiar a<br>Cliente
             </button>
-            <button class="action-btn cambiar-empresa-btn">
-                Cambiar a<br>Empresa
+            <button class="action-btn cambiar-empresa-btn" id="btnEmpleado">
+                Cambiar a<br>Empleado
             </button>
-            <button class="action-btn cambiar-administrador-btn">
+            <button class="action-btn cambiar-administrador-btn" id="btnAdministrador">
                 Cambiar a<br>Administrador
             </button>
         </div>
     </main>
     <footer-info></footer-info>
+
+    <!-- CORREGIDO: Ruta relativa desde pages/ hacia services/ -->
+    <script src="../services/usuario.service.js"></script>
+    <script src="../js/gestionar-roles.js"></script>
 </body>
 </html>

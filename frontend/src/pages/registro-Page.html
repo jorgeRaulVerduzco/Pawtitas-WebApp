@@ -11,46 +11,56 @@
     <header-info></header-info>
 
     <div class="main-content">
-    <div class="form-container">
-        <h2 class="titulo-form">¡Crea una cuenta!</h2>
-        <p class="campos-requeridos">Campos con * son requeridos</p>
+        <div class="form-container">
+            <h2 class="titulo-form">¡Crea una cuenta!</h2>
+            <p class="campos-requeridos">Campos con * son requeridos</p>
 
-        <form class="general-form" >
+            <form class="general-form" id="registroForm">
+                <label for="nombres" class="required">Nombres</label>
+                <input type="text" id="nombres" name="nombres" required>
 
-            <label for="nombres" class="required">Nombres</label>
-            <input type="text" id="nombres" name="nombres" required>
+                <label for="apellido-paterno" class="required">Apellido Paterno</label>
+                <input type="text" id="apellido-paterno" name="apellido-paterno" required>
 
-            <label for="apellido-materno" class="required">Apellido Materno</label>
-            <input type="text" id="apellido-materno" name="apellido-materno" required>
+                <label for="apellido-materno" class="required">Apellido Materno</label>
+                <input type="text" id="apellido-materno" name="apellido-materno" required>
 
-            <label for="apellido-paterno" class="required">Apellido Paterno</label>
-            <input type="text" id="apellido-paterno" name="apellido-paterno" required>
+                <label for="nombre-usuario" class="required">Nombre de Usuario</label>
+                <input type="text" id="nombre-usuario" name="nombre-usuario" required>
 
-            <label for="nombre-usuario" class="required">Nombre de Usuario</label>
-            <input type="text" id="nombre-usuario" name="nombre-usuario" required>
+                <label for="email" class="required">Dirección de Correo electrónico</label>
+                <input type="email" id="email" name="email" required>
 
-            <label for="email" class="required">Dirección de Correo electrónico</label>
-            <input type="email" id="email" name="email" required>
+                <label for="contrasena" class="required">Contraseña</label>
+                <input type="password" id="contrasena" name="contrasena" required>
 
-            <label for="contrasena" class="required">Contraseña</label>
-            <input type="password" id="contrasena" name="contrasena" required>
+                <label for="confirmar-contrasena" class="required">Confirmar Contraseña</label>
+                <input type="password" id="confirmar-contrasena" name="confirmar-contrasena" required>
 
-            <label for="confirmar-contrasena" class="required">Confirmar Contraseña</label>
-            <input type="password" id="confirmar-contrasena" name="confirmar-contrasena" required>
+                <!-- Selector de rol (solo para administradores en registro) -->
+                <label for="rol">Rol</label>
+                <select id="rol" name="rol">
+                    <option value="cliente">Cliente</option>
+                    <option value="empleado">Empleado</option>
+                    <option value="administrador">Administrador</option>
+                </select>
 
+                <div id="mensaje-error" style="color: red; margin: 10px 0; display: none;"></div>
+                <div id="mensaje-exito" style="color: green; margin: 10px 0; display: none;"></div>
 
-            <button class="boton">Crear</button>
+                <button type="submit" class="boton">Crear</button>
 
-
-            <p class="link">
-                ¿Ya tienes una cuenta? <a href="login-page.html">Inicia Sesión</a>
-            </p>
-
-            
-        </form>
-    </div>
+                <p class="link">
+                    ¿Ya tienes una cuenta? <a href="login-page.html">Inicia Sesión</a>
+                </p>
+            </form>
+        </div>
     </div>
 
     <footer-info></footer-info>
+
+    <!-- CORREGIDO: Ruta relativa desde pages/ hacia services/ -->
+    <script src="../services/usuario.service.js"></script>
+    <script src="../js/registro.js"></script>
 </body>
 </html>

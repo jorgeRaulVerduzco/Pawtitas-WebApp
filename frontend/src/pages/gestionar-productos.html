@@ -12,66 +12,16 @@
     
     <div class="main-content">
         <h2 class="page-title">Gestionar Productos</h2>
-        
         <div class="productos-card">
-            
-            <div class="obejeto-card">
-                
-                <div class="imagen">
-                    <img src="/frontend/src/assets/images/dawg.png" alt="Pedigree Dog Food">
-                </div>
-                
-                <div class="detalles-producto">
-                    <h3>Pedigree - High Protein, Croquetas para Perro Adulto, Sabor Res y Pollo, Alimento Completo para Perro con Alta Proteína.</h3>
-                    
-                    <p class="stock-label">Productos en existencia</p>
-                    
-                    <div class="stock-control">
-                        <button class="quantity-btn minus-btn">-</button>
-                        <input type="number" class="stock-quantity-input" value="5" min="0"> 
-                        <button class="quantity-btn plus-btn">+</button>
-                    </div>
-                </div>
-                
-                <div class="product-actions">
-                    <img src="/frontend/src/assets/images/trash.svg" alt="Eliminar" class="action-icon trash-icon">
-                    <img src="/frontend/src/assets/images/Edit-black.svg" alt="Editar" class="action-icon edit-icon">
-                </div>
-                
-            </div>
-            
-            <hr class="divider">
-            
-            <div class="obejeto-card">
-                
-                <div class="imagen">
-                    <img src="/frontend/src/assets/images/chewie_ball.png" alt="Chewie Ball">
-                </div>
-                
-                <div class="detalles-producto">
-                    <h3>Chewie Ball, Juguete Interactivo para Gatos, Pelota Giratoria Automática de 360° para Gatos y Perros.</h3>
-                    
-                    <p class="stock-label">Productos en existencia</p>
-                    
-                    <div class="stock-control">
-                        <button class="quantity-btn minus-btn">-</button>
-                        <input type="number" class="stock-quantity-input" value="5" min="0">
-                        <button class="quantity-btn plus-btn">+</button>
-                    </div>
-                </div>
-                
-                <div class="product-actions">
-                    <img src="/frontend/src/assets/images/trash.svg" alt="Eliminar" class="action-icon trash-icon">
-                    <img src="/frontend/src/assets/images/Edit-black.svg" alt="Editar" class="action-icon edit-icon">
-                </div>
-            </div>
-            
+            <!-- Los productos se cargarán dinámicamente aquí -->
         </div>
-        
         <button class="add-product-button">Agregar producto</button>
-        
     </div>
     
     <footer-info></footer-info>
+    
+    <!-- Scripts -->
+    <script src="../services/producto.service.js"></script>
+    <script src="../js/gestionar-productos.js"></script>
 </body>
 </html>

@@ -41,3 +41,15 @@
 {"level":"error","message":"Error al obtener mascotas del centro: Error al obtener mascotas: WHERE parameter \"idCentroAdopcion\" has invalid \"undefined\" value"}
 {"level":"error","message":"Error al obtener adopciones del usuario: Error al obtener adopciones: WHERE parameter \"idUsuario\" has invalid \"undefined\" value"}
 {"level":"error","message":"Error al crear solicitud de adopción: Error al crear adopción: Mascota no disponible para adopción"}
+{"level":"error","message":"No hay token en la cabecera"}
+{"level":"error","message":"Error al eliminar producto: Cannot delete or update a parent row: a foreign key constraint fails (`pawtitas`.`ventaitems`, CONSTRAINT `ventaitems_ibfk_2` FOREIGN KEY (`productoId`) REFERENCES `productos` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE)"}
+{"level":"error","message":"Error al eliminar producto: Cannot delete or update a parent row: a foreign key constraint fails (`pawtitas`.`ventaitems`, CONSTRAINT `ventaitems_ibfk_2` FOREIGN KEY (`productoId`) REFERENCES `productos` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE)"}
+{"level":"error","message":"Error al eliminar producto: Cannot delete or update a parent row: a foreign key constraint fails (`pawtitas`.`ventaitems`, CONSTRAINT `ventaitems_ibfk_2` FOREIGN KEY (`productoId`) REFERENCES `productos` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE)"}
+{"level":"error","message":"Error al eliminar producto: Cannot delete or update a parent row: a foreign key constraint fails (`pawtitas`.`ventaitems`, CONSTRAINT `ventaitems_ibfk_2` FOREIGN KEY (`productoId`) REFERENCES `productos` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE)"}
+{"level":"error","message":"Error al eliminar producto: Cannot delete or update a parent row: a foreign key constraint fails (`pawtitas`.`ventaitems`, CONSTRAINT `ventaitems_ibfk_2` FOREIGN KEY (`productoId`) REFERENCES `productos` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE)"}
+{"level":"error","message":"Error al eliminar producto: Cannot delete or update a parent row: a foreign key constraint fails (`pawtitas`.`ventaitems`, CONSTRAINT `ventaitems_ibfk_2` FOREIGN KEY (`productoId`) REFERENCES `productos` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE)"}
+{"level":"error","message":"Error al eliminar producto: Cannot delete or update a parent row: a foreign key constraint fails (`pawtitas`.`ventaitems`, CONSTRAINT `ventaitems_ibfk_2` FOREIGN KEY (`productoId`) REFERENCES `productos` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE)"}
+{"level":"error","message":"No se puede eliminar el producto porque tiene ventas asociadas"}
+{"level":"error","message":"No se puede eliminar el producto porque tiene ventas asociadas"}
+{"level":"error","message":"No se puede eliminar el producto porque tiene ventas asociadas"}
+{"level":"error","message":"No se puede eliminar el producto porque tiene ventas asociadas"}

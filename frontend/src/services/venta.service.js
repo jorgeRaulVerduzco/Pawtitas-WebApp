@@ -275,4 +275,3 @@ class VentaService {
   }
 }
 
-export default VentaService;

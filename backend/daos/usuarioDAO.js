@@ -28,10 +28,15 @@ class UsuarioDAO {
 
   // iniciarSesion con findOne (más sencillo y seguro que raw SQL)
   async iniciarSesion(nombreUsuario, contrasena) {
-    return await Usuario.findOne({
-      where: { nombreUsuario, contrasena, activo: true },
+    return await Usuario.findOne({ 
+      where: { 
+        nombreUsuario: nombreUsuario,  // ← CORREGIDO: quitar el prefijo Usuario
+        contrasena: contrasena,         // ← CORREGIDO
+        activo: true 
+      }
     });
   }
+
 
   async cambiarRol(idUsuario, nuevoRol) {
     await Usuario.update({ rol: nuevoRol }, { where: { id: idUsuario } });

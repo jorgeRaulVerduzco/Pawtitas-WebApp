@@ -105,22 +105,39 @@ class ProductoController {
   }
 
   // Eliminar producto
+
   static async eliminarProducto(req, res, next) {
     try {
       const { id } = req.params;
-      const producto = await productoDAO.obtenerProductoPorId(id);
 
+      // Verificar que el producto existe
+      const producto = await productoDAO.obtenerProductoPorId(id);
       if (!producto) {
         return next(new AppError("Producto no encontrado.", 404));
       }
 
-      await productoDAO.eliminarProducto(id);
-      res.status(200).json({
+      // Intentar eliminar
+      const eliminado = await productoDAO.eliminarProducto(id);
+
+      if (!eliminado) {
+        return next(new AppError("No se pudo eliminar el producto.", 500));
+      }
+
+      // ✅ IMPORTANTE: Enviar respuesta exitosa
+      return res.status(200).json({
         status: "success",
         message: "Producto eliminado correctamente.",
       });
     } catch (error) {
-      next(new AppError(`Error al eliminar producto: ${error.message}`, 500));
+      console.error("Error en eliminarProducto controller:", error);
+
+      if (error.message.includes("ventas asociadas")) {
+        return next(new AppError(error.message, 400));
+      }
+
+      return next(
+        new AppError(`Error al eliminar producto: ${error.message}`, 500)
+      );
     }
   }
 
@@ -215,6 +232,26 @@ class ProductoController {
       next(
         new AppError(
           `Error al obtener categorias del producto: ${error.message}`,
+          500
+        )
+      );
+    }
+  }
+
+  static async obtenerMasVendidos(req, res, next) {
+    try {
+      const limit = parseInt(req.query.limit) || 10;
+      const productos = await productoDAO.obtenerMasVendidos(limit);
+
+      res.status(200).json({
+        status: "success",
+        count: productos.length,
+        data: productos,
+      });
+    } catch (error) {
+      next(
+        new AppError(
+          `Error al obtener productos más vendidos: ${error.message}`,
           500
         )
       );

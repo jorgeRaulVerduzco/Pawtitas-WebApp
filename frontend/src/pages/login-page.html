@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio de sesion</title>
-    
+    <title>Inicio de sesión</title>
     <link rel="stylesheet" href="/frontend/src/styles/reg-log-styles.css">
     <script type="module" src="../../script.js"></script>
 </head>
@@ -12,29 +11,31 @@
      <header-info></header-info>
      <div class="main-content">
         <div class="form-container">
-
             <h2 class="titulo-form">Inicia Sesión!</h2>
             <p class="campos-requeridos">Campos con * son requeridos</p>
 
-            <form class="general-form">
-
+            <form class="general-form" id="loginForm">
                 <label for="nombre-usuario" class="required">Nombre de Usuario</label>
                 <input type="text" id="nombre-usuario" name="nombre-usuario" required>
 
                 <label for="contrasena" class="required">Contraseña</label>
                 <input type="password" id="contrasena" name="contrasena" required>
 
-                <button class="boton">Iniciar Sesión</button>
+                <div id="mensaje-error" style="color: red; margin: 10px 0; display: none;"></div>
+
+                <button type="submit" class="boton">Iniciar Sesión</button>
 
                 <p class="link">
                     ¿No tienes una cuenta? <a href="registro-page.html">Regístrate</a>
                 </p>
-                
             </form>
         </div>
      </div>
 
     <footer-info></footer-info>
-    
+
+    <!-- CORREGIDO: Ruta relativa desde pages/ hacia services/ -->
+    <script src="../services/usuario.service.js"></script>
+    <script src="../js/login.js"></script>
 </body>
 </html>

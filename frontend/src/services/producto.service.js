@@ -32,7 +32,7 @@ class ProductoService {
    * Obtener todos los productos
    * GET /api/productos/all?limit=10&offset=0
    */
-  static async obtenerTodos(limit = 10, offset = 0) {
+  static async obtenerTodos(limit = 100, offset = 0) {
     try {
       const response = await fetch(
         `${API_URL}/all?limit=${limit}&offset=${offset}`,
@@ -159,7 +159,7 @@ class ProductoService {
 
   /**
    * Buscar productos por nombre
-   * GET /api/productos/search?nombre=texto
+   * GET /api/productos/buscar?nombre=texto
    */
   static async buscarPorNombre(nombre) {
     try {
@@ -191,17 +191,17 @@ class ProductoService {
   static async filtrarPorCategoria(idCategoria) {
     try {
       const response = await fetch(
-        `${API_URL}/filter?idCategoria=${idCategoria}`,
+        `${API_URL}/filter?idCategoria=${encodeURIComponent(idCategoria)}`,
         {
           method: "GET",
-          headers: this.getHeaders(),
+          headers: this.getHeaders(true), // Con autenticación
         }
       );
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Error al filtrar productos");
+        throw new Error(data.message || "Error al filtrar productos por categoría");
       }
 
       return data;
@@ -213,7 +213,7 @@ class ProductoService {
 
   /**
    * Calificar producto
-   * GET /api/productos/cali/:id (con body)
+   * POST /api/productos/cali/:id
    */
   static async calificar(id, calificacion) {
     try {
@@ -238,11 +238,11 @@ class ProductoService {
 
   /**
    * Obtener categorías de un producto
-   * GET /api/productos/search?id=1
+   * GET /api/productos/categorias/:id
    */
   static async obtenerCategorias(id) {
     try {
-      const response = await fetch(`${API_URL}/search?id=${id}`, {
+      const response = await fetch(`${API_URL}/categorias/${id}`, {
         method: "GET",
         headers: this.getHeaders(),
       });
@@ -260,33 +260,29 @@ class ProductoService {
     }
   }
 
-
-  static async filtrarPorCategoria(idCategoria) {
+  /**
+   * Obtener productos más vendidos
+   * GET /api/productos/mas-vendidos
+   */
+  static async obtenerMasVendidos() {
     try {
-        const token = localStorage.getItem('token');
-        if (!token) throw new Error('Usuario no autenticado.');
+      const response = await fetch(`${API_URL}/mas-vendidos`, {
+        method: "GET",
+        headers: this.getHeaders(true),
+      });
 
-        // Se usa la ruta /filter con un query parameter
-        const response = await fetch(`${API_URL}/filter?idCategoria=${encodeURIComponent(idCategoria)}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        });
+      const data = await response.json();
 
-        const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || "Error al obtener productos más vendidos");
+      }
 
-        if (!response.ok) {
-            throw new Error(data.message || 'Error al filtrar productos por categoría');
-        }
-
-        return data; // Contiene status, results y data (la lista de productos)
+      return data;
     } catch (error) {
-        console.error('Error en filtrarPorCategoria:', error.message);
-        throw error;
+      console.error("Error en obtenerMasVendidos:", error);
+      throw error;
     }
-}
+  }
 }
 
-export default ProductoService;
+// ✅ NO OLVIDES ESTO
