@@ -289,4 +289,4 @@ class ProductoService {
 }
 }
 
-export default ProductoService;
+module.exports = ProductoService;

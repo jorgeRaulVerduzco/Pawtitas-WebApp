@@ -51,7 +51,7 @@ export class HeaderComponent extends HTMLElement {
     #addStyles(shadow) {
         let link = document.createElement('link');
         link.setAttribute('rel', 'stylesheet');
-        link.setAttribute('href', './header.component.css');
+        link.setAttribute('href', '/frontend/src/components/header/header.component.css');
         shadow.appendChild(link);
     }
 }

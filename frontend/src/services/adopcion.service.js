@@ -320,4 +320,4 @@ class AdopcionService {
   }
 }
 
-export default AdopcionService;
+module.exports = AdopcionService;

@@ -160,4 +160,4 @@ class CentroAdopcionService {
   }
 }
 
-export default CentroAdopcionService;
+module.exports =  CentroAdopcionService;

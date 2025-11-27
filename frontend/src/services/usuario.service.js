@@ -252,4 +252,4 @@ class UsuarioService {
   }
 }
 
-export default UsuarioService;
+module.exports =  UsuarioService;

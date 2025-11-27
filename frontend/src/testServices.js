@@ -1,13 +1,13 @@
 // testAllServices.js - Prueba completa de TODOS los servicios incluyendo adopciones
-import UsuarioService from "./services/usuario.service.js";
-import ProductoService from "./services/producto.service.js";
-import VentaService from "./services/venta.service.js";
-import PagoService from "./services/pago.service.js";
+const UsuarioService = require("./services/usuario.service.js");
+const ProductoService = require("./services/producto.service.js");
+const VentaService = require("./services/venta.service.js");
+const PagoService = require("./services/pago.service.js");
 
 // Nuevos servicios añadidos
-import MascotaService from "./services/mascota.service.js";
-import CentroAdopcionService from "./services/centroAdopcion.service.js";
-import AdopcionService from "./services/adopcion.service.js";
+const MascotaService = require("./services/mascota.service.js");
+const CentroAdopcionService = require("./services/centroAdopcion.service.js");
+const AdopcionService = require("./services/adopcion.service.js");
 
 global.localStorage = {
   data: {},
@@ -465,4 +465,4 @@ class TestAllServices {
   }
 })();
 
-export default TestAllServices;
+module.exports = TestAllServices;

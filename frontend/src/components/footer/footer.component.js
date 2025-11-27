@@ -29,7 +29,7 @@ export class FooterComponent extends HTMLElement {
 	#addStyles(shadow) {
 		let link = document.createElement("link");
 		link.setAttribute("rel", "stylesheet");
-        link.setAttribute("href", "./footer.component.css");
+		link.setAttribute("href", "/frontend/src/components/footer/footer.component.css");
 		shadow.appendChild(link);
 	}
 
