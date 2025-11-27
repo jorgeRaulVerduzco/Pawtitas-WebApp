@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestionar Mascotas</title>
+    <link rel="stylesheet" href="../styles/gestionar-mascotas-styles.css" />
+    <script type="module" src="../../script.js"></script>
+  </head>
+  <body>
+    <header-info></header-info>
+
+    <h1 class="titulo">Gestionar mascotas</h1>
+
+    <div class="main-content">
+      <div class="gestion-container">
+        <div class="gestion-wrapper">
+          <div class="gestion-card">
+            <div class="img-container">
+              <img src="/frontend/src/assets/images/dog.png" alt="Imagen de Guapura" />
+            </div>
+            <div class="text-content">
+              <h2 class="nombre-mascota">Guapura</h2>
+              <div class="estado-info">
+                <span class="estado-label">Estado:</span>
+                <span class="estado-value-pendiente"
+                  >Pendiente de revisión</span
+                >
+              </div>
+              <a href="propuesta-adopcion.html">
+                <button class="boton-revisar">Revisar</button>
+              </a>
+              <p class="fecha">Publicado el: 8/Noviembre/2025</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="gestion-wrapper">
+          <div class="gestion-card">
+            <div class="img-container">
+              <img
+                src="/frontend/src/assets/images/dog.png"
+                alt="Imagen de Pedro y Margarita"
+              />
+            </div>
+            <div class="text-content">
+              <h2 class="nombre-mascota">Pedro y Margarita</h2>
+              <div class="estado-info">
+                <span class="estado-label">Estado:</span>
+                <span class="estado-value-aceptada">Aceptada</span>
+              </div>
+              <p class="fecha">Mascota adoptada el: 10/Octubre/2023</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer-info></footer-info>
+  </body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Busqueda de Adopcion</title>
+    <link rel="stylesheet" href="../styles/home-adopciones-styles.css">
+    <script type="module" src="../../script.js"></script>
+</head>
+<body>
+    <header-info></header-info>
+
+    <div class="main-content">
+        <div class="filter-content">
+            <div class="filter-form">
+
+                <section class="filtro-checkbox">
+                <h4 class="titulo-filtro">Filtros</h4>
+                <label for="perro">
+                    <input type="checkbox" id="perro" name="perro" value="perro">
+                    Perro
+                </label>
+                <label for="gato">
+                    <input type="checkbox" id="gato" name="gato" value="gato">
+                    Gato
+                </label>
+                <label for="conejo">
+                    <input type="checkbox" id="conejo" name="conejo" value="conejo">
+                    Conejo
+                </label>
+                </section>
+
+                <section>
+                <h4 class="titulo-filtro">Localizacion</h4>
+                <label for="centro de adopcion">Centros de adopcion</label>
+                <select name="centro de adopcion" id="centro de adopcion">
+                <option value="Centro de Obregon">Centro de Obregon</option>
+                <option value="Centro de Hemosillo">Centro de Hemosillo</option>
+                <option value="Centro de Guadalajara">Centro de Guadalajara</option>
+                </select>
+                </section>
+
+                <section class="edad">
+                    <label for="edad">Edad</label>
+                    <select name="edad" id="edad">
+                        <option value="0-1">0-1 años</option>
+                        <option value="1-3">1-3 años</option>
+                        <option value="3-7">3-7 años</option>
+                        <option value="7+">7+ años</option>
+                    </select>   
+                </section>
+            </div>
+        </div>
+
+        <div class="resultados-adopcion">
+        <pet-info></pet-info>
+        </div>
+    </div>
+  
+
+    <footer-info></footer-info>
+</body>
+</html>

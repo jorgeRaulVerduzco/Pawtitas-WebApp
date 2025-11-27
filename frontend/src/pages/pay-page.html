@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../styles/pay-styles.css" />
+    <script type="module" src="../../script.js"></script>
+    <title>Pagar</title>
+</head>
+<body>
+    <header-info></header-info>
+    <div class="main-content">
+        <div class="checkout-forms">
+            <div class="card address-card">
+                <div class="card-header">
+                    <h2>Enviar a...</h2>
+                    <a href="/" class="change-link">Cambiar direccion</a>
+                </div>
+                <p class="address-text">
+                    Calle numero 890 con esquina de la calle 99090
+                </p>
+            </div>
+            <div class="card payment-card">
+                <h2>Metodo de pago</h2>
+                <div class="payment-options">
+                    <label class="radio-option">
+                        <input type="radio" name="payment" checked />
+                        Tarjeta de credito/debito
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="payment" />
+                        Paypal
+                    </label>
+                </div>
+                <form class="credit-card-form">
+                    <div class="form-group">
+                        <label>Numero de tarjeta</label>
+                        <input type="text" placeholder="" class="input-field" />
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Fecha de caducidad</label>
+                            <input type="text" class="input-field" />
+                        </div>
+                        <div class="form-group">
+                            <label>CVC</label>
+                            <input type="text" class="input-field" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="checkout-summary">
+            <div class="card summary-details">
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span>$50.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Entrega:</span>
+                    <span>$25.00</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total:</span>
+                    <span>$75.00</span>
+                </div>
+                <button class="btn-pay">Pagar ahora</button>
+            </div>
+            <div class="promo-image">
+                <img src="/frontend/src/assets/images/tom-nook.png" alt="Animal Crossing Promo" />
+            </div>
+        </div>
+    </div>
+    <footer-info></footer-info>
+</body>
+
+</html>

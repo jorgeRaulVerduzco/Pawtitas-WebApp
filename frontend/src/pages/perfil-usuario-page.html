@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil del usuario</title>
+    <link rel="stylesheet" href="../styles/perfil-usuario-styles.css">
+    <script type="module" src="../../script.js"></script>
+</head>
+<body>
+    <header-info></header-info>
+    
+    <div class="contenido">
+        <h1 class="nombre">Sesuko S Segalá</h1>
+        <p class="bienvenida">Bienvenido a tu cuenta, en esta sección podrás modificar tus datos.</p>
+
+        <div class="main-content">
+            
+            <div class="form-container">
+                <h2 class="titulo-form">Actualizar Contraseña</h2>
+                <p class="campos-requeridos">Campos con * son requeridos</p>
+
+                <form class="actualizar-contrasena-form">
+                    <label for="contrasena-actual" class="required">Contraseña actual</label>
+                    <input type="password" id="contrasena-actual" name="contrasena-actual" required>
+
+                    <label for="nueva-contrasena" class="required">Nueva Contraseña</label>
+                    <input type="password" id="nueva-contrasena" name="nueva-contrasena" required>
+
+                    <label for="confirmar-nueva-contrasena" class="required">Confirmar nueva contraseña</label>
+                    <input type="password" id="confirmar-nueva-contrasena" name="confirmar-nueva-contrasena" required>  
+                    
+                    <button type="submit" class="boton-actualizar">Actualizar</button>
+                </form>
+            </div>
+
+            <div class="mini-containers">
+                
+                <div class="mini-container">
+                    <div class="fondo-img"> <img src="/frontend/src/assets/images/shopping-cart.svg" alt="carrito"></div>
+                    <a href="">Historial de Compras</a>
+                </div>
+                
+                <div class="mini-container">
+                    <div class="fondo-img"> <img src="/frontend/src/assets/images/shopping-cart.svg" alt="carrito"></div>
+                    <a href="">Historial de Adopciones</a>
+                </div>
+                
+                <div class="mini-container">
+                    <div class="fondo-img"> <img src="/frontend/src/assets/images/shopping-cart.svg" alt="carrito"></div>
+                    <a href="">Estado de Solicitudes de Adopción</a>
+                </div>
+
+                <div class="mini-container">
+                    <div class="fondo-img"> <img src="/frontend/src/assets/images/shopping-cart.svg" alt="carrito"></div>
+                    <a href="">Direcciones</a>
+                </div>
+
+            </div>
+            
+        </div>
+    </div>
+
+    <footer-info></footer-info>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/cart-styles.css">
+    <script type="module" src="../../script.js"></script>
+    <title>Carrito</title>
+</head>
+<body>
+    <header-info></header-info>
+    <div class="main-content">
+        <div class="cart-and-suggestions-wrapper">
+            <h1 class="page-title">Carrito de Compras</h1>
+            <div class="product-list">
+                <div class="cart-item">
+                    <input type="checkbox" id="item1" name="selected_items" class="product-checkbox" checked>
+                    <div class="item-details">
+                        <img src="/frontend/src/assets/images/dawg.png" alt="Pedigree" class="product-image">
+                        <p class="product-name">Pedigree - High Protein, Croquetas para Perro Adulto, Sabor Res y Pollo, Alimento Completo para Perro con Alta Proteína, Vitaminas y Omega 6, 18 kg</p>
+                        <div class="quantity-control">
+                            <button class="quantity-btn delete-btn">
+                                <a href="/"><img src="/frontend/src/assets/images/trash.svg" alt="Eliminar"></a>
+                            </button>
+                            <div class="quantity-input-wrapper">
+                                <button class="quantity-btn minus-btn">-</button>
+                                <input type="number" class="product-quantity" value="1" min="1">
+                                <button class="quantity-btn plus-btn">+</button>
+                            </div>
+                        </div>
+                        <p class="item-price">$25.00</p>
+                    </div>
+                </div>
+                <div class="cart-item">
+                    <input type="checkbox" id="item2" name="selected_items" class="product-checkbox" checked>
+                    <div class="item-details">
+                        <img src="/frontend/src/assets/images/chewie_ball.png" alt="Chewie Ball" class="product-image">
+                        <p class="product-name">Chewie Ball, Juguete Interactivo para Gatos, Pelota Giratoria Automática de 360°para Gatos y Perros, Duraderos y Recargables por USB Juguete Interactivo con Pelota para Gatos</p>
+                        <div class="quantity-control">
+                            <button class="quantity-btn delete-btn">
+                                <img src="/frontend/src/assets/images/trash.svg" alt="Eliminar">
+                            </button>
+                            <div class="quantity-input-wrapper">
+                                <button class="quantity-btn minus-btn">-</button>
+                                <input type="number" class="product-quantity" value="1" min="1">
+                                <button class="quantity-btn plus-btn">+</button>
+                            </div>
+                        </div>
+                        <p class="item-price">$25.00</p>
+                    </div>
+                </div>
+            </div>
+            <div class="suggested-products-section">
+                <h2>Productos sugeridos</h2>
+                <div class="suggested-items">
+                    <div class="suggested-item">
+                        <img src="/frontend/src/assets/images/dawg.png" alt="Pedigree">
+                        <h3>Pedigree - High Protein, Croquetas para Perro Adulto, Sabor Res y Pollo, Alimento Completo para Perro con Alta Proteína, Vitaminas y Omega 6, 18 kg</h3>
+                        <button class="add-to-cart-button">Agregar</button>
+                    </div>
+                    <div class="suggested-item">
+                        <img src="/frontend/src/assets/images/chewie_ball.png" alt="Chewie Ball">
+                        <h3>Chewie Ball, Juguete Interactivo para Gatos, Pelota Giratoria Automática de 360° para Gatos y Perros, Duraderos y Recargables por USB Juguete Interactivo con Pelota para Gatos</h3>
+                        <button class="add-to-cart-button">Agregar</button>
+                    </div>
+                     <div class="suggested-item">
+                        <img src="/frontend/src/assets/images/dawg.png" alt="Pedigree">
+                        <h3>Pedigree - High Protein, Croquetas para Perro Adulto, Sabor Res y Pollo, Alimento Completo para Perro con Alta Proteína, Vitaminas y Omega 6, 18 kg</h3>
+                        <button class="add-to-cart-button">Agregar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="order-summary">
+            <h2>Resumen del pedido</h2>
+            <div class="summary-details">
+                <div class="summary-item">
+                    <p>Subtotal</p>
+                    <p class="summary-value">$50.00</p>
+                </div>
+                <div class="summary-item">
+                    <p>Entrega</p>
+                    <p class="summary-value">$25.00</p>
+                </div>
+                <div class="summary-item total">
+                    <p>Total</p>
+                    <p class="summary-value">$75.00</p>
+                </div>
+            </div>
+            <button class="buy-button">Comprar ahora</button>
+        </div>
+    </div>
+    <footer-info></footer-info>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/gestionar-cuentas-styles.css">
+    <script type="module" src="../../script.js"></script>
+    <title>Gestionar Roles</title>
+</head>
+<body>
+    <header-info></header-info>
+    <main class="main-content">
+        <div class="top-bar">
+            <h2 class="section-title">Buscar Usuarios...</h2>
+            <div class="search-wrapper">
+                <form class="search-form" action="/search" method="get">
+                    <button type="submit" class="search-icon-btn" aria-label="Buscar">
+                        <img src="/frontend/src/assets/images/search.svg" alt="Buscar" />
+                    </button>
+                    <input type="search" name="q" class="search-input" placeholder="Buscar..." aria-label="Buscar">
+                </form>
+            </div>
+        </div>
+        <div class="user-list-section">
+            <h3 class="list-title">Lista de Usuarios</h3>
+            <div class="user-card">
+                <ul class="user-list">
+                    <li class="user-item">
+                        <span class="username">Bell</span>
+                        <div class="user-details">
+                            <span class="user-role">Rol: Cliente</span>
+                            <input type="checkbox" class="role-checkbox" checked>
+                        </div>
+                    </li>
+                    <li class="user-item">
+                        <span class="username">Sesuko</span>
+                        <div class="user-details">
+                            <span class="user-role">Rol: Cliente</span>
+                            <input type="checkbox" class="role-checkbox" checked>
+                        </div>
+                    </li>
+                    <li class="user-item">
+                        <span class="username">Homero</span>
+                        <div class="user-details">
+                            <span class="user-role">Rol: Cliente</span>
+                            <input type="checkbox" class="role-checkbox" checked>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="botones">
+            <button class="action-btn cambiar-cliente-btn">
+                Cambiar a<br>Cliente
+            </button>
+            <button class="action-btn cambiar-empresa-btn">
+                Cambiar a<br>Empresa
+            </button>
+            <button class="action-btn cambiar-administrador-btn">
+                Cambiar a<br>Administrador
+            </button>
+        </div>
+    </main>
+    <footer-info></footer-info>
+</body>
+</html>

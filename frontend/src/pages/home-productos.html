@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Busqueda de Productos</title>
+    <link rel="stylesheet" href="../styles/home-adopciones-styles.css">
+    <script type="module" src="../../script.js"></script>
+</head>
+<body>
+    <header-info></header-info>
+    <div class="main-content">
+        <div class="filter-content">
+            <div class="filter-form">
+                <section class="filtro-checkbox">
+                <h4 class="titulo-filtro">Filtros</h4>
+                <label for="perro">
+                    <input type="checkbox" id="perro" name="perro" value="perro">
+                    Perro
+                </label>
+                <label for="gato">
+                    <input type="checkbox" id="gato" name="gato" value="gato">
+                    Gato
+                </label>
+                <label for="conejo">
+                    <input type="checkbox" id="conejo" name="conejo" value="conejo">
+                    Conejo
+                </label>
+                </section>
+                <section>
+                <h4 class="titulo-filtro">Categoría</h4>
+                <ul class="categoria-list">
+                    <li><a href="" class="categoria-producto"><span class="categoria-nombre">Comida</span><span class="numero-product">(5)</span></a></li>
+                    <li><a href="" class="categoria-producto"><span class="categoria-nombre">Peluches</span><span class="numero-product">(4)</span></a></li>
+                    <li><a href="" class="categoria-producto"><span class="categoria-nombre">Juguetes</span><span class="numero-product">(5)</span></a></li>
+                </ul>
+                </section>
+            </div>
+        </div>
+        <div class="resultados-adopcion">
+            <product-info> </product-info>
+        </div>
+    </div>
+    <footer-info></footer-info>
+</body>
+</html>
