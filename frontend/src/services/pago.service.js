@@ -173,4 +173,4 @@ class PagoService {
   }
 }
 
-module.exports = PagoService;
+export default PagoService;

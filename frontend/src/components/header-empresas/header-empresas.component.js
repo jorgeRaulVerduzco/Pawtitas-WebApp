@@ -14,7 +14,7 @@ export class HeaderEmpresasComponent extends HTMLElement {
        <header>
   <div class="header-content">
     <div class="left">
-      <a href="/" class="brand">
+      <a href="/" class="brand" data-nav="index.html">
         <img src="/frontend/src/assets/images/Logo2.png" alt="Pawtitas Logo" class="brand-logo">
         <span class="brand-text">Pawtitas</span>
       </a>
@@ -26,6 +26,29 @@ export class HeaderEmpresasComponent extends HTMLElement {
   </div>
 </header>
         `;
+        
+        // Interceptar clics para navegación compatible con Live Server
+        this.#setupNavigation(shadow);
+    }
+    
+    #setupNavigation(shadow) {
+        const currentPath = window.location.pathname;
+        const isStandalonePage = currentPath.includes('/pages/') || 
+                                 (currentPath.includes('.html') && !currentPath.endsWith('/index.html') && !currentPath.endsWith('/'));
+        
+        shadow.querySelectorAll('a[data-nav]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                const target = link.getAttribute('data-nav');
+                if (isStandalonePage && target) {
+                    e.preventDefault();
+                    if (target === 'index.html') {
+                        window.location.href = '../../index.html';
+                    } else {
+                        window.location.href = `../pages/${target}`;
+                    }
+                }
+            });
+        });
     }
 
     #addStyles(shadow) {

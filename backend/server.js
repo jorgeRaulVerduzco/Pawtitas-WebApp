@@ -34,7 +34,7 @@ app.use('/api/centros', centroAdopcionRouter);
 app.use('/api/adopciones', adopcionRouter);
 
 // Servir index.html para rutas SPA (debe ir después de las rutas de API pero antes del error handler)
-app.get('*', (req, res, next) => {
+app.use((req, res, next) => {
   // Si la ruta no es una API y no es un archivo estático, servir index.html para SPA
   if (!req.path.startsWith('/api') && !req.path.includes('.')) {
     res.sendFile(path.join(__dirname, '../frontend/index.html'));

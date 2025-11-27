@@ -275,4 +275,4 @@ class VentaService {
   }
 }
 
-module.exports = VentaService;
+export default VentaService;

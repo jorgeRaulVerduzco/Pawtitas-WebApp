@@ -232,4 +232,4 @@ class MascotaService {
   }
 }
 
-module.exports =  MascotaService;
+export default MascotaService;
