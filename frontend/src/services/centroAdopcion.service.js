@@ -160,4 +160,6 @@ class CentroAdopcionService {
   }
 }
 
+export default CentroAdopcionService;
+
 

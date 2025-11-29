@@ -153,7 +153,7 @@
           "request": {
             "method": "POST",
             "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{jwtToken}}" }],
-            "body": { "mode": "raw", "raw": "{ \"idUsuario\": 1, \"idMascota\": 1, \"tipoVivienda\": \"departamento\", \"razonAdopcion\": \"Quiero compañía\", \"tieneExperiencia\": true }" },
+            "body": { "mode": "raw", "raw": "{ \"idUsuario\": 2, \"idMascota\": 1, \"tipoVivienda\": \"departamento\", \"razonAdopcion\": \"Quiero compañía\", \"tieneExperiencia\": true }" },
             "url": { "raw": "{{baseUrl}}/api/adopciones" }
           }
         },

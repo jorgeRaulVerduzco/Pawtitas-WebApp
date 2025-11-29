@@ -232,4 +232,6 @@ class MascotaService {
   }
 }
 
+export default MascotaService;
+
 

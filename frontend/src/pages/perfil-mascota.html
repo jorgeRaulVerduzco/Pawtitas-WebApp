@@ -12,44 +12,41 @@
 
     <div class="main-content">
         <div class="mascota-container">
-            <div class="mascota-img"> <img src="/frontend/src/assets/images/dog.png" alt="Imagen de la mascota"></div>
-            <h2 class="nombre-mascota">Guapura</h2>
+            <div class="mascota-img"> <img id="mascota-img" src="/frontend/src/assets/images/dog.png" alt="Imagen de la mascota"></div>
+            <h2 id="nombre-mascota" class="nombre-mascota">-</h2>
             <section class="info-mascota">
                 <div class="edad">
                     <span class="info-label ">Edad</span>
-                    <span class="info-value">3 años</span>
+                    <span id="edad-value" class="info-value">-</span>
                 </div>     
                 <div class="especie">
                     <span class="info-label ">Especie</span>
-                    <span class="info-value">Perro</span>
-                </div>   
-                <div class="raza">
-                    <span class="info-label ">Raza</span>
-                    <span class="info-value">Labrador</span>
-                </div>   
+                    <span id="especie-value" class="info-value">-</span>
+                </div>    
                 <div class="peso">
-                    <span class="info-label ">Peso</span>
-                    <span class="info-value">20 kg</span>
+                    <span class="info-label ">Tamano</span>
+                    <span id="tamano-value" class="info-value">-</span>
                 </div>       
                 <div class="localizacion">
                     <span class="info-label ">Localización</span>
-                    <span class="info-value">Centro de Obregon</span>
+                    <span id="centro-value" class="info-value">-</span>
                 </div>       
                 <div class="sexo">
                     <span class="info-label ">Sexo</span>
-                    <span class="info-value">Macho</span>
+                    <span id="sexo-value" class="info-value">-</span>
                 </div>        
             </section>
 
-            
-                <p class="Descripcion">Hola soy guapo y soy muy guapo!</p>
 
-                <button class="Boton">Me interesa!</button>
+                <p id="descripcion-text" class="Descripcion">-</p>
+
+                <button id="interesar-btn" class="Boton">Me interesa!</button>
         </div>
     </div>
 
 
     <footer-info></footer-info>
+    <script type="module" src="../../src/js/perfil-mascota.js"></script>
     
 </body>
 </html>

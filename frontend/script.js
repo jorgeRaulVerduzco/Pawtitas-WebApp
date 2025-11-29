@@ -1,3 +1,4 @@
+import page from 'https://unpkg.com/page/page.mjs';
 import { HeaderComponent } from "./src/components/header/header.component.js"
 import { HeaderEmpresasComponent } from "./src/components/header-empresas/header-empresas.component.js"
 import { FooterComponent } from "./src/components/footer/footer.component.js"
@@ -21,6 +22,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function showContent(contentId) {
     const contentContainer = document.getElementById('content');
+
+    // Si no existe el contenedor 'content' en la página actual, no intentar cambiarlo.
+    if (!contentContainer) {
+        console.warn("showContent: contenedor '#content' no encontrado en esta página.");
+        return;
+    }
 
     contentContainer.innerHTML = `<${contentId}></${contentId}>`;
 }

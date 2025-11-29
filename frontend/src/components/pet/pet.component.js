@@ -12,20 +12,29 @@ export class PetComponent extends HTMLElement {
 
 	// Solo son datos de prueba, despues se pondran los de la base de datos
 	#render(shadow) {
+		const name = this.getAttribute('name') || 'Sin nombre';
+		const image = this.getAttribute('imagen') || '/frontend/src/assets/images/dog.png';
+		const age = this.getAttribute('edad') || '';
+		const species = this.getAttribute('especie') || '';
+		const size = this.getAttribute('tamano') || '';
+		const sexo = this.getAttribute('sexo') || '';
+		const estado = this.getAttribute('estado') || '';
+		const centro = this.getAttribute('centro') || '';
+		const petId = this.getAttribute('pet-id') || '';
+
 		shadow.innerHTML += `
 		<div class="card">
-            <a href="/pet-id" class="pet-link">
-            <div class="image-container">
-                <img src="/frontend/src/assets/images/dog.png" alt="Muchachon">
-            </div>
-            <div class="card-details">
-                <h1>Muchachon</h1>
-                <div class="age">
-                    <p>2 años</p>
-                </div>
-            </div>
-            </a>
-        </div>
+			<a href="./perfil-mascota.html?id=${petId}" class="pet-link" data-id="${petId}">
+				<div class="image-container">
+					<img src="${image}" alt="${name}">
+				</div>
+				<div class="card-details">
+					<h1>${name}</h1>
+					<div class="meta">
+						<p class="age">${age}</p>
+				</div>
+			</a>
+		</div>
 		`;
 	}
 

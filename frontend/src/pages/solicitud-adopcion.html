@@ -17,6 +17,9 @@
 
         <form class="general-form" >
 
+            <input type="hidden" id="idMascota" name="idMascota" />
+
+
             <label for="vivienda" class="required">Tipo de vivienda</label>
             <input type="text" id="vivienda" name="vivienda" required>
 
@@ -43,11 +46,11 @@
             <label for="razon" class="required">Razon de adopcion</label>
             <textarea id="razon" name="razon" required></textarea>
 
-            <label for="ine" class="required">INE</label>
-            <input type="file" id="ine" name="ine" required>
+            <label for="ine">INE (opcional)</label>
+            <input type="file" id="ine" name="ine">
 
-            <label for="foto-vivienda" class="required">Foto de la vivienda</label>
-            <input type="file" id="foto-vivienda" name="foto-vivienda" required>
+            <label for="foto-vivienda">Foto de la vivienda (opcional)</label>
+            <input type="file" id="foto-vivienda" name="foto-vivienda">
 
         
             <button class="boton">Enviar</button>
@@ -57,5 +60,6 @@
     </div>
 
     <footer-info></footer-info>
-</body>
+    <script type="module" src="../../src/js/solicitud-adopcion.js"></script>
+    </body>
 </html>

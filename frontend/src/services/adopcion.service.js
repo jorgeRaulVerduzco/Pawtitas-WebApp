@@ -320,4 +320,6 @@ class AdopcionService {
   }
 }
 
+export default AdopcionService;
+
 
