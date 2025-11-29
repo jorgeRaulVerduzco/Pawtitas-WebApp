@@ -87,3 +87,4 @@ class CategoriaService {
   }
 }
 
+export default CategoriaService;

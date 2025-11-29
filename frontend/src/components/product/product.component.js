@@ -1,51 +1,167 @@
-export class ProductComponent extends HTMLElement {
+import ProductoService from "../../services/producto.service.js";
 
-	constructor() {
-		super();
-	}
+export class ProductComponent extends HTMLElement {
+    constructor() {
+        super();
+        this.productService = ProductoService;
+        this.shadow = this.attachShadow({ mode: 'open' });
+
+        // Propiedades del producto por defecto
+        this.image = '';
+        this.name = '';
+        this.price = '';
+        this.productData = null;
+        this.productId = null;
+        this.calificacion = 0;
+    }
 
 	connectedCallback() {
-        this.shadow = this.attachShadow({ mode: "open" });
-		this.#agregaEstilo(this.shadow);
-		this.#render(this.shadow);
+        this.productId = this.getAttribute('product-id') || null;
+
+        if (this.productId) {
+            this.#agregaEstilo(this.shadow);
+            this.#loadProduct(this.productId).then(() => this.#render(this.shadow.getElementById('card') || this.shadow));
+        } else {
+            this.#agregaEstilo(this.shadow);
+            this.#loadAllProducts();
+        }
 	}
 
-    // Solo son datos de prueba, despues se pondran los de la base de datos
-	#render(shadow) {
-		shadow.innerHTML += `
-		<div class="card">
-            <a href="/product-id" class="product-link">
+        async #loadAllProducts() {
+        try {
+            // Pedir todos los productos
+            const res = await this.productService.obtenerTodos();
+            const productos = res && res.data ? res.data : [];
+
+            // Asegurarnos de tener el contenedor
+            let container = this.shadow.getElementById('list');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'list';
+                container.className = 'product-list';
+                this.shadow.appendChild(container);
+            }
+            container.innerHTML = '';
+
+            if (!productos.length) {
+                container.textContent = 'No hay productos para mostrar.';
+                return;
+            }
+
+            // Eliminar duplicados por id por si el backend los devuelve
+            const vistos = new Set();
+            const unicos = [];
+            productos.forEach(p => {
+                if (!p || typeof p.id === 'undefined' || p.id === null) return;
+                if (vistos.has(p.id)) return;
+                vistos.add(p.id);
+                unicos.push(p);
+            });
+
+            // Crear un elemento <product-info> por producto único
+            // Intentar renderizar en el DOM 'light' dentro de la sección `.resultados-adopcion`
+            const hostResultados = this.closest('.resultados-adopcion') || document.querySelector('.resultados-adopcion');
+            if (hostResultados) {
+                unicos.forEach(p => {
+                    const el = document.createElement('product-info');
+                    if (p.id) el.setAttribute('product-id', p.id);
+                    if (p.nombre) el.setAttribute('name', p.nombre);
+                    if (p.imagen) el.setAttribute('image', p.imagen);
+                    if (typeof p.calificacion !== 'undefined') el.setAttribute('calificacion', p.calificacion);
+                    if (typeof p.precio !== 'undefined') el.setAttribute('price', `$${Number(p.precio).toFixed(2)}`);
+                    hostResultados.appendChild(el);
+                });
+                // Hemos volcado los elementos directamente en la sección principal; eliminar este wrapper
+                // para evitar dejar un elemento extra en la grid
+                this.remove();
+                return;
+            }
+            // Si no encontramos la sección principal, renderizamos en el shadow por compatibilidad
+            unicos.forEach(p => {
+                const el = document.createElement('product-info');
+                if (p.id) el.setAttribute('product-id', p.id);
+                if (p.nombre) el.setAttribute('name', p.nombre);
+                if (p.imagen) el.setAttribute('image', p.imagen);
+                if (typeof p.calificacion !== 'undefined') el.setAttribute('calificacion', p.calificacion);
+                if (typeof p.precio !== 'undefined') el.setAttribute('price', `$${Number(p.precio).toFixed(2)}`);
+                container.appendChild(el);
+            });
+        } catch (err) {
+            console.error('Error cargando productos en product-list:', err);
+            const container = this.shadow.getElementById('list');
+            if (container) container.textContent = 'Error al cargar productos.';
+        }
+    }
+
+    async #loadProduct(id) {
+        try {
+            const res = await this.productService.obtenerPorId(id, true);
+            if (res && res.data) {
+                this.productData = res.data;
+                this.name = this.productData.nombre || this.name;
+                this.image = this.productData.imagen || this.image;
+                this.price = `$${(this.productData.precio || 0).toFixed(2)}`;
+                this.calificacion = this.productData.calificacion || 0;
+            }
+        } catch (err) {
+            console.error('Error cargando producto en componente:', err);
+        }
+    }
+    
+
+    #render(container) {
+        const parent = container || this.shadow;
+        // Navegar directamente a la página estática `producto-page.html` con query param
+        // Esto hace que el navegador cargue la página al hacer clic en el producto
+        const productUrl = this.productId ? `/src/pages/producto-page.html?product=${this.productId}` : '/src/pages/producto-page.html';
+        parent.innerHTML += `
+        <div class="card">
+            <a href="${productUrl}" class="product-link">
                 <div class="image-container">
-                    <img src="/frontend/src/assets/images/dawg.png" alt="Producto">
+                    <img src="${this.image}" alt="${this.name}" class="product-image"/>
                 </div>
                 <div class="card-details">
-                <h3>Pedigree - High Protein, Croquetas para Perro Adulto, Sabor Res y Pollo, Alimento Completo para Perro con Alta Proteína, Vitaminas y Omega 6, 18 kg</h3>
+                <h3>${this.name}</h3>
                 <div class="rating">
-                    ${this.#getRatingHtml(4)}
+                    ${this.#getRatingHtml(this.calificacion)}
                 </div>
-                <div class="price">$25.00</div>
+                <div class="price">${this.price}</div>
                 </div>
             </a>
         </div>
-		`;
-	}
+        `;
+
+        // Asegurar navegación fuera del Shadow DOM: redirigir directamente
+        // usando `window.location.href` para cargar `producto-page.html`.
+        try {
+            const link = parent.querySelector('.product-link');
+            if (link) {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.location.href = productUrl;
+                });
+            }
+        } catch (err) {
+            console.error('Error al enlazar navegación del producto:', err);
+        }
+    }
 
     #getRatingHtml(score) {
         let html = '';
         for (let i = 1; i <= 5; i++) {
             if (i <= score) {
-                html += '<i class="fas fa-paw"><img src="/frontend/src/assets/images/paw-purple.svg" alt="Estrella"></i>';
+                html += `<i class="fas fa-paw"><img src="/src/assets/images/paw-purple.svg" alt="Estrella"></i>`;
             } else {
-                html += '<i class="fas fa-paw"><img src="/frontend/src/assets/images/paw-gray.svg" alt="Sin estrella"></i>';
+                html += `<i class="fas fa-paw"><img src="/src/assets/images/paw-gray.svg" alt="Sin estrella"></i>`;
             }
         }
         return html;
     }
 
 	#agregaEstilo(shadow) {
-		let link = document.createElement("link");
-		link.setAttribute("rel", "stylesheet");
-		link.setAttribute("href", "/frontend/src/components/product/product.component.css");
-		shadow.appendChild(link);
+        let link = document.createElement("link");
+        link.setAttribute("rel", "stylesheet");
+        link.setAttribute("href", "/src/components/product/product.component.css");
+        shadow.appendChild(link);
 	}
 }

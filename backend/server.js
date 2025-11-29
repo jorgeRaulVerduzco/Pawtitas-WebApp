@@ -3,7 +3,8 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
 
-dotenv.config({ path: './variables.env' });
+// Cargar variables de entorno de forma robusta usando __dirname
+dotenv.config({ path: path.join(__dirname, 'variables.env') });
 
 // Importación de rutas
 const usuarioRouter = require('./routes/usuarioRoutes.js');

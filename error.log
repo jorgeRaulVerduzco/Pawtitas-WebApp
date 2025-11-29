@@ -1,0 +1,8 @@
+{"level":"error","message":"Error al iniciar sesión: JWT_SECRET no está configurado. Defina la variable de entorno JWT_SECRET o añádala en variables.env"}
+{"level":"error","message":"Error al iniciar sesión: JWT_SECRET no está configurado. Defina la variable de entorno JWT_SECRET o añádala en variables.env"}
+{"level":"error","message":"Credenciales inválidas o usuario inactivo"}
+{"level":"error","message":"Venta no encontrada"}
+{"level":"error","message":"Credenciales inválidas o usuario inactivo"}
+{"level":"error","message":"No hay productos para esta categoria."}
+{"level":"error","message":"No hay productos para esta categoria."}
+{"level":"error","message":"No hay productos para esta categoria."}

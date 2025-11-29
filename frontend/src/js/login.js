@@ -35,11 +35,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Redirigir según el rol
         if (rol === 'administrador') {
-          window.location.href = '/frontend/src/pages/home-administrador.html';
+          window.location.href = 'home-administrador.html';
         } else if (rol === 'empleado') {
-          window.location.href = '/frontend/src/pages/home-empresas.html';
+          window.location.href = 'home-empresas.html';
         } else {
-          window.location.href = '/frontend/src/pages/index.html'; //nose si este correcto xd
+          // Usuario cliente: ir a la vista de productos
+          window.location.href = 'home-productos.html';
         }
       } else {
         throw new Error('Respuesta del servidor incompleta');

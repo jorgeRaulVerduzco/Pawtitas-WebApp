@@ -98,3 +98,18 @@
   background: #fff;
   padding: 12px;
 }
+
+/* Contenedor de lista: mostrar tarjetas en fila (horizontal) */
+.product-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap; /* permite pasar a la siguiente línea en pantallas pequeñas */
+  gap: 12px; /* espacio entre tarjetas */
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 12px;
+}
+
+:host {
+  display: block;
+}
