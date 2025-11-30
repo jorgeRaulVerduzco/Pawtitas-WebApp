@@ -5,7 +5,7 @@ class ProductoController {
   // Crear producto con categorías opcionales
   static async crearProducto(req, res, next) {
     try {
-      const { nombre, descripcion, precio, cantidadStock, activo, categorias } =
+      const { nombre, descripcion, precio, cantidadStock, activo, categorias, imagen } =
         req.body;
 
       if (!nombre || !precio || cantidadStock === undefined) {
@@ -24,6 +24,7 @@ class ProductoController {
         cantidadStock,
         activo: activo ?? true,
         categorias,
+        imagen,
       });
 
       res.status(201).json({
