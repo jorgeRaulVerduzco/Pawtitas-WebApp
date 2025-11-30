@@ -98,10 +98,14 @@ export class ProductComponent extends HTMLElement {
             const res = await this.productService.obtenerPorId(id, true);
             if (res && res.data) {
                 this.productData = res.data;
+                console.log('ProductComponent #loadProduct -> productData:', this.productData);
                 this.name = this.productData.nombre || this.name;
                 this.image = this.productData.imagen || this.image;
-                this.price = `$${(this.productData.precio || 0).toFixed(2)}`;
-                this.calificacion = this.productData.calificacion || 0;
+                // Asegurar que precio y calificacion sean numéricos (Sequelize DECIMAL suele venir como string)
+                const precioNum = Number(this.productData.precio);
+                this.price = `$${(Number.isFinite(precioNum) ? precioNum : 0).toFixed(2)}`;
+                const cal = Number(this.productData.calificacion);
+                this.calificacion = Number.isFinite(cal) ? cal : 0;
             }
         } catch (err) {
             console.error('Error cargando producto en componente:', err);
@@ -123,7 +127,7 @@ export class ProductComponent extends HTMLElement {
                 <div class="card-details">
                 <h3>${this.name}</h3>
                 <div class="rating">
-                    ${this.#getRatingHtml(this.calificacion)}
+                    ${this.#getRatingHtml(Math.round(this.calificacion))}
                 </div>
                 <div class="price">${this.price}</div>
                 </div>
@@ -149,11 +153,8 @@ export class ProductComponent extends HTMLElement {
     #getRatingHtml(score) {
         let html = '';
         for (let i = 1; i <= 5; i++) {
-            if (i <= score) {
-                html += `<i class="fas fa-paw"><img src="/src/assets/images/paw-purple.svg" alt="Estrella"></i>`;
-            } else {
-                html += `<i class="fas fa-paw"><img src="/src/assets/images/paw-gray.svg" alt="Sin estrella"></i>`;
-            }
+            const src = i <= score ? '/frontend/src/assets/images/paw-purple.svg' : '/frontend/src/assets/images/paw-gray.svg';
+            html += `<img class="paw-icon" src="${src}" alt="${i <= score ? 'Patita activa' : 'Patita inactiva'}" data-score="${i}" style="width:20px;height:20px;margin-right:6px;vertical-align:middle;">`;
         }
         return html;
     }

@@ -6,20 +6,4 @@
 {"level":"error","message":"No hay productos para esta categoria."}
 {"level":"error","message":"No hay productos para esta categoria."}
 {"level":"error","message":"No hay productos para esta categoria."}
-{"level":"error","message":"No se encontraron productos."}
-{"level":"error","message":"No se encontraron productos."}
-{"level":"error","message":"Error al crear mascota: Error al crear mascota: Cannot add or update a child row: a foreign key constraint fails (`pawtitas`.`mascotas`, CONSTRAINT `mascotas_ibfk_2` FOREIGN KEY (`idCentroAdopcion`) REFERENCES `centroadopciones` (`id`) ON DELETE CASCADE ON UPDATE CASCADE)"}
-{"level":"error","message":"Error al crear mascota: Error al crear mascota: Centro de adopción no encontrado"}
-{"level":"error","message":"Credenciales inválidas o usuario inactivo"}
-{"level":"error","message":"Credenciales inválidas o usuario inactivo"}
-{"level":"error","message":"Credenciales inválidas o usuario inactivo"}
-{"level":"error","message":"No se encontraron productos."}
-{"level":"error","message":"No se encontraron productos."}
-{"level":"error","message":"Sólo se pueden aprobar solicitudes pendientes"}
-{"level":"error","message":"Sólo se pueden aprobar solicitudes pendientes"}
-{"level":"error","message":"No se encontraron productos."}
-{"level":"error","message":"No se encontraron productos."}
-{"level":"error","message":"No se encontraron productos."}
-{"level":"error","message":"No se encontraron productos."}
-{"level":"error","message":"No se encontraron productos."}
-{"level":"error","message":"No se encontraron productos."}
+{"level":"error","message":"Data truncated for column 'metodoPago' at row 1"}
