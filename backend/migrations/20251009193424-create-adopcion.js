@@ -62,7 +62,7 @@ module.exports = {
         allowNull: false,
       },
       documentosSolicitud: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT('long'),
         allowNull: true,
       },
       createdAt: {

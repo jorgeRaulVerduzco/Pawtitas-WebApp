@@ -69,7 +69,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       documentosSolicitud: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT('long'),
         allowNull: true,
       },
     },

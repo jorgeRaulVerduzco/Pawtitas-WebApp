@@ -64,17 +64,82 @@ async function init() {
       return;
     }
 
-    const payload = {
-      idUsuario: Number(idUsuario),
-      idMascota: Number(idMascotaVal),
-      tipoVivienda,
-      tienePatio: !!tienePatio,
-      razonAdopcion: razon,
-      tieneExperiencia: !!tieneExperiencia,
-      documentosSolicitud: null
+    // Procesar archivos subidos
+    const documentos = [];
+    const ineFile = document.getElementById('ine')?.files[0];
+    const fotoViviendaFile = document.getElementById('foto-vivienda')?.files[0];
+
+    console.log('Archivos detectados:', { 
+      ine: ineFile ? `${ineFile.name} (${ineFile.size} bytes)` : 'No hay archivo',
+      fotoVivienda: fotoViviendaFile ? `${fotoViviendaFile.name} (${fotoViviendaFile.size} bytes)` : 'No hay archivo'
+    });
+
+    // Función para convertir archivo a base64
+    const convertirArchivoABase64 = (file) => {
+      return new Promise((resolve, reject) => {
+        if (!file) {
+          resolve(null);
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = () => {
+          console.log('Archivo convertido a base64, tamaño:', reader.result.length);
+          resolve(reader.result);
+        };
+        reader.onerror = () => reject(new Error('No se pudo leer el archivo'));
+        reader.readAsDataURL(file);
+      });
     };
 
     try {
+      // Convertir archivos a base64
+      if (ineFile) {
+        console.log('Convirtiendo INE a base64...');
+        const ineBase64 = await convertirArchivoABase64(ineFile);
+        if (ineBase64) {
+          documentos.push(ineBase64);
+          console.log('INE agregado a documentos');
+        }
+      }
+
+      if (fotoViviendaFile) {
+        console.log('Convirtiendo foto de vivienda a base64...');
+        const fotoBase64 = await convertirArchivoABase64(fotoViviendaFile);
+        if (fotoBase64) {
+          documentos.push(fotoBase64);
+          console.log('Foto de vivienda agregada a documentos');
+        }
+      }
+
+      console.log('Total de documentos procesados:', documentos.length);
+
+      // Preparar documentosSolicitud: si hay documentos, guardarlos como JSON string
+      // Si solo hay uno, guardarlo directamente; si hay múltiples, como array JSON
+      let documentosSolicitud = null;
+      if (documentos.length === 1) {
+        documentosSolicitud = documentos[0];
+        console.log('Un solo documento, guardando como string base64');
+      } else if (documentos.length > 1) {
+        documentosSolicitud = JSON.stringify(documentos);
+        console.log('Múltiples documentos, guardando como JSON string');
+      } else {
+        console.log('No hay documentos para guardar');
+      }
+
+      const payload = {
+        idUsuario: Number(idUsuario),
+        idMascota: Number(idMascotaVal),
+        tipoVivienda,
+        tienePatio: !!tienePatio,
+        razonAdopcion: razon,
+        tieneExperiencia: !!tieneExperiencia,
+        documentosSolicitud
+      };
+
+      console.log('Payload completo:', payload);
+      console.log('documentosSolicitud tiene valor?', documentosSolicitud !== null);
+      console.log('Tamaño de documentosSolicitud:', documentosSolicitud ? documentosSolicitud.length : 0);
+
       const result = await AdopcionService.crear(payload);
       console.log('Solicitud creada:', result);
       alert('Solicitud enviada correctamente.');
