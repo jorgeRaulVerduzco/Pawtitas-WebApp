@@ -30,7 +30,7 @@ export class HeaderComponent extends HTMLElement {
     </div>
 
     <div class="right">
-      <a href="/help" class="action" data-nav="help-page.html">
+      <a href="https://www.youtube.com/watch?v=oo6NoWGdrH4" class="action">
         <img src="/frontend/src/assets/images/circle-question-mark.svg" alt="Ayuda">
         <span>Ayuda</span>
       </a>

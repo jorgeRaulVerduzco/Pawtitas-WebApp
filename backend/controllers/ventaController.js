@@ -133,7 +133,8 @@ class VentaController {
 
   static async obtenerHistorialPorUsuario(req, res, next) {
     try {
-      const idUsuario = req.params.idUsuario ?? req.user?.id;
+      // Aceptar `idUsuario` o `idUser` (las rutas usan `idUser`) y fallback a req.user.id
+      const idUsuario = req.params.idUsuario ?? req.params.idUser ?? req.user?.id;
       if (!idUsuario) return next(new AppError("idUsuario requerido", 400));
 
       const historial = await ventaDAO.obtenerHistorialPorUsuario(idUsuario);

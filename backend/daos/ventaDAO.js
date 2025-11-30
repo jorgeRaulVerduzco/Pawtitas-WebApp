@@ -196,7 +196,14 @@ class VentaDAO {
   async obtenerHistorialPorUsuario(idUsuario) {
     return await Venta.findAll({
       where: { clienteId: idUsuario },
-      include: [{ model: VentaItem, as: "items" }, { model: Pago, as: "pagos" }],
+      include: [
+        {
+          model: VentaItem,
+          as: "items",
+          include: [{ model: Producto, as: "producto" }],
+        },
+        { model: Pago, as: "pagos" },
+      ],
       order: [["fechaVenta", "DESC"]],
     });
   }
