@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionar Adopciones</title>
+    <link rel="stylesheet" href="/frontend/src/styles/gestionar-adopciones-styles.css">
+    <script type="module" src="../../script.js"></script>
+</head>
+<body>
+    <header-empresas-info></header-empresas-info>
+    
+    <div class="main-content">
+        <h2 class="page-title">Gestionar Adopciones</h2>
+        
+        <button class="add-adopcion-button" onclick="window.location.href='/frontend/src/pages/publicar-adopcion.html'">
+            Publicar adopción
+        </button>
+        
+        <!-- Filtros por estado -->
+        <div class="filters-section">
+            <button class="filter-btn active" data-estado="todos">Todas</button>
+            <button class="filter-btn" data-estado="pendiente">Pendientes</button>
+            <button class="filter-btn" data-estado="aprobada">Aprobadas</button>
+            <button class="filter-btn" data-estado="rechazada">Rechazadas</button>
+        </div>
+        
+        <div class="adopciones-card">
+            <!-- Las adopciones se cargarán dinámicamente aquí -->
+            <p class="loading-message">Cargando adopciones...</p>
+        </div>
+    </div>
+    
+    <footer-info></footer-info>
+    
+    <script type="module" src="../js/gestionar-adopciones.js"></script>
+</body>
+</html>
+

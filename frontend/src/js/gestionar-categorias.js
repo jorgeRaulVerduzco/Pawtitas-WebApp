@@ -1,3 +1,5 @@
+import CategoriaService from '../services/categoria.service.js';
+
 document.addEventListener("DOMContentLoaded", () => {
   const categoryList = document.querySelector(".category-list");
   const form = document.querySelector(".add-category-form");
@@ -144,4 +146,5 @@ document.addEventListener("DOMContentLoaded", () => {
       : "Agregar categoría";
   }
 });
+
 

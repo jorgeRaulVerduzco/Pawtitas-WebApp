@@ -128,7 +128,7 @@ async function loadAndRenderProduct() {
 							localStorage.setItem('cart', JSON.stringify(cart));
 							window.alert('Producto agregado al carrito');
 							// Ir al carrito
-							window.location.href = '/src/pages/cart-page.html';
+							window.location.href = '/frontend/src/pages/cart-page.html';
 						} catch (err) {
 							console.error('Error agregando al carrito:', err);
 							window.alert('No se pudo agregar el producto. Revisa la consola.');

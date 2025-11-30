@@ -1,3 +1,5 @@
+import UsuarioService from '../services/usuario.service.js';
+
 document.addEventListener("DOMContentLoaded", () => {
   const token = localStorage.getItem("token");
   const usuarioRaw = localStorage.getItem("usuario");
@@ -31,6 +33,16 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
     window.location.href = "/frontend/src/pages/direcciones-page.html";
   });
+
+  // Botón de cerrar sesión
+  const btnCerrarSesion = document.getElementById("btnCerrarSesion");
+  if (btnCerrarSesion) {
+    btnCerrarSesion.addEventListener("click", () => {
+      if (confirm("¿Estás seguro de que deseas cerrar sesión?")) {
+        cerrarSesion();
+      }
+    });
+  }
 
   const form = document.getElementById("formActualizarContrasena");
   form.addEventListener("submit", async (event) => {
@@ -77,5 +89,17 @@ document.addEventListener("DOMContentLoaded", () => {
       boton.textContent = "Guardar cambios";
     }
   });
+
+  function cerrarSesion() {
+    // Limpiar datos de sesión
+    UsuarioService.logout();
+    localStorage.removeItem('usuario');
+    localStorage.removeItem('cart');
+    localStorage.removeItem('checkout');
+    
+    // Redirigir a login
+    window.location.href = '/frontend/src/pages/login-page.html';
+  }
 });
+
 

@@ -1,4 +1,5 @@
 import ProductoService from '../services/producto.service.js';
+import VentaService from '../services/venta.service.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
 	const purchasesCard = document.querySelector('.purchases-card');
@@ -94,7 +95,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 					console.warn('productoId no encontrado en atributo del botón');
 					return;
 				}
-				const productUrl = `/src/pages/producto-page.html?product=${productoId}`;
+				const productUrl = `/frontend/src/pages/producto-page.html?product=${productoId}`;
 				console.log('Redirigiendo a:', productUrl);
 				window.location.href = productUrl;
 			}

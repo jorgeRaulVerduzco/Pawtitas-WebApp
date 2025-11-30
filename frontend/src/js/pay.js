@@ -1,3 +1,6 @@
+import DireccionService from '../services/direccion.service.js';
+import VentaService from '../services/venta.service.js';
+
 function readCheckout() {
   try {
     const raw = localStorage.getItem('checkout');
@@ -94,7 +97,7 @@ async function fillAddress() {
   addressTextEl.innerHTML = '<strong>No tienes una dirección guardada.</strong> Serás redirigido para agregar una.';
   // pequeña espera para que el usuario vea el mensaje
   setTimeout(() => {
-    window.location.href = '/src/pages/direcciones-page.html';
+    window.location.href = '/frontend/src/pages/direcciones-page.html';
   }, 1500);
 }
 
@@ -205,154 +208,17 @@ document.addEventListener('DOMContentLoaded', async () => {
   await fillAddress();
 });
 
-// --- Toggle del formulario de tarjeta según método de pago ---
-// Habilita/deshabilita inputs y marca/desmarca required
-function toggleCreditForm(enable) {
-  const form = document.querySelector('.credit-card-form');
-  if (!form) return;
-  const inputs = form.querySelectorAll('input, select, textarea, button');
-  inputs.forEach(inp => {
-    if (enable) {
-      inp.removeAttribute('disabled');
-      // aplicar required solo a campos de texto (input-field) para forzar llenado
-      if (inp.classList && inp.classList.contains('input-field')) inp.setAttribute('required', '');
-    } else {
-      inp.setAttribute('disabled', '');
-      inp.removeAttribute('required');
-    }
-  });
-  form.classList.toggle('disabled', !enable);
-}
-
-function setupPaymentMethodToggle() {
-  const radios = Array.from(document.querySelectorAll('input[name="payment"]'));
-  if (!radios || !radios.length) return;
-
-  // Inicializar estado según el radio seleccionado
-  const checked = radios.find(r => r.checked) || radios[0];
-  toggleCreditForm(checked && checked.id === 'tarjeta-credito');
-
-  radios.forEach(radio => {
-    radio.addEventListener('change', (e) => {
-      const isCard = e.target && e.target.id === 'tarjeta-credito';
-      toggleCreditForm(isCard);
-    });
-  });
-}
-
-// Intentar configurar el toggle al cargar el módulo (si el DOM ya está listo será llamada sin problema)
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', setupPaymentMethodToggle);
-} else {
-  setupPaymentMethodToggle();
-}
-
-// --- Validaciones y formateo para inputs de tarjeta ---
-function sanitizeDigits(value, maxLen) {
-  return (value || '').replace(/\D/g, '').slice(0, maxLen);
-}
-
-function onCardNumberInput(el) {
-  if (!el) return;
-  const val = sanitizeDigits(el.value, 16);
-  el.value = val;
-  updatePayButtonState();
-}
-
-function onCvcInput(el) {
-  if (!el) return;
-  el.value = sanitizeDigits(el.value, 3);
-  updatePayButtonState();
-}
-
-function onExpiryInput(el) {
-  if (!el) return;
-  // Mantener solo dígitos y luego formatear MM/YY
-  const digits = sanitizeDigits(el.value, 4);
-  let month = digits.slice(0, 2);
-  let year = digits.slice(2, 4);
-
-  // Ajustes: mes max 12, año mínimo 25
-  if (month.length === 2) {
-    const m = parseInt(month, 10);
-    if (isNaN(m) || m < 1) month = '01';
-    else if (m > 12) month = '12';
-    else if (month.length === 1) month = '0' + month; // never mind but safe
-  }
-
-  if (year.length === 2) {
-    const y = parseInt(year, 10);
-    if (isNaN(y) || y < 25) year = '25';
-  }
-
-  el.value = month + (year ? '/' + year : '');
-  updatePayButtonState();
-}
-
-function isExpiryValid(value) {
-  if (!value) return false;
-  const m = value.split('/');
-  if (m.length !== 2) return false;
-  const month = parseInt(m[0], 10);
-  const year = parseInt(m[1], 10);
-  if (isNaN(month) || isNaN(year)) return false;
-  if (month < 1 || month > 12) return false;
-  if (year < 25) return false;
-  return true;
-}
-
-function isCreditFormValid() {
-  const checked = document.querySelector('input[name="payment"]:checked');
-  // Si no se seleccionó tarjeta como método, consideramos válido (no bloquear)
-  if (!checked || checked.id !== 'tarjeta-credito') return true;
-
-  const cardEl = document.getElementById('card-number');
-  const expiryEl = document.getElementById('card-expiry');
-  const cvcEl = document.getElementById('card-cvc');
-  if (!cardEl || !expiryEl || !cvcEl) return false;
-
-  const cardDigits = sanitizeDigits(cardEl.value, 16);
-  const cvcDigits = sanitizeDigits(cvcEl.value, 3);
-  return cardDigits.length === 16 && isExpiryValid(expiryEl.value) && cvcDigits.length === 3;
-}
-
-function updatePayButtonState() {
-  const btn = document.querySelector('.btn-pay');
-  if (!btn) return;
-  btn.disabled = !isCreditFormValid();
-}
-
-function attachCardInputHandlers() {
-  const cardEl = document.getElementById('card-number');
-  const expiryEl = document.getElementById('card-expiry');
-  const cvcEl = document.getElementById('card-cvc');
+// Configurar botón de pago - sin validación de tarjeta
+function setupPayButton() {
   const payBtn = document.querySelector('.btn-pay');
-
-  if (cardEl) {
-    cardEl.addEventListener('input', () => onCardNumberInput(cardEl));
-    cardEl.addEventListener('blur', () => onCardNumberInput(cardEl));
-  }
-  if (expiryEl) {
-    expiryEl.addEventListener('input', () => onExpiryInput(expiryEl));
-    expiryEl.addEventListener('blur', () => onExpiryInput(expiryEl));
-  }
-  if (cvcEl) {
-    cvcEl.addEventListener('input', () => onCvcInput(cvcEl));
-    cvcEl.addEventListener('blur', () => onCvcInput(cvcEl));
-  }
-
   if (payBtn) {
-    // Estado inicial
-    updatePayButtonState();
+    // Habilitar botón por defecto (no requiere validación de tarjeta)
+    payBtn.disabled = false;
     payBtn.addEventListener('click', async (e) => {
       e.preventDefault();
       e.stopPropagation();
-      if (!isCreditFormValid()) {
-        alert('Por favor completa correctamente los datos de la tarjeta (16 dígitos, MM/YY válido y CVC de 3 dígitos).');
-        return false;
-      }
 
-      // Ejecutar el proceso de pago/venta
+      // Ejecutar el proceso de pago/venta directamente (sin validar tarjeta)
       try {
         payBtn.disabled = true;
         payBtn.textContent = 'Procesando...';
@@ -360,23 +226,18 @@ function attachCardInputHandlers() {
       } catch (err) {
         console.error('Error procesando pago:', err);
         alert('Ocurrió un error procesando el pago: ' + (err.message || err));
-      } finally {
         payBtn.disabled = false;
         payBtn.textContent = 'Pagar ahora';
       }
     });
   }
-
-  // También actualizar estado cuando se cambie el método de pago
-  const radios = Array.from(document.querySelectorAll('input[name="payment"]'));
-  radios.forEach(r => r.addEventListener('change', updatePayButtonState));
 }
 
-// Agregar handlers cuando el DOM esté listo (si ya lo está, ejecuta inmediatamente)
+// Agregar handlers cuando el DOM esté listo
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', attachCardInputHandlers);
+  document.addEventListener('DOMContentLoaded', setupPayButton);
 } else {
-  attachCardInputHandlers();
+  setupPayButton();
 }
 
 // --- Proceso de pago que llama al backend para crear venta/pago/items ---
@@ -407,10 +268,11 @@ async function processCheckoutAndPay() {
   const entrega = subtotal>0 ? 100.0 : 0.0;
   const total = subtotal + entrega;
 
-  // Determinar método de pago (enviar siempre 'tarjeta' para cumplir ENUM del backend)
-  const metodo = 'tarjeta';
+  // Determinar método de pago según selección del usuario o usar 'tarjeta' por defecto
+  const metodoSeleccionado = document.querySelector('input[name="payment"]:checked');
+  const metodo = metodoSeleccionado && metodoSeleccionado.id === 'paypal' ? 'transferencia' : 'tarjeta';
 
-  // Preparar datos de pago (simulamos aprobado para marcar la venta como completada)
+  // Preparar datos de pago (aprobado directamente, como en las clases test)
   const pago = {
     monto: total.toFixed ? total.toFixed(2) : String(total),
     metodoPago: metodo,
@@ -418,17 +280,12 @@ async function processCheckoutAndPay() {
     estado: 'aprobado'
   };
 
-  // Llamar al servicio de ventas (requiere token en headers si el usuario está autenticado)
-  if (typeof VentaService === 'undefined' || !VentaService.crearVentaCompleta) {
-    throw new Error('VentaService no está disponible. Asegúrate de incluir ../services/venta.service.js en la página');
-  }
-
   // Requerir que el usuario esté autenticado (ruta del backend usa validateJWT)
   const token = localStorage.getItem('token');
   if (!token) {
     // Redirigir a login para que obtenga token y vuelva a intentar
     window.alert('Debes iniciar sesión para realizar el pago');
-    window.location.href = '/src/pages/login-page.html';
+    window.location.href = '/frontend/src/pages/login-page.html';
     return;
   }
 
@@ -440,7 +297,7 @@ async function processCheckoutAndPay() {
     try { localStorage.removeItem('cart'); } catch(e){}
     try { localStorage.removeItem('checkout'); } catch(e){}
     // Redirigir a historial de calificaciones/ventas
-    window.location.href = '/src/pages/historial-calificacion-productos-page.html';
+    window.location.href = '/frontend/src/pages/historial-calificacion-productos-page.html';
     return;
   }
 

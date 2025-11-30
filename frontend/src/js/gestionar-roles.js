@@ -1,4 +1,6 @@
 // frontend/src/js/gestionar-roles.js
+import UsuarioService from '../services/usuario.service.js';
+
 let usuarios = [];
 let usuariosSeleccionados = [];
 
@@ -27,11 +29,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 async function cargarUsuarios() {
   try {
     console.log('Cargando usuarios...');
-    // Asegúrate de que UsuarioService existe
-    if (typeof UsuarioService === 'undefined') {
-        throw new Error('UsuarioService no está cargado correctamente');
-    }
-
     const response = await UsuarioService.obtenerTodos();
     usuarios = response.data;
     console.log('Usuarios cargados:', usuarios); // Verificamos la estructura

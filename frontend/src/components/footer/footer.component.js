@@ -36,9 +36,9 @@ export class FooterComponent extends HTMLElement {
 		
 		shadow.querySelectorAll('a[data-nav]').forEach(link => {
 			link.addEventListener('click', (e) => {
+				e.preventDefault();
 				const target = link.getAttribute('data-nav');
-				if (isStandalonePage && target) {
-					e.preventDefault();
+				if (target) {
 					if (target === 'index.html') {
 						window.location.href = '../../index.html';
 					} else {

@@ -1,3 +1,5 @@
+import DireccionService from '../services/direccion.service.js';
+
 document.addEventListener("DOMContentLoaded", () => {
   const token = localStorage.getItem("token");
   const usuarioRaw = localStorage.getItem("usuario");
@@ -79,6 +81,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function editarDireccion(id) {
     localStorage.setItem("direccionEditId", String(id));
+    // Guardar página de origen para regresar después
+    localStorage.setItem('paginaOrigen', '/frontend/src/pages/direcciones-page.html');
     window.location.href = "/frontend/src/pages/agregar-domicilio-page.html";
   }
 

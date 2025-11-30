@@ -1,4 +1,6 @@
 // frontend/src/js/registro.js
+import UsuarioService from '../services/usuario.service.js';
+
 document.addEventListener('DOMContentLoaded', () => {
   const registroForm = document.getElementById('registroForm');
   const mensajeError = document.getElementById('mensaje-error');

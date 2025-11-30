@@ -173,4 +173,5 @@ class PagoService {
   }
 }
 
+export default PagoService;
 

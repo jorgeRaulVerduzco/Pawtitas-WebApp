@@ -1,3 +1,5 @@
+import DireccionService from '../services/direccion.service.js';
+
 document.addEventListener("DOMContentLoaded", () => {
   const token = localStorage.getItem("token");
   if (!token) {
@@ -50,8 +52,13 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       localStorage.removeItem("direccionEditId");
+      
+      // Obtener página de origen o usar la predeterminada
+      const paginaOrigen = localStorage.getItem('paginaOrigen') || '/frontend/src/pages/direcciones-page.html';
+      localStorage.removeItem('paginaOrigen');
+      
       setTimeout(() => {
-        window.location.href = "/frontend/src/pages/direcciones-page.html";
+        window.location.href = paginaOrigen;
       }, 1200);
     } catch (error) {
       mensaje.textContent = error.message || "No se pudo guardar la dirección.";
@@ -78,4 +85,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 });
+
 

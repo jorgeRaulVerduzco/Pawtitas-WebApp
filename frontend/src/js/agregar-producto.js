@@ -1,4 +1,6 @@
 // frontend/src/js/agregar-producto.js
+import ProductoService from '../services/producto.service.js';
+
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("agregarProductoForm");
   const mensajeError = document.getElementById("mensaje-error");
@@ -95,8 +97,12 @@ document.addEventListener("DOMContentLoaded", () => {
       form.reset();
       ocultarPreview();
 
+      // Obtener página de origen o usar la predeterminada
+      const paginaOrigen = localStorage.getItem('paginaOrigen') || '/frontend/src/pages/gestionar-productos.html';
+      localStorage.removeItem('paginaOrigen');
+
       setTimeout(() => {
-        window.location.href = "/frontend/src/pages/gestionar-productos.html";
+        window.location.href = paginaOrigen;
       }, 2000);
     } catch (error) {
       console.error("Error al agregar producto:", error);

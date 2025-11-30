@@ -280,6 +280,6 @@ function attachBuyButtonListener() {
 
     localStorage.setItem('checkout', JSON.stringify(payload));
     // Redirigir a la página de pago
-    window.location.href = '/src/pages/pay-page.html';
+    window.location.href = '/frontend/src/pages/pay-page.html';
   });
 }

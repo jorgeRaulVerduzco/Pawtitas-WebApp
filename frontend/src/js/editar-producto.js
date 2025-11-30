@@ -1,3 +1,5 @@
+import ProductoService from '../services/producto.service.js';
+
 document.addEventListener("DOMContentLoaded", () => {
   const productoId = localStorage.getItem("editandoProductoId");
   const token = localStorage.getItem("token");
@@ -8,7 +10,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (!productoId) {
-    window.location.href = "/frontend/src/pages/gestionar-productos.html";
+    // Si no hay productoId, regresar a la página de origen o la predeterminada
+    const paginaOrigen = localStorage.getItem('paginaOrigen') || '/frontend/src/pages/gestionar-productos.html';
+    localStorage.removeItem('paginaOrigen');
+    window.location.href = paginaOrigen;
     return;
   }
 
@@ -97,8 +102,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       mostrarExito("Producto actualizado correctamente.");
       localStorage.removeItem("editandoProductoId");
+      
+      // Obtener página de origen o usar la predeterminada
+      const paginaOrigen = localStorage.getItem('paginaOrigen') || '/frontend/src/pages/gestionar-productos.html';
+      localStorage.removeItem('paginaOrigen');
+      
       setTimeout(() => {
-        window.location.href = "/frontend/src/pages/gestionar-productos.html";
+        window.location.href = paginaOrigen;
       }, 1500);
     } catch (error) {
       mostrarError(error.message || "No se pudo actualizar el producto.");
@@ -130,8 +140,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     } catch (error) {
       mostrarError("No se pudo cargar el producto a editar.");
+      const paginaOrigen = localStorage.getItem('paginaOrigen') || '/frontend/src/pages/gestionar-productos.html';
+      localStorage.removeItem('paginaOrigen');
       setTimeout(() => {
-        window.location.href = "/frontend/src/pages/gestionar-productos.html";
+        window.location.href = paginaOrigen;
       }, 1500);
     }
   }
@@ -181,4 +193,5 @@ document.addEventListener("DOMContentLoaded", () => {
     mensajeError.style.display = "none";
   }
 });
+
 

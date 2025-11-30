@@ -4,13 +4,11 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Mascota extends Model {
     static associate(models) {
-      // N:1 con CentroAdopcion
       Mascota.belongsTo(models.CentroAdopcion, {
         foreignKey: "idCentroAdopcion",
         as: "centro",
       });
 
-      // 1:N con Adopcion (una mascota puede tener varias solicitudes)
       Mascota.hasMany(models.Adopcion, {
         foreignKey: "idMascota",
         as: "adopciones",
@@ -36,12 +34,20 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      raza: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
       edad: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      imagen: {
+      peso: {
         type: DataTypes.STRING,
+        allowNull: true,
+      },
+      imagen: {
+        type: DataTypes.TEXT('long'),
         allowNull: true,
       },
       tamano: {

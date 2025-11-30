@@ -182,3 +182,30 @@ body > :content-component {
     max-width: 520px;
     margin: 0 auto;
 }
+
+.logout-section {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid #D492FF;
+    text-align: center;
+}
+
+.boton-logout {
+    background-color: #dc3545;
+    color: white;
+    padding: 12px 40px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.boton-logout:hover {
+    background-color: #c82333;
+}
+
+.boton-logout:active {
+    transform: scale(0.98);
+}

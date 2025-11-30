@@ -8,11 +8,14 @@
     <script type="module" src="../../script.js"></script>
   </head>
   <body>
-    <header-info></header-info>
+    <header-empresas-info></header-empresas-info>
 
     <h1 class="titulo">Gestionar mascotas</h1>
 
     <div class="main-content">
+      <button class="add-mascota-button" onclick="window.location.href='/frontend/src/pages/publicar-adopcion.html'">
+        Publicar nueva mascota
+      </button>
       <div class="gestion-container">
         <div class="gestion-wrapper">
           <div class="gestion-card">
@@ -57,5 +60,7 @@
     </div>
 
     <footer-info></footer-info>
+    
+    <script type="module" src="../js/gestionar-mascotas.js"></script>
   </body>
 </html>

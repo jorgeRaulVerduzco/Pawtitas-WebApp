@@ -11,3 +11,4 @@ router.delete("/:id", validateJWT, categoriaController.eliminarCategoria);
 
 module.exports = router;
 
+

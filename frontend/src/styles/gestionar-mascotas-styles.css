@@ -154,3 +154,23 @@ body > :content-component {
     margin: 0;
 }
 
+.add-mascota-button {
+    background-color: #6B21A8;
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 30px;
+    transition: background-color 0.3s ease;
+    align-self: flex-start;
+}
+
+.add-mascota-button:hover {
+    background-color: #4c1680;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(107, 33, 168, 0.3);
+}
+

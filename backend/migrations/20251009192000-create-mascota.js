@@ -27,12 +27,20 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      raza: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
       edad: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      imagen: {
+      peso: {
         type: Sequelize.STRING,
+        allowNull: true
+      },
+      imagen: {
+        type: Sequelize.TEXT('long'),
         allowNull: true
       },
       tamano: {

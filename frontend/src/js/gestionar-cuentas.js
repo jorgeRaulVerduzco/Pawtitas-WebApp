@@ -1,4 +1,6 @@
 // frontend/src/js/gestionar-cuentas.js
+import UsuarioService from '../services/usuario.service.js';
+
 let usuarios = [];
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -16,9 +18,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 async function cargarUsuarios() {
   try {
-    if (typeof UsuarioService === 'undefined') {
-        throw new Error('UsuarioService no está cargado');
-    }
     const response = await UsuarioService.obtenerTodos();
     usuarios = response.data;
     renderizarUsuarios(usuarios);

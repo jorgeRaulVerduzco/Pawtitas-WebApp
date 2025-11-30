@@ -8,7 +8,7 @@
     <script type="module" src="../../script.js"></script>
 </head>
 <body>
-    <header-info></header-info>
+    <header-empresas-info></header-empresas-info>
 
     <div class="main-content">
         <div class="form-container">
@@ -76,6 +76,12 @@
                     </div>
                 </div>
 
+                <label for="imagenArchivo">Imagen de la mascota</label>
+                <input type="file" id="imagenArchivo" name="imagenArchivo" accept="image/*">
+                <div id="previewContainer" style="display: none; margin-top: 15px;">
+                    <img id="previewImagen" src="" alt="Vista previa" style="max-width: 300px; max-height: 300px; border-radius: 10px; border: 2px solid #D492FF;">
+                </div>
+
                 <label for="descripcion" class="required">Descripción</label>
                 <textarea id="descripcion" name="descripcion" required></textarea>
 
@@ -85,5 +91,7 @@
     </div>
 
     <footer-info></footer-info>
+    
+    <script type="module" src="../js/publicar-adopcion.js"></script>
 </body>
 </html>

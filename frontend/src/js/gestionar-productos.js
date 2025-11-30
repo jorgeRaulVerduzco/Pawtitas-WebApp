@@ -1,5 +1,7 @@
 // frontend/src/js/gestionar-productos.js
 
+import ProductoService from '../services/producto.service.js';
+
 document.addEventListener('DOMContentLoaded', async () => {
   const productosCard = document.querySelector('.productos-card');
   const addProductButton = document.querySelector('.add-product-button');
@@ -16,6 +18,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Event listener para agregar producto
   addProductButton.addEventListener('click', () => {
+    // Guardar página de origen para regresar después
+    localStorage.setItem('paginaOrigen', '/frontend/src/pages/gestionar-productos.html');
     window.location.href = '/frontend/src/pages/agregar-producto.html';
   });
 
@@ -178,6 +182,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   function editarProducto(id) {
     // Guardar ID del producto en localStorage para la página de edición
     localStorage.setItem('editandoProductoId', id);
+    // Guardar página de origen para regresar después
+    localStorage.setItem('paginaOrigen', '/frontend/src/pages/gestionar-productos.html');
     window.location.href = '/frontend/src/pages/editar-producto.html';
   }
 });

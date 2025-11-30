@@ -1,4 +1,6 @@
 // frontend/src/js/login.js
+import UsuarioService from '../services/usuario.service.js';
+
 document.addEventListener('DOMContentLoaded', () => {
   const loginForm = document.getElementById('loginForm');
   const mensajeError = document.getElementById('mensaje-error');
@@ -35,12 +37,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Redirigir según el rol
         if (rol === 'administrador') {
-          window.location.href = 'home-administrador.html';
+          window.location.href = '/frontend/src/pages/home-administrador.html';
         } else if (rol === 'empleado') {
-          window.location.href = 'home-empresas.html';
+          window.location.href = '/frontend/src/pages/home-empresas.html';
         } else {
           // Usuario cliente: ir a la vista de productos
-          window.location.href = 'home-productos.html';
+          window.location.href = '/frontend/src/pages/home-productos.html';
         }
       } else {
         throw new Error('Respuesta del servidor incompleta');

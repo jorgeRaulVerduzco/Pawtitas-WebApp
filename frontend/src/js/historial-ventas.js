@@ -1,5 +1,8 @@
 // frontend/src/js/historial-ventas.js
 
+import ProductoService from '../services/producto.service.js';
+import VentaService from '../services/venta.service.js';
+
 document.addEventListener('DOMContentLoaded', async () => {
   const purchasesCard = document.querySelector('.purchases-card');
 
