@@ -3,7 +3,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.changeColumn("Productos", "imagen", {
-      type: Sequelize.TEXT,
+      type: Sequelize.TEXT('long'),
       allowNull: true,
     });
   },

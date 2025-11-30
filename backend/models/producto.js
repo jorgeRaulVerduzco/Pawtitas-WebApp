@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       nombre: { type: DataTypes.STRING, allowNull: false },
       descripcion: { type: DataTypes.TEXT, allowNull: false },
       precio: { type: DataTypes.DECIMAL(10, 2), allowNull: false },
-      imagen: { type: DataTypes.TEXT, allowNull: true },
+      imagen: { type: DataTypes.TEXT('long'), allowNull: true },
       calificacion: { type: DataTypes.DECIMAL(2, 1), defaultValue: 0 },
       cantidadStock: { type: DataTypes.INTEGER, defaultValue: 0 },
       activo: { type: DataTypes.BOOLEAN, defaultValue: true },
