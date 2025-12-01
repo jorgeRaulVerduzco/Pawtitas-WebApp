@@ -186,6 +186,25 @@ body > :content-component {
     background-color: #dc2626;
 }
 
+.mascota-imagen-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.mascota-imagen-preview {
+    width: 20rem;
+    height: 15rem;
+    object-fit: cover;
+    border: 3px solid #8a2be2;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.archivos-lista {
+    gap: 10px; 
+}
+
+
 /* Responsive */
 @media (max-width: 768px) {
     .documentos-container {

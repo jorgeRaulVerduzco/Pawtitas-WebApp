@@ -38,3 +38,14 @@ window.customElements.define('header-empresas-info', HeaderEmpresasComponent);
 window.customElements.define('footer-info', FooterComponent);
 window.customElements.define('product-info', ProductComponent);
 window.customElements.define('pet-info', PetComponent);
+
+// Cargar módulos específicos de página si corresponde (evita tocar HTML de cada página)
+try {
+    const pathname = window.location.pathname || '';
+    // si estamos en la página gestionar-documentos, importar su módulo
+    if (pathname.endsWith('gestionar-documentos.html')) {
+        import('./src/js/gestionar-documentos.js').catch(err => console.error('Error cargando gestionar-documentos.js', err));
+    }
+} catch (e) {
+    console.warn('No se pudo cargar módulos de página dinámicos:', e);
+}

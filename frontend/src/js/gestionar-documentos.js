@@ -3,274 +3,224 @@
 import AdopcionService from '../services/adopcion.service.js';
 import MascotaService from '../services/mascota.service.js';
 
-document.addEventListener('DOMContentLoaded', async () => {
-  const documentosContainer = document.querySelector('.documentos-container');
-  
-  if (!documentosContainer) {
-    console.error('No se encontró el contenedor de documentos');
-    return;
-  }
-  
-  // Verificar autenticación
-  const token = localStorage.getItem('token');
-  if (!token) {
-    window.location.href = '/frontend/src/pages/login-page.html';
-    return;
-  }
-
-  // Obtener IDs de la URL
-  const urlParams = new URLSearchParams(window.location.search);
-  const adopcionId = urlParams.get('id');
-  const mascotaId = urlParams.get('mascotaId');
-
-  console.log('IDs obtenidos de URL:', { adopcionId, mascotaId });
-
-  if (!adopcionId) {
-    documentosContainer.innerHTML = '<p style="text-align: center; padding: 40px; color: red;">No se especificó una solicitud de adopción</p>';
-    return;
-  }
-
-  // Cargar información de la solicitud
-  await cargarDocumentos(adopcionId, mascotaId);
-
-  /**
-   * Cargar información de la solicitud de adopción
-   */
-  async function cargarDocumentos(adopcionId, mascotaId) {
-    try {
-      documentosContainer.innerHTML = '<p style="text-align: center; padding: 40px;">Cargando información...</p>';
-      
-      // Cargar información de la adopción
-      const adopcionResponse = await AdopcionService.obtenerPorId(adopcionId, {
-        includeUsuario: true,
-        includeMascota: true
-      });
-      
-      console.log('Respuesta completa:', adopcionResponse);
-      
-      // Manejar diferentes estructuras de respuesta
-      const adopcion = adopcionResponse?.data || adopcionResponse;
-      
-      if (!adopcion) {
-        documentosContainer.innerHTML = '<p style="text-align: center; padding: 40px; color: red;">Solicitud no encontrada</p>';
-        return;
-      }
-
-      console.log('Datos de adopción:', adopcion);
-
-      const usuario = adopcion.usuario || {};
-      const mascota = adopcion.mascota || {};
-      
-      const nombreUsuario = usuario.nombres ? 
-        `${usuario.nombres} ${usuario.apellidoPaterno || ''}`.trim() : 
-        usuario.nombreUsuario || 'Usuario desconocido';
-      
-      const nombreMascota = mascota.nombre || 'Mascota sin nombre';
-
-      // Actualizar título
-      const nombreDestacado = document.querySelector('.nombre-destacado');
-      if (nombreDestacado) {
-        nombreDestacado.textContent = nombreMascota;
-      }
-
-      // Actualizar información de la solicitud
-      const nombreSolicitante = document.querySelector('.nombre-solicitante');
-      if (nombreSolicitante) {
-        nombreSolicitante.textContent = nombreUsuario;
-      }
-
-      const tipoVivienda = document.querySelector('.info-value');
-      if (tipoVivienda && adopcion.tipoVivienda) {
-        tipoVivienda.textContent = adopcion.tipoVivienda;
-      }
-
-      const tienePatio = document.querySelectorAll('.info-value-si')[0];
-      if (tienePatio) {
-        tienePatio.textContent = adopcion.tienePatio ? 'Sí' : 'No';
-      }
-
-      const tieneExperiencia = document.querySelectorAll('.info-value-si')[1];
-      if (tieneExperiencia) {
-        tieneExperiencia.textContent = adopcion.tieneExperiencia ? 'Sí' : 'No';
-      }
-
-      const razonBox = document.querySelector('.razon-box p');
-      if (razonBox) {
-        razonBox.textContent = adopcion.razonAdopcion || 'No especificada';
-      }
-
-      // Mostrar documentos si existen
-      let documentos = [];
-      
-      if (adopcion.documentosSolicitud) {
-        try {
-          // Intentar parsear como JSON (si hay múltiples documentos)
-          const parsed = JSON.parse(adopcion.documentosSolicitud);
-          if (Array.isArray(parsed)) {
-            documentos = parsed;
-          } else if (typeof parsed === 'object') {
-            // Si es un objeto, convertirlo a array
-            documentos = Object.values(parsed);
-          } else {
-            // Si no es array ni objeto, tratarlo como documento único
-            documentos = [adopcion.documentosSolicitud];
-          }
-        } catch (e) {
-          // Si no es JSON, tratarlo como documento único (URL o base64)
-          documentos = [adopcion.documentosSolicitud];
-        }
-      }
-
-      // Buscar los elementos del HTML
-      const archivoItems = document.querySelectorAll('.archivo-item');
-      const primerArchivoItem = archivoItems[0]; // Foto de credencial
-      const segundoArchivoItem = archivoItems[1]; // Fotos extras
-      
-      // Mostrar foto de credencial (primer documento)
-      if (primerArchivoItem && documentos.length > 0) {
-        const primerArchivoLink = primerArchivoItem.querySelector('.archivo-link');
-        if (primerArchivoLink) {
-          const documento = documentos[0];
-          primerArchivoLink.href = documento;
-          primerArchivoLink.target = '_blank';
-          
-          // Determinar el nombre del archivo
-          if (documento.startsWith('data:')) {
-            // Si es base64, extraer el tipo
-            const match = documento.match(/data:([^;]+)/);
-            const tipo = match ? match[1] : 'documento';
-            if (tipo.includes('pdf')) {
-              primerArchivoLink.textContent = 'Ver credencial (PDF)';
-            } else if (tipo.includes('image')) {
-              primerArchivoLink.textContent = 'Ver credencial (Imagen)';
-            } else {
-              primerArchivoLink.textContent = 'Ver credencial';
-            }
-          } else if (documento.includes('http') || documento.includes('/')) {
-            // Si es URL, extraer nombre del archivo
-            const nombreArchivo = documento.split('/').pop() || 'Ver credencial';
-            primerArchivoLink.textContent = nombreArchivo.length > 30 ? 'Ver credencial' : nombreArchivo;
-          } else {
-            primerArchivoLink.textContent = 'Ver credencial';
-          }
-        }
-      } else if (primerArchivoItem && documentos.length === 0) {
-        const primerArchivoLink = primerArchivoItem.querySelector('.archivo-link');
-        if (primerArchivoLink) {
-          primerArchivoLink.textContent = 'No disponible';
-          primerArchivoLink.style.color = '#999';
-          primerArchivoLink.style.pointerEvents = 'none';
-        }
-      }
-
-      // Mostrar fotos extras (documentos adicionales)
-      if (segundoArchivoItem && documentos.length > 1) {
-        const archivosLista = segundoArchivoItem.querySelector('.archivos-lista');
-        if (archivosLista) {
-          archivosLista.innerHTML = ''; // Limpiar contenido por defecto
-          
-          // Mostrar documentos adicionales (del índice 1 en adelante)
-          documentos.slice(1).forEach((documento, index) => {
-            const link = document.createElement('a');
-            link.href = documento;
-            link.className = 'archivo-link';
-            link.target = '_blank';
-            
-            // Determinar el nombre del archivo
-            if (documento.startsWith('data:')) {
-              const match = documento.match(/data:([^;]+)/);
-              const tipo = match ? match[1] : 'documento';
-              if (tipo.includes('pdf')) {
-                link.textContent = `Documento ${index + 1} (PDF)`;
-              } else if (tipo.includes('image')) {
-                link.textContent = `Imagen ${index + 1}`;
-              } else {
-                link.textContent = `Documento ${index + 1}`;
-              }
-            } else if (documento.includes('http') || documento.includes('/')) {
-              const nombreArchivo = documento.split('/').pop() || `Documento ${index + 1}`;
-              link.textContent = nombreArchivo.length > 30 ? `Documento ${index + 1}` : nombreArchivo;
-            } else {
-              link.textContent = `Documento ${index + 1}`;
-            }
-            
-            archivosLista.appendChild(link);
-          });
-        }
-      } else if (segundoArchivoItem && documentos.length <= 1) {
-        const archivosLista = segundoArchivoItem.querySelector('.archivos-lista');
-        if (archivosLista) {
-          archivosLista.innerHTML = '<p style="color: #999; font-style: italic; margin: 0;">No hay fotos extras</p>';
-        }
-      }
-
-      // Configurar botones de acción
-      const btnAceptar = document.querySelector('.boton-aceptar');
-      const btnRechazar = document.querySelector('.boton-rechazar');
-
-      if (btnAceptar) {
-        // Remover listeners anteriores si existen
-        btnAceptar.replaceWith(btnAceptar.cloneNode(true));
-        const newBtnAceptar = document.querySelector('.boton-aceptar');
-        newBtnAceptar.addEventListener('click', () => aprobarSolicitud(adopcionId));
-      }
-
-      if (btnRechazar) {
-        // Remover listeners anteriores si existen
-        btnRechazar.replaceWith(btnRechazar.cloneNode(true));
-        const newBtnRechazar = document.querySelector('.boton-rechazar');
-        newBtnRechazar.addEventListener('click', () => rechazarSolicitud(adopcionId));
-      }
-
-      documentosContainer.style.display = 'block';
-
-    } catch (error) {
-      console.error('Error al cargar documentos:', error);
-      console.error('Stack trace:', error.stack);
-      documentosContainer.innerHTML = `<p style="text-align: center; padding: 40px; color: red;">Error al cargar información: ${error.message || 'Error desconocido'}. Por favor intenta de nuevo.</p>`;
-    }
-  }
-
-  /**
-   * Aprobar solicitud de adopción
-   */
-  async function aprobarSolicitud(id) {
-    if (!confirm('¿Estás seguro de aprobar esta solicitud de adopción?')) {
-      return;
-    }
-
-    try {
-      await AdopcionService.aprobar(id);
-      alert('Solicitud de adopción aprobada exitosamente');
-      
-      // Redirigir a gestionar-mascotas
-      window.location.href = '/frontend/src/pages/gestionar-mascotas.html';
-      
-    } catch (error) {
-      console.error('Error al aprobar solicitud:', error);
-      alert(`Error al aprobar la solicitud: ${error.message}`);
-    }
-  }
-
-  /**
-   * Rechazar solicitud de adopción
-   */
-  async function rechazarSolicitud(id) {
-    if (!confirm('¿Estás seguro de rechazar esta solicitud de adopción?')) {
-      return;
-    }
-
-    try {
-      await AdopcionService.rechazar(id);
-      alert('Solicitud de adopción rechazada');
-      
-      // Redirigir a gestionar-mascotas
-      window.location.href = '/frontend/src/pages/gestionar-mascotas.html';
-      
-    } catch (error) {
-      console.error('Error al rechazar solicitud:', error);
-      alert(`Error al rechazar la solicitud: ${error.message}`);
-    }
-  }
+document.addEventListener('DOMContentLoaded', () => {
+  init().catch(err => console.error('Error init gestionar-documentos:', err));
 });
 
+
+async function init() {
+  const cont = document.querySelector('.documentos-container');
+  if (!cont) return;
+
+  if (!isAuthenticated()) {
+    return redirectToLogin();
+  }
+
+  const params = Object.fromEntries(new URLSearchParams(window.location.search));
+  const adopcionId = params.id;
+  
+  if (!adopcionId) return showMessage(cont, 'No se especificó la solicitud de adopción (id)', 'red');
+
+  // Guardar la plantilla antes de borrarla con el mensaje de carga
+  const plantillaGuardada = cont.innerHTML; 
+  showMessage(cont, 'Cargando solicitud...');
+
+  const adopcion = await fetchAdopcion(adopcionId, params.mascotaId);
+  if (!adopcion) return showMessage(cont, 'Solicitud no encontrada', '#999');
+
+  // Restaurar plantilla y poblar con datos
+  cont.innerHTML = plantillaGuardada;
+  populateTemplate(cont, adopcion);
+  attachActionButtons(cont, adopcion.id);
+}
+
+
+function isAuthenticated() {
+  return !!localStorage.getItem('token');
+}
+
+function redirectToLogin() {
+  window.location.href = '/frontend/src/pages/login-page.html';
+}
+
+function showMessage(container, text, color) {
+  container.innerHTML = `<p style="text-align:center;padding:40px;${color ? `color:${color}` : ''}">${text}</p>`;
+}
+
+async function fetchAdopcion(id, mascotaId) {
+  try {
+    const resp = await AdopcionService.obtenerPorId(id, { includeUsuario: true, includeMascota: true });
+    
+    // Si la mascota no viene incluida, intentar obtenerla por separado
+    if (!resp.mascota && mascotaId) {
+      resp.mascota = await tryGetMascota(mascotaId);
+    }
+    return resp?.data || resp;
+  } catch (e) {
+    console.error('Error fetchAdopcion', e);
+    return null;
+  }
+}
+
+async function tryGetMascota(id) {
+  try {
+    const m = await MascotaService.obtenerPorId(id, true);
+    return m?.data || m;
+  } catch (e) {
+    console.warn('No se pudo obtener mascota:', e.message || e);
+    return null;
+  }
+}
+
+function normalizeDocumentos(field) {
+  if (!field) return [];
+  if (Array.isArray(field)) return field;
+  if (typeof field === 'object') return Object.values(field);
+  if (typeof field === 'string') {
+    try { 
+      const p = JSON.parse(field); 
+      return Array.isArray(p) ? p : (typeof p === 'object' ? Object.values(p) : [p]); 
+    } catch (e) { 
+      return [field]; 
+    }
+  }
+  return [field];
+}
+
+
+function populateTemplate(cont, adopcion) {
+  const { usuario = {}, mascota = {} } = adopcion;
+
+  const nombreUsuario = usuario.nombres ? `${usuario.nombres} ${usuario.apellidoPaterno || ''}`.trim() : (usuario.nombreUsuario || 'Solicitante desconocido');
+  const nombreMascota = (mascota.nombre || mascota.nombreMascota) || 'Mascota';
+
+  // Datos principales
+  cont.querySelector('.nombre-destacado').textContent = nombreMascota;
+  cont.querySelector('.nombre-solicitante').textContent = nombreUsuario;
+  cont.querySelector('.info-value').textContent = adopcion.tipoVivienda || 'N/A';
+  cont.querySelector('.razon-box p').textContent = adopcion.razonAdopcion || 'No especificada';
+
+  // Booleano (Sí/No)
+  const infoSiElements = cont.querySelectorAll('.info-value-si');
+  if (infoSiElements[0]) infoSiElements[0].textContent = adopcion.tienePatio ? 'Sí' : 'No';
+  if (infoSiElements[1]) infoSiElements[1].textContent = adopcion.tieneExperiencia ? 'Sí' : 'No';
+
+  // Imagen de Mascota
+  const imagenMascota = cont.querySelector('.mascota-imagen-preview');
+  if (imagenMascota) {
+      imagenMascota.src = mascota.imagen || '/frontend/src/assets/images/dog.png';
+      imagenMascota.alt = `Foto de ${nombreMascota}`;
+  }
+  
+  // Documentos
+  populateDocumentSections(cont, adopcion);
+}
+
+function populateDocumentSections(cont, adopcion) {
+  const documentos = normalizeDocumentos(adopcion.documentosSolicitud);
+  const archivosSeccion = cont.querySelector('.archivos-seccion');
+  if (!archivosSeccion) return;
+
+  // 1. Foto de credencial
+  const primerItem = archivosSeccion.querySelector('.archivo-item:first-child');
+  if (primerItem) {
+    primerItem.innerHTML = `<span class="info-label">Foto de credencial:</span>`;
+    const doc = documentos[0];
+
+    if (doc) {
+      const isImage = typeof doc === 'string' && doc.startsWith('data:image');
+      
+      if (isImage) {
+        const img = document.createElement('img'); 
+        img.src = doc; img.alt = 'Credencial'; 
+        img.style.cssText = 'max-width:15rem; max-height:15rem; margin:8px 0;';
+        primerItem.appendChild(img);
+
+        // Enlace oculto para mantener funcionalidad si es necesario
+        const a = document.createElement('a'); 
+        a.href = doc; a.target = '_blank'; a.className = 'archivo-link';
+        a.textContent = 'Ver documento (Clic)';
+        a.style.display = 'none'; // Ocultar el texto azul
+        primerItem.appendChild(a);
+      } else {
+        const a = document.createElement('a');
+        a.href = doc; a.target = '_blank'; a.className = 'archivo-link';
+        a.textContent = doc.startsWith('data:application/pdf') ? 'Ver credencial (PDF)' : ('' + doc).split('/').pop() || 'Ver credencial';
+        primerItem.appendChild(a);
+      }
+    } else {
+      const p = document.createElement('p');
+      p.style.color = '#999'; p.textContent = 'No disponible';
+      primerItem.appendChild(p);
+    }
+  }
+
+  // 2. Fotos extras
+  const listaExtras = archivosSeccion.querySelector('.archivo-item:nth-child(2) .archivos-lista');
+  if (listaExtras) {
+    listaExtras.innerHTML = ''; 
+    const extras = documentos.slice(1);
+    
+    if (extras.length > 0) {
+      extras.forEach((doc, i) => {
+        const itemContainer = document.createElement('div');
+        itemContainer.style.cssText = 'display:flex; align-items:center; gap:8px;';
+        const isImage = typeof doc === 'string' && doc.startsWith('data:image');
+        
+        if (isImage) {
+          const img = document.createElement('img');
+          img.src = doc; img.alt = `Imagen ${i + 1}`;
+          img.style.cssText = 'max-width:15rem; max-height:15rem; object-fit:cover;';
+          
+          // Envolver la imagen en el enlace (<a>) para que sea clickeable
+          const a_img = document.createElement('a');
+          a_img.href = doc; a_img.target = '_blank';
+          a_img.appendChild(img);
+          itemContainer.appendChild(a_img);
+        } else {
+          // Si es PDF/otro, mostrar solo el enlace azul
+          const a = document.createElement('a');
+          a.className = 'archivo-link'; a.href = doc; a.target = '_blank';
+          a.textContent = doc.startsWith('data:application/pdf') ? `Documento ${i + 1} (PDF)` : ('' + doc).split('/').pop() || `Documento ${i + 1}`;
+          itemContainer.appendChild(a);
+        }
+        listaExtras.appendChild(itemContainer);
+      });
+    } else {
+      const p = document.createElement('p');
+      p.style.cssText = 'color:#999; font-style:italic; margin:0;';
+      p.textContent = 'No hay fotos extras';
+      listaExtras.appendChild(p);
+    }
+  }
+}
+
+// ===================================
+//  4. Acciones
+// ===================================
+
+function attachActionButtons(container, adopcionId) {
+  const aprobo = () => aprobar(adopcionId);
+  const rechazo = () => rechazar(adopcionId);
+  
+  // Asignar a botones dinámicos (si existen)
+  container.querySelector('.btn-aprobar')?.addEventListener('click', aprobo);
+  container.querySelector('.btn-rechazar')?.addEventListener('click', rechazo);
+
+  // Reemplazar y asignar a botones de la plantilla
+  const globalA = document.querySelector('.boton-aceptar');
+  if (globalA) { const cloneA = globalA.cloneNode(true); globalA.replaceWith(cloneA); cloneA.addEventListener('click', aprobo); }
+  
+  const globalR = document.querySelector('.boton-rechazar');
+  if (globalR) { const cloneR = globalR.cloneNode(true); globalR.replaceWith(cloneR); cloneR.addEventListener('click', rechazo); }
+}
+
+async function aprobar(id) {
+  if (!confirm('¿Estás seguro de aprobar esta solicitud de adopción?')) return;
+  try { await AdopcionService.aprobar(id); alert('Solicitud aprobada'); window.location.href = '/frontend/src/pages/gestionar-mascotas.html'; } catch (e) { console.error(e); alert('Error al aprobar: ' + (e.message || e)); }
+}
+
+async function rechazar(id) {
+  if (!confirm('¿Estás seguro de rechazar esta solicitud de adopción?')) return;
+  try { await AdopcionService.rechazar(id); alert('Solicitud rechazada'); window.location.href = '/frontend/src/pages/gestionar-mascotas.html'; } catch (e) { console.error(e); alert('Error al rechazar: ' + (e.message || e)); }
+}

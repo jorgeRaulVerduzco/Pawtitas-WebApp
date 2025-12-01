@@ -31,30 +31,29 @@ body > :content-component {
 }
 
 .main-content {
+    display: block;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.gestion-container{
     background-color: white;
     display: flex; 
     flex-direction: column; 
     align-items: center; 
     border-radius: 25px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    max-width: 900px;
+    width: 50rem;
     width: 90%;
     margin: 1rem auto 4rem auto; 
     padding: 30px 40px; 
-}
-
-.gestion-container{
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    width: 100%;
 }
 
 .gestion-card {
     display: flex; 
     gap: 25px; 
     align-items: flex-start; 
-    width: 100%;
+    width: 50rem;
 }
 
 .gestion-wrapper {
@@ -174,3 +173,25 @@ body > :content-component {
     box-shadow: 0 4px 8px rgba(107, 33, 168, 0.3);
 }
 
+.filter-btn {
+    padding: 10px 20px;
+    border: 2px solid #D492FF;
+    background-color: white;
+    color: #6B21A8;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    background-color: #D492FF;
+    color: white;
+}
+
+.filter-btn.active {
+    background-color: #6B21A8;
+    color: white;
+    border-color: #6B21A8;
+}

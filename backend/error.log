@@ -144,3 +144,15 @@
 {"level":"error","message":"El token no es válido o ha expirado"}
 {"level":"error","message":"El token no es válido o ha expirado"}
 {"level":"error","message":"El token no es válido o ha expirado"}
+{"level":"error","message":"Error al crear el usuario: Validation error"}
+{"level":"error","message":"Error al crear el usuario: Validation error"}
+{"level":"error","message":"Error al crear el usuario: Validation error"}
+{"level":"error","message":"Error al crear el usuario: Validation error"}
+{"level":"error","message":"Credenciales inválidas o usuario inactivo"}
+{"level":"error","message":"No se encontraron productos."}
+{"level":"error","message":"No se encontraron productos."}
+{"level":"error","message":"No se encontraron productos."}
+{"level":"error","message":"No se encontraron productos."}
+{"level":"error","message":"Credenciales inválidas o usuario inactivo"}
+{"level":"error","message":"No se encontraron productos."}
+{"level":"error","message":"No se encontraron productos."}

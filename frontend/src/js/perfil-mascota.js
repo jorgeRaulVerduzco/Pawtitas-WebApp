@@ -30,6 +30,7 @@ async function renderPerfil() {
     const especieEl = document.getElementById('especie-value');
     const tamanoEl = document.getElementById('tamano-value');
     const centroEl = document.getElementById('centro-value');
+    const razaEl = document.getElementById('raza-value');
     const sexoEl = document.getElementById('sexo-value');
     const descEl = document.getElementById('descripcion-text');
 
@@ -40,6 +41,7 @@ async function renderPerfil() {
     especieEl.textContent = mascota.especie || '-';
     tamanoEl.textContent = mascota.tamano || '-';
     centroEl.textContent = mascota.centro ? mascota.centro.nombre : '-';
+    razaEl.textContent = mascota.raza || '-';
     sexoEl.textContent = mascota.sexo || '-';
     descEl.textContent = mascota.descripcion || '-';
 

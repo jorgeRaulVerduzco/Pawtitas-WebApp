@@ -16,6 +16,15 @@
       <button class="add-mascota-button" onclick="window.location.href='/frontend/src/pages/publicar-adopcion.html'">
         Publicar nueva mascota
       </button>
+
+      <div class="filters-section">
+            <button class="filter-btn active" data-estado="todos">Todas</button>
+            <button class="filter-btn" data-estado="pendiente">Pendientes</button>
+            <button class="filter-btn" data-estado="aprobada">Aprobadas</button>
+            <button class="filter-btn" data-estado="rechazada">Rechazadas</button>
+        </div>
+
+        
       <div class="gestion-container">
         <div class="gestion-wrapper">
           <div class="gestion-card">
@@ -30,7 +39,7 @@
                   >Pendiente de revisión</span
                 >
               </div>
-              <a href="propuesta-adopcion.html">
+              <a href="/frontend/src/pages/propuesta-mascota.html">
                 <button class="boton-revisar">Revisar</button>
               </a>
               <p class="fecha">Publicado el: 8/Noviembre/2025</p>

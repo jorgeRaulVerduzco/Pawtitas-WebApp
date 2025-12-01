@@ -1,9 +1,11 @@
 // frontend/src/js/gestionar-mascotas.js
 
 import MascotaService from '../services/mascota.service.js';
+import AdopcionService from '../services/adopcion.service.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
   const gestionContainer = document.querySelector('.gestion-container');
+  const filterButtons = document.querySelectorAll('.filter-btn');
   
   // Verificar autenticación
   const token = localStorage.getItem('token');
@@ -12,23 +14,47 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
 
-  // Cargar mascotas al iniciar
-  await cargarMascotas();
+  // Cargar mascotas al iniciar (por defecto: todas)
+  let estadoFiltro = 'todos';
+  // Event listeners para filtros (si existen en el HTML)
+  if (filterButtons && filterButtons.length) {
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        estadoFiltro = btn.dataset.estado || 'todos';
+        cargarMascotas(estadoFiltro);
+      });
+    });
+  }
+
+  await cargarMascotas(estadoFiltro);
 
   /**
    * Cargar todas las mascotas
    */
-  async function cargarMascotas() {
+  async function cargarMascotas(estado = 'todos') {
     try {
       gestionContainer.innerHTML = '<p style="text-align: center; padding: 40px;">Cargando mascotas...</p>';
-      
-      const response = await MascotaService.obtenerTodas({
-        includeCentro: true,
-        limit: 100,
-        offset: 0
-      });
-      
-      const mascotas = response.data || [];
+      let mascotas = [];
+
+      if (estado === 'todos') {
+        const response = await MascotaService.obtenerTodas({
+          includeCentro: true,
+          limit: 100,
+          offset: 0
+        });
+        mascotas = response.data || [];
+      } else {
+        // Obtener adopciones filtradas por estado y extraer mascotas relacionadas
+        const resp = await AdopcionService.obtenerTodas({ includeMascota: true, estadoSolicitud: estado, limit: 1000, offset: 0 });
+        const adopciones = resp.data || [];
+        const map = new Map();
+        adopciones.forEach(a => {
+          if (a.mascota && a.mascota.id) map.set(a.mascota.id, a.mascota);
+        });
+        mascotas = Array.from(map.values());
+      }
       
       if (!mascotas || mascotas.length === 0) {
         gestionContainer.innerHTML = '<p style="text-align: center; padding: 40px;">No hay mascotas registradas</p>';
