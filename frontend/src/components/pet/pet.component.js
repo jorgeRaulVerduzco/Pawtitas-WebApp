@@ -10,16 +10,10 @@ export class PetComponent extends HTMLElement {
 		this.#render(this.shadow);
 	}
 
-	// Solo son datos de prueba, despues se pondran los de la base de datos
 	#render(shadow) {
 		const name = this.getAttribute('name') || 'Sin nombre';
 		const image = this.getAttribute('imagen') || '/frontend/src/assets/images/dog.png';
 		const age = this.getAttribute('edad') || '';
-		const species = this.getAttribute('especie') || '';
-		const size = this.getAttribute('tamano') || '';
-		const sexo = this.getAttribute('sexo') || '';
-		const estado = this.getAttribute('estado') || '';
-		const centro = this.getAttribute('centro') || '';
 		const petId = this.getAttribute('pet-id') || '';
 
 		shadow.innerHTML += `
